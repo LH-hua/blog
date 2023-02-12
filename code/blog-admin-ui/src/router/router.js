@@ -9,7 +9,7 @@ const routes = [
         children: [
             {
                 path: "article",
-                component: () => import('@/views/article/home.vue'),
+                component: () => import('@/views/article/article.vue'),
             }
         ]
     }
