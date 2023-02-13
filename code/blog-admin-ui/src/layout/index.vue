@@ -3,27 +3,37 @@
     <template #side>
       <v-card class="mx-auto" height="100%">
         <v-list density="compact">
-          <!-- <v-list-subheader></v-list-subheader> -->
-          <v-list-item
-            v-for="(item, i) in menu"
-            :key="i"
-            :value="item"
-            active-color="primary"
-            @click="router(item)"
-          >
-            <template v-slot:prepend>
-              <v-icon :icon="item.icon"></v-icon>
-            </template>
-
-            <v-list-item-title v-text="item.text"></v-list-item-title>
-          </v-list-item>
+          <div v-for="(item, index) in menu" :key="item + index">
+            <v-list-group v-if="item.chilren.length > 0" :value="item.text">
+              <template v-slot:activator="{ props }">
+                <v-list-item v-bind="props" :prepend-icon="item.icon" :title="item.text"></v-list-item>
+              </template>
+              <v-list-item
+                v-for="(item1, i) in item.chilren"
+                :key="item1 + i"
+                :value="item1.text"
+                :title="item1.text"
+                :prepend-icon="item1.icon"
+                @click="toRouter(item)"
+              ></v-list-item>
+            </v-list-group>
+            <v-list-item
+              v-else
+              :value="item.text"
+              active-color="primary"
+              :title="item.text"
+              :prepend-icon="item.icon"
+              @click="toRouter(item)"
+            >
+            </v-list-item>
+          </div>
         </v-list>
       </v-card>
     </template>
     <template #main>
       <v-card>
         <v-card-text>
-            <router-view></router-view>
+          <router-view></router-view>
         </v-card-text>
       </v-card>
     </template>
@@ -32,6 +42,19 @@
 
 <script setup>
 import layout from "./layout.vue";
-import { reactive } from "vue";
-import {menu} from '@/config/menu.js'
+
+import { reactive, getCurrentInstance } from "vue";
+import { useRouter } from "vue-router";
+
+import { menu } from "@/config/menu.js";
+
+const { ctx, proxy } = getCurrentInstance();
+const router = useRouter();
+const _this = ctx;
+
+const toRouter = (val) => {
+  console.log(_this);
+  console.log(proxy);
+  router.push(val.path);
+};
 </script>
