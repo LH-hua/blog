@@ -39,7 +39,7 @@ function send(data,res){
  *          description: Order not found
  * */
 
-route.get('/api/get/articles/list', async (req, res) => {
+route.get('/api/get/articles', async (req, res) => {
     try {
         let result = await article.find({},{body:0})
         send(result,res)

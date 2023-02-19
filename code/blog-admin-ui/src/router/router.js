@@ -10,8 +10,15 @@ const routes = [
             {
                 path: "article",
                 component: () => import('@/views/article/article.vue'),
+            },
+            {
+                path: "editArticle",
+                component: () => import('@/views/article/editArticle.vue'),
             }
         ]
+    }, {
+        path: "/login",
+        component: () => import('@/views/login.vue'),
     }
 ]
 const router = VueRouter.createRouter({

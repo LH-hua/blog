@@ -1,7 +1,7 @@
 <template>
   <layout>
     <template #side>
-      <v-card class="mx-auto" height="100%">
+      <v-card class="mx-auto" flat >
         <v-list density="compact">
           <div v-for="(item, index) in menu" :key="item + index">
             <v-list-group v-if="item.chilren.length > 0" :value="item.text">
@@ -31,7 +31,7 @@
       </v-card>
     </template>
     <template #main>
-      <v-card>
+      <v-card style="height:89vh">
         <v-card-text>
           <router-view></router-view>
         </v-card-text>

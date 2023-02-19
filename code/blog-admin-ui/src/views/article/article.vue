@@ -10,8 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in articleList" :key="item">
-          <td>{{ item.timer }}</td>
+        <tr v-for="item in postList.data" :key="item">
+          <td>{{ item.date }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.auther }}</td>
           <td>
@@ -25,74 +25,24 @@
   </div>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed, onMounted } from "vue";
+import { article } from "@/http/article";
 
-const articleList = reactive([
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
-  {
-    timer: "2023-02-10 10:00",
-    auther: "xxx",
-    title: "test",
-  },
+const state = reactive({
+  data: [],
+});
 
-]);
+const postList = computed(() => {
+  return state.data;
+});
+
+const getArticleList = () => {
+  article().then((res) => {
+    state.data = res.data;
+  });
+};
+
+onMounted(() => {
+  getArticleList();
+});
 </script>
