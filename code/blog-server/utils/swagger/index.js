@@ -13,7 +13,7 @@ const swaggerDoc = require('swagger-jsdoc')
       }
     },
     // 去哪个路由下收集 swagger 注释
-    apis: [path.join(__dirname,'../../route/*.js')]
+    apis: [path.join(__dirname,'../../Controller/*.js')]
   }
 
   var swaggerJson = function (req, res) {
