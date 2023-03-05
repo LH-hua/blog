@@ -1,6 +1,8 @@
 const User = require('../mongodb/schema/user')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
+const salt = bcrypt.genSaltSync(10)
 /**
  * @swagger
  * "components": {
@@ -71,9 +73,26 @@ const user = {
         console.log(req.body)
         // console.log(req)
         try {
-            let result = await User.findOne({})
+            let result = await User.findOne({username:req.body.username})
+            console.log(result)
+            if(!result.username){
+                res.send({
+                    msg:'用户名或密码错误'
+                })
+                return
+            }
+            const isTure = bcrypt.compareSync(req.body.password,result.password)
+            console.log(isTure)
+            if(!isTure){
+                res.send({
+                    msg:'错误'
+                })
+                return
+            }
+            const token = jwt.sign(toString(result._id),'huaker')
             res.send({
-                msg: result
+                msg:'登录成功',
+                token:token
             })
         } catch (error) {
             next(error)
@@ -83,7 +102,7 @@ const user = {
         try {
             const result = await User.create({
                 username:req.body.username,
-                password:bcrypt.hashSync(req.body.password,10)
+                password:bcrypt.hashSync(req.body.password,salt)
             })
             if(result){
                 res.status(200).send(result)

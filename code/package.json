@@ -2,12 +2,12 @@
   "name": "my",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm run dev --prefix blog-client-ui",
     "admin": "npm run dev --prefix blog-admin-ui",
-    "server": "nodemon index.js --prefix blog-server",
+    "server": "nodemon app.js --prefix blog-server",
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\""
   },
   "author": "",
