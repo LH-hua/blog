@@ -22,6 +22,7 @@ const app = new express();
 // app.use('/api',require('./route/index'))
 
 app.use(bodyParser.urlencoded({extended:false}))
+app.use(express.json())
 app.use(cors())
 require('./mongodb/conect')
 swaggerInstall(app)

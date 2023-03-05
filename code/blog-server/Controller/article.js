@@ -43,8 +43,7 @@ const article = {
                 msg: result
             })
         } catch (error) {
-            console.log(error)
-            next()
+            next(error)
         }
     },
     /**,
@@ -78,7 +77,7 @@ const article = {
             let result = await db.findOne({ _id: _id })
             res.send(result)
         } catch (error) {
-            console.log(error)
+            next(error)
         }
     }
 }
