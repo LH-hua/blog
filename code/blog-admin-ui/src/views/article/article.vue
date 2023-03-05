@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in postList.data" :key="item">
+        <tr v-for="item in postList" :key="item">
           <td>{{ item.date }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.auther }}</td>
@@ -38,7 +38,9 @@ const postList = computed(() => {
 
 const getArticleList = () => {
   article().then((res) => {
-    state.data = res.data;
+    
+    state.data = res.data.msg;
+    console.log(state.data)
   });
 };
 

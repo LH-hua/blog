@@ -3,8 +3,10 @@ import * as VueRouter from 'vue-router'
 
 
 const routes = [
+    { path: "/", redirect: "/login" },
     {
-        path: "/",
+        path: "/admin/",
+        name:'admin',
         component: () => import('@/views/index.vue'),
         children: [
             {
@@ -16,7 +18,8 @@ const routes = [
                 component: () => import('@/views/article/editArticle.vue'),
             }
         ]
-    }, {
+    }, 
+    {
         path: "/login",
         name: 'login',
         component: () => import('@/views/login.vue'),
@@ -26,17 +29,15 @@ const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes
 })
+
 router.beforeEach((to, from, next) => {
+    const token = sessionStorage.getItem('token')
     console.log(to)
     console.log(from)
-    const token = sessionStorage.getItem('token')
-    if (token) {
-        console.log(token)
-        next()
-    }
-    else {
-        console.log(token)
+    if(to.name !== 'login' && !token){
         next({ name: 'login' })
+    }else{
+        next()
     }
 
 })

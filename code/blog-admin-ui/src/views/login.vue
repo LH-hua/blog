@@ -11,7 +11,7 @@
         <v-card-text>
           <v-form ref="form">
             <v-text-field
-              v-model="state.form.name"
+              v-model="state.form.username"
               :rules="nameRules"
               label="用户"
               required
@@ -28,7 +28,7 @@
         </v-card-text>
         <v-card-actions>
           <div style="display:felx;align-items: center;justify-content: end;">
-            <v-btn color="#00B0FF" variant="flat">登 录</v-btn>
+            <v-btn color="#00B0FF" variant="flat" @click="btn_login">登 录</v-btn>
             <v-btn color="#00B0FF" variant="flat">重 置</v-btn>
           </div>
         </v-card-actions>
@@ -41,13 +41,26 @@
 
 <script setup>
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import {login} from '@/http/user'
 
 const state = reactive({
   form: {
-    name: "",
+    username: "",
     password: "",
   },
 });
+const router = useRouter();
+const btn_login = () => {
+  login(state.form).then(res => {
+    if(res.data.token){
+      sessionStorage.setItem('token',res.data.token)
+      router.push({
+        path:'/admin/article'
+      })
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

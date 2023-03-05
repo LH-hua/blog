@@ -7,7 +7,7 @@ const request = axios.create({
 })
 // request.defaults.headers.Authorization = 'token'
 request.interceptors.request.use(function(config){
-  // config.headers.common['Authorization'] = 'token11'
+  // config.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
 //   config.headers['Authorization'] = 'token'
 //   config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   return config

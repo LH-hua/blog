@@ -1,9 +1,9 @@
-import request from "./axios"
+import axios from "./axios"
 
 export function get(url, data) {
     return new Promise((resolve) => {
-        request({
-            methods: 'GET',
+        axios({
+            method: 'GET',
             url: url,
             params: data
         })
@@ -14,8 +14,8 @@ export function get(url, data) {
 }
 export function post(url, data) {
     return new Promise((resolve) => {
-        request({
-            methods: 'POST',
+        axios({
+            method: 'POST',
             url: url,
             data: data
         })

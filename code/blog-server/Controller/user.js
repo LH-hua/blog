@@ -70,22 +70,19 @@ const user = {
      *          description: Order not found
      * */
     login: async (req, res, next) => {
-        console.log(req.body)
-        // console.log(req)
         try {
             let result = await User.findOne({username:req.body.username})
             console.log(result)
-            if(!result.username){
+            if(!result){
                 res.send({
-                    msg:'用户名或密码错误'
+                    msg:'用户名不存在'
                 })
                 return
             }
             const isTure = bcrypt.compareSync(req.body.password,result.password)
-            console.log(isTure)
             if(!isTure){
                 res.send({
-                    msg:'错误'
+                    msg:'密码错误'
                 })
                 return
             }
