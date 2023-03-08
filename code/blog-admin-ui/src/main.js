@@ -9,6 +9,7 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 
 import router from './router/router'
+import { test1 } from './components/alter/alter.js'
 
 const vuetify = createVuetify({
   components,
@@ -17,5 +18,9 @@ const vuetify = createVuetify({
     defaultSet: 'mdi',
   },
 })
+const app = createApp(App)
+app.config.globalProperties.msg = 'hello'
+app.use(router).use(vuetify).mount('#app')
 
-createApp(App).use(router).use(vuetify).mount('#app')
+
+app.config.globalProperties.alter = test1

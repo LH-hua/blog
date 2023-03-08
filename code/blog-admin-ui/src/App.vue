@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <router-view></router-view>
+    <div style="position: absolute;z-index: 9999;width: 1000px;height: 100px;" id="app3"></div>
   </v-app>
 </template>
 

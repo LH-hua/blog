@@ -1,12 +1,26 @@
 <template>
   <layout>
+    <template #header>
+      <v-container>
+        <v-row align="start" no-gutters>
+          <v-col cols="11"></v-col>
+          <v-col cols="1">
+            <user/>
+          </v-col>
+        </v-row>
+      </v-container>
+    </template>
     <template #side>
-      <v-card class="mx-auto" flat >
+      <v-card class="mx-auto" flat>
         <v-list density="compact">
           <div v-for="(item, index) in menu" :key="item + index">
             <v-list-group v-if="item.chilren.length > 0" :value="item.text">
               <template v-slot:activator="{ props }">
-                <v-list-item v-bind="props" :prepend-icon="item.icon" :title="item.text"></v-list-item>
+                <v-list-item
+                  v-bind="props"
+                  :prepend-icon="item.icon"
+                  :title="item.text"
+                ></v-list-item>
               </template>
               <v-list-item
                 v-for="(item1, i) in item.chilren"
@@ -31,7 +45,7 @@
       </v-card>
     </template>
     <template #main>
-      <v-card style="height:89vh">
+      <v-card style="height: 89vh">
         <v-card-text>
           <router-view></router-view>
         </v-card-text>
@@ -42,6 +56,7 @@
 
 <script setup>
 import layout from "./layout.vue";
+import user from "../components/user";
 
 import { reactive, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
