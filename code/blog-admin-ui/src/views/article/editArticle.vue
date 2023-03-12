@@ -47,7 +47,7 @@ let editor = reactive(null);
 const initEditor = () => {
   editor = new Editor({
     el: document.querySelector("#editor"),
-    height: "700px",
+    height: "800px",
     initialEditType: "markdown",
     previewStyle: "vertical",
   });
@@ -55,9 +55,13 @@ const initEditor = () => {
 const submit = () => {
   const body = editor.getMarkdown();
   console.log(body);
-  // addArticle().then((res) => {
-  //   console.log(res);
-  // });
+  const data = {
+    title:state.title,
+    body:body
+  }
+  addArticle(data).then((res) => {
+    console.log(res);
+  });
 };
 onMounted(() => {
   initEditor();
