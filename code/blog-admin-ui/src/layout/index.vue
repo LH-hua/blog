@@ -2,10 +2,10 @@
   <layout>
     <template #header>
       <v-container>
-        <v-row align="start" no-gutters>
+        <v-row no-gutters>
           <v-col cols="11"></v-col>
           <v-col cols="1">
-            <user/>
+            <!-- <user/> -->
           </v-col>
         </v-row>
       </v-container>

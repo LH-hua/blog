@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <v-sheet width="400px" height="400px"  rounded>
+    <v-sheet width="400px" height="400px" rounded>
       <v-card height="100%" style="padding: 10px">
         <v-form>
           <h2>欢迎登录</h2>
           <v-divider></v-divider>
-          <br>
+          <br />
           <v-text-field
             v-model="state.form.username"
             label="用户名"
@@ -46,6 +46,7 @@
 import { reactive, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import { login } from "@/http/user";
+import { usrMassegeStore } from "../store/massege";
 
 const state = reactive({
   form: {
@@ -57,8 +58,14 @@ const { ctx, proxy } = getCurrentInstance();
 const _this = ctx;
 const router = useRouter();
 const btn_login = () => {
-  proxy.alter();
-  // console.log(proxy.msg)
+  const msg = usrMassegeStore();
+  if (!state.form.password || !state.form.username) {
+    msg.openMsg({
+      type: "info",
+      text: "请检查用户或密码是否完整",
+    });
+    return;
+  }
   login(state.form).then((res) => {
     if (res.data.token) {
       sessionStorage.setItem("token", res.data.token);
@@ -66,6 +73,10 @@ const btn_login = () => {
         path: "/admin/article",
       });
     }
+    msg.openMsg({
+      type: res.data.type,
+      text: res.data.msg,
+    })
   });
 };
 </script>

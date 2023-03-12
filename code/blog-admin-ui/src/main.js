@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { createPinia } from 'pinia'
 
 // Vuetify
 import 'vuetify/styles'
@@ -18,8 +19,10 @@ const vuetify = createVuetify({
     defaultSet: 'mdi',
   },
 })
+
+const pinia = createPinia()
 const app = createApp(App)
-app.config.globalProperties.msg = 'hello'
+app.use(pinia)
 app.use(router).use(vuetify).mount('#app')
 
 

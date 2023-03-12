@@ -72,9 +72,9 @@ const user = {
     login: async (req, res, next) => {
         try {
             let result = await User.findOne({username:req.body.username})
-            console.log(result)
             if(!result){
                 res.send({
+                    type:'info',
                     msg:'用户名不存在'
                 })
                 return
@@ -82,12 +82,14 @@ const user = {
             const isTure = bcrypt.compareSync(req.body.password,result.password)
             if(!isTure){
                 res.send({
+                    type:'error',
                     msg:'密码错误'
                 })
                 return
             }
             const token = jwt.sign(toString(result._id),'huaker')
             res.send({
+                type:'success',
                 msg:'登录成功',
                 token:token
             })

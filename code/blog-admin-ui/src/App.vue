@@ -1,11 +1,12 @@
 <template>
   <v-app>
     <router-view></router-view>
-    <div style="position: absolute;z-index: 9999;width: 1000px;height: 100px;" id="app3"></div>
+    <alter></alter>
   </v-app>
 </template>
 
 <script setup>
+import alter from './components/alter/alter.vue'
 </script>
 
 <style scoped>
