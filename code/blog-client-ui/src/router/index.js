@@ -4,6 +4,10 @@ import * as VueRouter from 'vue-router'
 
 const routes = [
     {
+        path: "/", 
+        redirect: "/article"
+    },
+    {
         path: "/",
         name:'index',
         component: () => import('@/views/index.vue'),
