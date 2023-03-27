@@ -5,7 +5,7 @@ import * as VueRouter from 'vue-router'
 const routes = [
     {
         path: "/", 
-        redirect: "/article"
+        redirect: "/home"
     },
     {
         path: "/",
@@ -13,9 +13,13 @@ const routes = [
         component: () => import('@/views/index.vue'),
         children: [
             {
-                path: "article",
+                path: "home",
                 component: () => import('@/views/article/main.vue'),
             },
+            {
+                path:'post/:id',
+                component:() => import('@/views/article/detal.vue')
+            }
         ]
     }, 
 ]

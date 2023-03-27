@@ -19,5 +19,8 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <v-footer style="background-color: #f1f3f4" class="d-flex flex-column">
+      <div>{{ new Date().getFullYear() }} — <strong>龙华</strong></div>
+    </v-footer>
   </div>
 </template>

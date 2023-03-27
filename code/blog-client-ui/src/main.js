@@ -12,6 +12,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import router from './router/index'
 
 import twoCol from '@/layout/twoCol.vue'
+import twoCol1 from '@/layout/twoCol1.vue'
 const vuetify = createVuetify({
   components,
   directives,
@@ -23,6 +24,7 @@ const vuetify = createVuetify({
 const pinia = createPinia()
 const app = createApp(App)
 app.component('twoCol',twoCol)
+app.component('twoCol1',twoCol1)
 app.use(pinia)
 app.use(router)
 app.use(vuetify).mount('#app')

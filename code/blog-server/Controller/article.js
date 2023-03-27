@@ -3,6 +3,8 @@ const Article = require('../mongodb/schema/article')
 const _ = require('lodash')
 const moment = require('moment')
 
+const MarkdownIt = require('markdown-it')
+
 /**
  * @swagger
  * "components": {
@@ -91,6 +93,8 @@ const article = {
         let { _id } = _.assign(req.body, req.query, req.params)
         try {
             let result = await Article.findOne({ _id: _id })
+            // const md = new MarkdownIt()
+            // result.body = md.render(result.body)
             res.send(result)
         } catch (error) {
             next(error)
