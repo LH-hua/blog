@@ -27,7 +27,7 @@ export function get(url,data){
             method:'GET',
             params:data
         }).then(res => {
-            resolve(res)
+            resolve(res.data)
         }).catch(err => {
             reject(err)
         })
