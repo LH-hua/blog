@@ -9,7 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdi/font": "^7.2.96",
     "axios": "^1.4.0",
+    "highlight.js": "^11.8.0",
+    "markdown-it": "^13.0.1",
+    "sass": "^1.62.1",
     "vue": "^3.2.47",
     "vue-router": "^4.2.1",
     "vuetify": "^3.3.0"

@@ -3,26 +3,39 @@
     <v-avatar class="me-10 ms-4" color="grey-darken-1" size="40">LH</v-avatar>
     <v-spacer></v-spacer>
     <v-btn v-for="item in menu.data" :key="item" variant="text">
-      {{ item.title }}
+        <v-icon :icon="item.icon"/>
+      {{ item.name }}
     </v-btn>
   </v-container>
 </template>
 
 <script setup>
-import {reactive} from 'vue'
+import { reactive } from "vue";
 const menu = reactive({
   data: [
     {
-      title: "首页",
-      path: "",
+      id: "0",
+      pid: "0",
+      icon:"mdi-home",
+      name: "首页",
+      url: "",
+      children:[]
     },
     {
-      title: "室内场景",
-      path: "",
+      id: "1",
+      pid: "0",
+      icon:"mdi-home",
+      name: "室内场景",
+      url: "",
+      children:[]
     },
     {
-      title: "室外场景",
-      path: "",
+      id: "2",
+      pid: "0",
+      icon:"mdi-home",
+      name: "室外场景",
+      url: "",
+      children:[]
     },
   ],
 });
