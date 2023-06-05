@@ -15,9 +15,14 @@ const routes = [
         path: "detal/:id",
         name: "详情",
         component: () => import('@/views/article/detal.vue'),
-      }
+      },
     ]
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "404",
+    component: () => import('@/views/404.vue'),
+  }
 ]
 
 export default routes
