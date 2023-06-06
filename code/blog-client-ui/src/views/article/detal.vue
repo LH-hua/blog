@@ -2,7 +2,9 @@
   <div>
     <v-card :title="data.data.title" :subtitle="data.data.date" flat>
       <v-card-text>
-        <div v-html="data.data.body"></div>
+        <div class="typo">
+            <div v-html="data.data.body"></div>
+        </div>
       </v-card-text>
     </v-card>
   </div>
@@ -14,6 +16,7 @@ import { useRoute } from "vue-router";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/scss/tokyo-night-light.scss";
+import "@/assets/css/typo.css"
 
 import { getArticleDetal } from "@/http/article";
 
@@ -46,3 +49,7 @@ onMounted(() => {
   });
 });
 </script>
+
+<style leng="less" scoped>
+/* @import '../../assets/css/typo.css'; */
+</style>
