@@ -7,10 +7,10 @@
         src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
         cover
       >
-        <v-card-title>虽千万人，吾往矣</v-card-title>
       </v-img>
+      <v-card-title>虽千万人，吾往矣</v-card-title>
 
-      <v-card-subtitle> L H </v-card-subtitle>
+      <!-- <v-card-subtitle> L H </v-card-subtitle> -->
 
       <v-card-text>
         <div>明天会更好</div>

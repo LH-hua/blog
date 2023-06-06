@@ -1,21 +1,39 @@
 
 const routes = [
-  { path: "/", redirect: "/article/list" },
+  { path: "/", redirect: "/post/list" },
   {
-    path: "/article",
+    path: "/",
     name: "home",
     component: () => import('@/views/home.vue'),
     children: [
       {
-        path: "list",
+        path: "post",
         name: "列表",
-        component: () => import('@/views/article/list.vue'),
+        component: () => import('@/views/article/index.vue'),
+        children: [
+          {
+            path: "list",
+            name: "列表",
+            component: () => import('@/views/article/list.vue'),
+          },
+          {
+            path: "detal/:id",
+            name: "详情",
+            component: () => import('@/views/article/detal.vue'),
+          },
+        ]
       },
       {
-        path: "detal/:id",
-        name: "详情",
-        component: () => import('@/views/article/detal.vue'),
+        path: "gis",
+        name: "gis",
+        component: () => import('@/views/gis/index.vue'),
       },
+      {
+        path: "indoors",
+        name: "indoors",
+        component: () => import('@/views/indoors/index.vue'),
+      },
+
     ]
   },
   {
