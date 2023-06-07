@@ -10,6 +10,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  optimizeDeps: {
+    include: ['cesium'],
+  },
+  define: {
+    CESIUM_BASE_URL: JSON.stringify('/cesium'),
+  },
   server: {
     open:true,
     // https:true,
