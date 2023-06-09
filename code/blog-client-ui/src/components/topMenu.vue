@@ -20,15 +20,70 @@
       >登 录</v-avatar
     >
     <v-dialog v-model="data.dialog" persistent width="1024">
-      <v-card>
-        <v-card-text>
-          <v-text-field :counter="10" label="Name" required></v-text-field>
+      <!-- <v-container> -->
+      <v-sheet height="400" width="800" border>
+        <v-row dense no-gutters>
+          <v-col cols="5">
+            <v-card flat>
+              <v-img
+                src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
+                class="align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="390px"
+                cover
+              >
+                <v-card-title
+                  class="text-white"
+                >Pre-fab homes</v-card-title>
+              </v-img>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card flat height="100%">
+              <template v-slot:title>密码登录</template>
+              <template v-slot:text>
+                <v-text-field
+                  variant="outlined"
+                  label="用户名"
+                  prepend-inner-icon="mdi-account"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="密码"
+                  type="passworld"
+                  variant="outlined"
+                  prepend-inner-icon="mdi-shield-key"
+                  append-inner-icon="mdi-eye-off"
+                  required
+                ></v-text-field>
+              </template>
+              <template v-slot:actions>
+                <v-btn
+                  height="48"
+                  class="flex-grow-1"
+                  variant="outlined"
+                  size="small"
+                >
+                  注 册
+                </v-btn>
 
-          <v-text-field label="E-mail" required></v-text-field>
-          <v-btn color="#64B5F6"> 登 录 </v-btn>
-          <v-btn @click="onDialogShow" color="#EEEEEE"> 取 消 </v-btn>
-        </v-card-text>
-      </v-card>
+                <v-btn
+                  class="flex-grow-1 text-none text-subtitle-1"
+                  color="#2196F3"
+                  variant="flat"
+                  height="48"
+                  @click="load"
+                  size="small"
+                >
+                  登 录
+                </v-btn>
+              </template>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-sheet>
+
+      <!-- </v-container> -->
     </v-dialog>
   </v-container>
 </template>
