@@ -20,7 +20,6 @@
       >登 录</v-avatar
     >
     <v-dialog v-model="data.dialog" width="1024">
-      <!-- <v-container> -->
       <v-sheet width="800" class="pa-8 text-white mx-auto">
         <v-row dense no-gutters>
           <v-col>
@@ -82,8 +81,6 @@
           </v-col>
         </v-row>
       </v-sheet>
-
-      <!-- </v-container> -->
     </v-dialog>
   </v-container>
 </template>
