@@ -1,25 +1,50 @@
 <template>
-  <div id="container"></div>
+  <div>
+    <div class="tools">
+      <v-sheet :width="200" class="pa-8 ">
+        <v-select
+          label="图层"
+          density
+          :items="TDT_IMAGE"
+          item-title="name"
+          item-value="key"
+          variant="outlined"
+          @click="onChangeImage"
+        ></v-select>
+      </v-sheet>
+    </div>
+    <div id="container"></div>
+  </div>
 </template>
 
 <script setup>
-import 'cesium/Build/Cesium/Widgets/widgets.css';
-import { onMounted } from "vue";
-import * as Cesium from "cesium";
+import { onMounted, reactive } from "vue";
+import { map, provider } from "@/utils/ceisum.map";
+import { TDT_IMAGE } from "@/config/default";
+
+const store = reactive({ items: [], layerSelect: "vec" });
+function onChangeImage(obj) {
+  console.log(obj);
+  if (store.layer) {
+    store.viewer.imageryLayers.remove(store.layer);
+  }
+
+  store.layer = provider(store.viewer, obj);
+  console.log(store.viewer.imageryLayers._layers);
+  // viewer.imageryLayers.get(0).show = false
+}
 
 onMounted(() => {
-  const viewer = new Cesium.Viewer("container", {
-    geocoder: false, // 位置查找工具
-    homeButton: false, // 视角返回初始位置
-    sceneModePicker: false, // 选择视角的模式（球体、平铺、斜视平铺）
-    baseLayerPicker: false, // 图层选择器（地形影像服务）
-    navigationHelpButton: false, // 导航帮助(手势，鼠标)
-    animation: false, // 左下角仪表盘（动画器件）
-    timeline: false, // 底部时间线
-    fullscreenButton: false, // 全屏
-    vrButton: false, // VR
-  })
-  viewer._cesiumWidget._creditContainer.style.display = "none"
+  for (let index = 0; index < TDT_IMAGE.length; index++) {
+    const item = TDT_IMAGE[index];
+    store.items.push({
+      title: item.name,
+      value: item.key,
+      ...item,
+    });
+  }
+
+  store.viewer = map("container");
 });
 </script>
 
@@ -27,5 +52,11 @@ onMounted(() => {
 .container {
   height: 100vh;
   width: 100vw;
+}
+.tools {
+  position: absolute;
+  color: white;
+  z-index: 1000;
+  cursor: pointer;
 }
 </style>
