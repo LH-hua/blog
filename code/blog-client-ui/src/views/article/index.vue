@@ -6,7 +6,7 @@
             <card-image></card-image>
             <br>
             <v-card flat>
-                <v-card-title>公告</v-card-title>
+                <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
                 <v-card-text>
                     <p>这是LH个人博客，记录和分享日常</p>
                     <p>有问题欢迎讨论交流</p>

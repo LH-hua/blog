@@ -12,6 +12,7 @@
     "@mdi/font": "^7.2.96",
     "axios": "^1.4.0",
     "cesium": "^1.106.1",
+    "echarts": "^5.4.2",
     "highlight.js": "^11.8.0",
     "markdown-it": "^13.0.1",
     "sass": "^1.62.1",
