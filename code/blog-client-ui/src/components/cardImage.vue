@@ -5,7 +5,7 @@
         <div
           style="
             width: 100%;
-            height: 100px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -17,13 +17,14 @@
             image="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
           ></v-avatar>
           <span>LH-hua</span>
-          <span>生活不止有今天的麻烦，还有明天的烦恼</span>
+          <span>我的心眼很小，你走了就空了。</span>
+          <div>若你在这方世界消失，我便屠尽这方生灵</div>
         </div>
       </v-card-title>
       <v-card-text>
-        <!-- <div>明天会更好</div>
+        
 
-        <div>一个乐于分享的网站</div> -->
+        <!-- <div>一个乐于分享的网站</div> -->
       </v-card-text>
       <template v-slot:actions>
         <v-btn
@@ -49,9 +50,9 @@
     <v-list>
       <v-list-item
         prepend-avatar="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        title="LH"
+        title="LH-hua"
       ></v-list-item>
-      <v-list-item> 明天和意外谁会先来临呢？ </v-list-item>
+      <v-list-item> 众生皆草木，唯你是青山。 </v-list-item>
     </v-list>
 
     <v-divider></v-divider>

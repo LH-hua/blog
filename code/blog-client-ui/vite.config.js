@@ -14,7 +14,7 @@ export default defineConfig({
     include: ['cesium'],
   },
   define: {
-    CESIUM_BASE_URL: JSON.stringify('/cesium'),
+    CESIUM_BASE_URL: JSON.stringify('/cesium/'),
   },
   server: {
     open:true,

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet min-height="70vh" rounded="lg">
+  <v-sheet class="pa-5" min-height="70vh" rounded="lg">
     <v-card
       v-for="item in data.data"
       :key="item._id"
