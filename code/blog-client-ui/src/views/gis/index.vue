@@ -1,16 +1,31 @@
 <template>
   <div>
     <div class="tools">
-      <v-sheet :width="200" class="pa-8 ">
-        <v-select
-          label="图层"
-          density
-          :items="TDT_IMAGE"
-          item-title="name"
-          item-value="key"
-          variant="outlined"
-          @click="onChangeImage"
-        ></v-select>
+      <v-sheet :width="230" class="pa-4">
+        <div style="display: flex;">
+          图层<v-spacer></v-spacer><v-select
+            density
+            :items="TDT_IMAGE"
+            item-title="name"
+            item-value="key"
+            variant="outlined"
+            @click="onChangeImage"
+          ></v-select>
+        </div>
+        <div style="display: flex;">
+          注记<v-spacer></v-spacer><v-select
+            density
+            :items="TDT_Annotation"
+            item-title="name"
+            item-value="key"
+            variant="outlined"
+            @click="onChangeImage"
+          ></v-select>
+        </div>
+        <div>
+          <v-btn flat>取 消</v-btn>
+          <v-btn flat>加 载</v-btn>
+        </div>
       </v-sheet>
     </div>
     <div id="container"></div>
@@ -20,7 +35,7 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import { map, provider } from "@/utils/ceisum.map";
-import { TDT_IMAGE } from "@/config/default";
+import { TDT_IMAGE,TDT_Annotation } from "@/config/default";
 
 const store = reactive({ items: [], layerSelect: "vec" });
 function onChangeImage(obj) {
