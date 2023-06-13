@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 
-const article = require('../../Controller/article')
+const article = require('../../controller/article')
 
 router.get('/articles',article.articles)
 router.get('/detail',article.detail)

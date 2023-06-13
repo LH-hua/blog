@@ -1,9 +1,7 @@
 
-const Article = require('../mongodb/schema/article')
+const posts = require('../models/post')
 const _ = require('lodash')
 const moment = require('moment')
-
-const MarkdownIt = require('markdown-it')
 
 /**
  * @swagger
@@ -55,7 +53,7 @@ const article = {
      * */
     articles: async (req, res, next) => {
         try {
-            let result = await Article.find({}, { body: 0 })
+            let result = await posts.find({}, { body: 0 })
             // console.log(result)
             res.send({
                 msg: result
@@ -93,8 +91,6 @@ const article = {
         let { _id } = _.assign(req.body, req.query, req.params)
         try {
             let result = await Article.findOne({ _id: _id })
-            // const md = new MarkdownIt()
-            // result.body = md.render(result.body)
             res.send(result)
         } catch (error) {
             next(error)
@@ -130,14 +126,14 @@ const article = {
     add: async (req, res) => {
         const { title, body } = req.body
         const result = await Article.create({
-            dete:moment().format('YYYY-MM-DD HH:mm:ss'),
-            title:title,
-            body:body
+            dete: moment().format('YYYY-MM-DD HH:mm:ss'),
+            title: title,
+            body: body
         })
-        if(result){
+        if (result) {
             res.send({
-                type:'success',
-                msg:'文章添加成功了'
+                type: 'success',
+                msg: '文章添加成功了'
             })
         }
     }
