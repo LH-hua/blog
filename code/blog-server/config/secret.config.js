@@ -1,1 +1,1 @@
-module.exports = 'LH-hua'
+module.secret = 'huaker'
