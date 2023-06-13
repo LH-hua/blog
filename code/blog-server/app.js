@@ -6,7 +6,7 @@ const cors = require("cors");
 const { port, hostUrl } = require('./config/host.config')
 
 // 使用swagger API 文档
-const swaggerInstall = require('./utils/swagger/index')
+const swaggerInstall = require('./utils/swagger')
 const router = require('./route')
 
 const app = new express();
@@ -22,6 +22,7 @@ router(app)
 // 错误捕捉，防止程序崩溃
 app.use(function (err, req, res, next) {
 	res.send({
+		code:500,
 		msg: err.message
 	})
 })
