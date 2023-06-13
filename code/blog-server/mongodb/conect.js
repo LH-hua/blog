@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const host = "localhost"
+const host = "lhua.top"
 const port = 27017
 const dataBase = "blog"
 mongoose.connect(`mongodb://${host}:${port}/${dataBase}`,{ useUnifiedTopology: true })

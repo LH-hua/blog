@@ -27,6 +27,15 @@ app.use(cors())
 require('./mongodb/conect')
 swaggerInstall(app)
 router(app)
+app.use('/',() => {
+	throw new Error('服务器内部错误')
+})
+
+app.use(function(err,req,res,next){
+	res.send({
+		msg:err.message
+	})
+})
 
 // app.use(require('./route/article'))
 app.listen(port, () => {
