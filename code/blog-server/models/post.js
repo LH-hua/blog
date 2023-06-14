@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     userId: Number,
     descr: {
         type: String,
-        default: ''
+        default: null
     },
     body: {
         type: String,
