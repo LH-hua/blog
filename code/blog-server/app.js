@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path")
 
 // 主机运行配置文件
 const { port, hostUrl } = require('./src/config/host.config')
@@ -10,10 +11,10 @@ const swaggerInstall = require('./src/utils/swagger')
 const router = require('./src/route')
 
 const app = new express();
-
+app.use(express.static(path.join(__dirname,'./public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(express.static('public'))
+
 app.use(cors())
 
 require('./src/mongodb/conect')
