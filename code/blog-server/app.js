@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 // 主机运行配置文件
-const { port, hostUrl } = require('./config/host.config')
+const { port, hostUrl } = require('./src/config/host.config')
 
 // 使用swagger API 文档
-const swaggerInstall = require('./utils/swagger')
-const router = require('./route')
+const swaggerInstall = require('./src/utils/swagger')
+const router = require('./src/route')
 
 const app = new express();
 
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
 
-require('./mongodb/conect')
+require('./src/mongodb/conect')
 swaggerInstall(app)
 router(app)
 
