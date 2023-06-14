@@ -99,6 +99,7 @@ const user = {
         }
     },
     regsiter: async (req, res, next) => {
+        console.log(11)
         try {
             const result = await User.create({
                 username: req.body.username,

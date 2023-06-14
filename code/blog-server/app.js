@@ -13,6 +13,7 @@ const app = new express();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(express.static('public'))
 app.use(cors())
 
 require('./src/mongodb/conect')

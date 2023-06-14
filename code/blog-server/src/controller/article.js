@@ -87,10 +87,10 @@ const article = {
     *        404:
     *          description: Order not found
     * */
-    detail: async (req, res) => {
+    detail: async (req, res, next) => {
         let { _id } = _.assign(req.body, req.query, req.params)
         try {
-            let result = await Article.findOne({ _id: _id })
+            let result = await posts.findOne({ _id: _id })
             res.send(result)
         } catch (error) {
             next(error)
@@ -125,7 +125,7 @@ const article = {
 
     add: async (req, res) => {
         const { title, body } = req.body
-        const result = await Article.create({
+        const result = await posts.create({
             dete: moment().format('YYYY-MM-DD HH:mm:ss'),
             title: title,
             body: body
