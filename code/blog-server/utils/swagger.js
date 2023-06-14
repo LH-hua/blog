@@ -7,9 +7,9 @@ const swaggerDoc = require('swagger-jsdoc')
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'api',
+        title: 'API',
         version: '1.0.0',
-        description: `博客接口API`
+        description: `LH接口API文档`
       }
     },
     // 去哪个路由下收集 swagger 注释
@@ -21,7 +21,7 @@ const swaggerDoc = require('swagger-jsdoc')
     res.send(swaggerSpec);
   }
   const swaggerSpec = swaggerDoc(options)
-  
+
   var swaggerInstall = function(app) {
     if (!app){
       app = express()
@@ -31,4 +31,4 @@ const swaggerDoc = require('swagger-jsdoc')
     // 使用 swaggerSpec 生成 swagger 文档页面，并开放在指定路由
     app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   }
-  module.exports = swaggerInstall 
+  module.exports = swaggerInstall
