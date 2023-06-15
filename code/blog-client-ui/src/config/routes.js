@@ -23,18 +23,17 @@ const routes = [
           },
         ]
       },
-      {
-        path: "gis",
-        name: "gis",
-        component: () => import('@/views/gis/index.vue'),
-      },
-      {
-        path: "indoors",
-        name: "indoors",
-        component: () => import('@/views/indoors/index.vue'),
-      },
-
     ]
+  },
+  {
+    path: "/gis",
+    name: "gis",
+    component: () => import('@/views/gis/index.vue'),
+  },
+  {
+    path: "/indoors",
+    name: "indoors",
+    component: () => import('@/views/indoors/index.vue'),
   },
   {
     path: "/:catchAll(.*)",

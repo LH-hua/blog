@@ -1,9 +1,9 @@
 import {get} from './request'
 
 export function getArticleList(){
-    return get('/api/article/articles')
+    return get('/api/post/article/articles')
 }
 
 export function getArticleDetal(params){
-    return get('/api/article/detail',params)
+    return get('/api/post/article/detail',params)
 }

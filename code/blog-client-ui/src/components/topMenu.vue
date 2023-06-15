@@ -40,6 +40,7 @@ const data = reactive({
       icon: "mdi-clipboard-list-outline",
       name: "文 章",
       url: "/",
+      tag: false,
       children: [],
     },
     {
@@ -48,6 +49,7 @@ const data = reactive({
       icon: "mdi-home",
       name: "室内场景",
       url: "/indoors",
+      tag: true,
       children: [],
     },
     {
@@ -56,26 +58,29 @@ const data = reactive({
       icon: "mdi-earth",
       name: "室外场景",
       url: "/gis",
+      tag: true,
       children: [],
     },
   ],
-  login:true,
+  login: true,
   dialog: false,
 });
 
 const router = useRouter();
 const route = useRoute();
 
-
 function onDialogShow() {
   data.dialog = !data.dialog;
 }
 
-
-
 function onTorouter(obj) {
   console.log(route);
   console.log(obj);
-  router.push(obj.url);
+  if (obj.tag) {
+    const href = router.resolve(obj.url)
+    window.open(href.href,'_blank');
+  } else {
+    router.push(obj.url);
+  }
 }
 </script>

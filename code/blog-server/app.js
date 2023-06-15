@@ -11,7 +11,7 @@ const swaggerInstall = require('./src/utils/swagger')
 const router = require('./src/route')
 
 const app = new express();
-app.use(express.static(path.join(__dirname,'./public')))
+app.use(express.static(path.join(__dirname,'./assets')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 
