@@ -6,7 +6,7 @@ router.post('/menuAndRouter', (req, res, next) => {
   const { token } = req.headers
   if (!token) {
     res.send({
-      msg: 'token 没有定义'
+      msg: '请求头 token 未定义'
     })
     return
   }
