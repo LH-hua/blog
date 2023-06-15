@@ -1,14 +1,35 @@
+const menu = require('../models/sys')
 module.exports = sys = {
-  currentMenu: (req, res, next) => {
+  currentMenu: async (req, res, next) => {
     try {
       const { token } = req.headers
       // 判断token是否正确
       // 。。。
+      const result = await menu.find({})
       res.send({
-        msg:'还没开发好呢'
+        msg: 'ok',
+        data: result
       })
 
       // 正确返回菜单
+    } catch (error) {
+
+    }
+  },
+  addMenu: async (req, res, next) => {
+    try {
+      const { token } = req.headers
+      if (token == undefined) {
+        return
+      }
+      const data = req.body
+      const result = await menu.create(data)
+      if (result) {
+        res.send({
+          msg: '添加成功',
+          data:result
+        })
+      }
     } catch (error) {
 
     }
