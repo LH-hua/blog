@@ -27,6 +27,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/avatar': {
+        target: 'http://127.0.0.1:3333',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/avatar/, ''),
+      }
     }
   }
 })
