@@ -1,1 +1,1 @@
-module.secret = 'huaker'
+exports.secret = 'huaker'
