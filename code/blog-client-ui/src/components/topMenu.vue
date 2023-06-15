@@ -1,6 +1,8 @@
 <template>
   <v-container class="fill-height d-flex align-center">
-    <v-avatar class="me-10 ms-4" color="grey-darken-1" size="40">LH</v-avatar>
+    <v-avatar class="me-10 ms-4 logo" color="grey-darken-1" size="40"
+      >LH</v-avatar
+    >
     <v-spacer></v-spacer>
     <v-btn
       v-for="item in data.menu"
@@ -77,10 +79,17 @@ function onTorouter(obj) {
   console.log(route);
   console.log(obj);
   if (obj.tag) {
-    const href = router.resolve(obj.url)
-    window.open(href.href,'_blank');
+    const href = router.resolve(obj.url);
+    window.open(href.href, "_blank");
   } else {
     router.push(obj.url);
   }
 }
 </script>
+
+<style scoped>
+.logo {
+  cursor: pointer;
+  font-weight: 800;
+}
+</style>

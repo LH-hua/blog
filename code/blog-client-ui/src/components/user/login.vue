@@ -4,12 +4,12 @@
       <v-row dense no-gutters>
         <v-col>
           <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
+            src="/image/default.jpg"
             class="align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="390px"
             cover
-            >Pre-fab homes
+            >
           </v-img>
         </v-col>
         <v-col>
