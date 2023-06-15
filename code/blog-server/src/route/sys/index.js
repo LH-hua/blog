@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
 
-router.use('/post',require('./user'))
+router.use('/token', require('./sys'))
 
 module.exports = router
