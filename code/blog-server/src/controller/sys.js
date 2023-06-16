@@ -20,6 +20,9 @@ module.exports = sys = {
     try {
       const { token } = req.headers
       if (token == undefined) {
+        res.send({
+          msg:'未定义 token 值'
+        })
         return
       }
       const data = req.body
