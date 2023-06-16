@@ -6,8 +6,8 @@
           return-object @update:modelValue="onChangeImageLayer"></v-select>
         <v-select label="注记" density :items="TDT_Annotation" item-title="name" item-value="key" variant="outlined"
           return-object @update:modelValue="onChangeLabelLayer"></v-select>
-          <v-select label="视角" density :items="geoCode" item-title="name" item-value="coord" variant="outlined"
-            return-object @update:modelValue="onCamera"></v-select>
+        <v-select label="视角" density :items="geoCode" item-title="name" item-value="coord" variant="outlined"
+          return-object @update:modelValue="onCamera"></v-select>
       </v-sheet>
     </div>
     <div id="container"></div>
@@ -55,6 +55,29 @@ onMounted(() => {
   // }
 
   store.viewer = map("container");
+  const promise = Cesium.GeoJsonDataSource.load("/json/中华人民共和国.json")
+  promise.then(dataSources => {
+    store.viewer.dataSources.add(dataSources)
+    const entities = dataSources.entities.values
+    const colorHash = {}
+    for (let i = 0;i < entities.length;i++) {
+      const entity = entities[i]
+      const name = entity.name
+      let color = colorHash[name]
+      if (!color) {
+        color = Cesium.Color.fromRandom({
+          alpha: 0.5,
+        });
+        colorHash[name] = color
+      }
+
+      //Set the polygon material to our random color.
+      entity.polygon.material = color;
+      //Remove the outlines.
+      entity.polygon.outline = false
+    }
+  })
+
 });
 </script>
 
