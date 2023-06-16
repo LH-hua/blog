@@ -2,29 +2,12 @@
   <div>
     <div class="tools">
       <v-sheet :width="230" class="pa-4">
-        <div style="display: flex;">
-          图层<v-spacer></v-spacer><v-select
-            density
-            :items="TDT_IMAGE"
-            item-title="name"
-            item-value="key"
-            variant="outlined"
-            @click="onChangeImage"
-          ></v-select>
+        <div style="display: flex;"><v-select label="图层" density :items="TDT_IMAGE" item-title="name" item-value="key"
+            variant="outlined" return-object @update:modelValue="onChangeImageLayer"></v-select>
         </div>
         <div style="display: flex;">
-          注记<v-spacer></v-spacer><v-select
-            density
-            :items="TDT_Annotation"
-            item-title="name"
-            item-value="key"
-            variant="outlined"
-            @click="onChangeImage"
-          ></v-select>
-        </div>
-        <div>
-          <v-btn flat>取 消</v-btn>
-          <v-btn flat>加 载</v-btn>
+          <v-select label="注记" density :items="TDT_Annotation" item-title="name" item-value="key" variant="outlined" return-object
+            @update:modelValue="onChangeLabelLayer"></v-select>
         </div>
       </v-sheet>
     </div>
@@ -35,29 +18,40 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import { map, provider } from "@/utils/ceisum.map";
-import { TDT_IMAGE,TDT_Annotation } from "@/config/default";
+import { TDT_IMAGE, TDT_Annotation } from "@/config/default";
 
-const store = reactive({ items: [], layerSelect: "vec" });
-function onChangeImage(obj) {
-  console.log(obj);
-  if (store.layer) {
-    store.viewer.imageryLayers.remove(store.layer);
+const store = reactive({ items: [], });
+function onLoadingLayer() {
+  console.log(store)
+}
+function onChangeImageLayer(obj) {
+  if (store.imageLayer) {
+    store.viewer.imageryLayers.remove(store.imageLayer);
   }
 
-  store.layer = provider(store.viewer, obj);
-  console.log(store.viewer.imageryLayers._layers);
+  store.imageLayer = provider(store.viewer, obj);
+}
+function onChangeLabelLayer(obj) {
+  if (store.labelLayer) {
+    store.viewer.imageryLayers.remove(store.labelLayer);
+  }
+
+  store.labelLayer = provider(store.viewer, obj);
+}
+function onChangeImage(obj) {
+
   // viewer.imageryLayers.get(0).show = false
 }
 
 onMounted(() => {
-  for (let index = 0; index < TDT_IMAGE.length; index++) {
-    const item = TDT_IMAGE[index];
-    store.items.push({
-      title: item.name,
-      value: item.key,
-      ...item,
-    });
-  }
+  // for (let index = 0; index < TDT_IMAGE.length; index++) {
+  //   const item = TDT_IMAGE[index];
+  //   store.items.push({
+  //     title: item.name,
+  //     value: item.key,
+  //     ...item,
+  //   });
+  // }
 
   store.viewer = map("container");
 });
@@ -68,6 +62,7 @@ onMounted(() => {
   height: 100vh;
   width: 100vw;
 }
+
 .tools {
   position: absolute;
   color: white;

@@ -28,9 +28,10 @@ export function map(id) {
 // "http://t0.tianditu.com/ter_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=ter&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk="
 
 export function provider(viewer, obj) {
+  const arr = obj.key.split("_")
   const providerImage = new Cesium.ImageryLayer(
     new Cesium.WebMapTileServiceImageryProvider({
-      url: `http://{s}.tianditu.com/${obj.key}_${obj.type}/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=${obj.key}&tileMatrixSet=${obj.type}&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${TDT_TOKEN}`,
+      url: `http://{s}.tianditu.com/${obj.key}/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=${arr[0]}&tileMatrixSet=${arr[1]}&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${TDT_TOKEN}`,
       layer: obj.key,	//WMTS请求的层名称
       style: "default",//WMTS请求的样式名称
       format: "tiles",//MIME类型，用于从服务器检索图像

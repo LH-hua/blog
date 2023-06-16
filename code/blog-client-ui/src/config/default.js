@@ -4,18 +4,15 @@ export const CESIUM_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiY2
 export const TDT_IMAGE = [
   {
     name: '矢量底图',
-    key: 'vec',
-    type:'w'
+    key: 'vec_w',
   },
   {
     name: '影像底图',
-    key: 'img',
-    type:'w'
+    key: 'img_w',
   },
   {
     name: '地形晕渲',
-    key: 'ter',
-    type:'w'
+    key: 'ter_w',
   },
 ]
 export const TDT_Annotation = [
