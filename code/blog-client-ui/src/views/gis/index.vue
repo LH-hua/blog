@@ -2,13 +2,12 @@
   <div>
     <div class="tools">
       <v-sheet :width="230" class="pa-4">
-        <div style="display: flex;"><v-select label="图层" density :items="TDT_IMAGE" item-title="name" item-value="key"
-            variant="outlined" return-object @update:modelValue="onChangeImageLayer"></v-select>
-        </div>
-        <div style="display: flex;">
-          <v-select label="注记" density :items="TDT_Annotation" item-title="name" item-value="key" variant="outlined" return-object
-            @update:modelValue="onChangeLabelLayer"></v-select>
-        </div>
+        <v-select label="图层" density :items="TDT_IMAGE" item-title="name" item-value="key" variant="outlined"
+          return-object @update:modelValue="onChangeImageLayer"></v-select>
+        <v-select label="注记" density :items="TDT_Annotation" item-title="name" item-value="key" variant="outlined"
+          return-object @update:modelValue="onChangeLabelLayer"></v-select>
+          <v-select label="视角" density :items="geoCode" item-title="name" item-value="coord" variant="outlined"
+            return-object @update:modelValue="onCamera"></v-select>
       </v-sheet>
     </div>
     <div id="container"></div>
@@ -18,7 +17,7 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import { map, provider } from "@/utils/ceisum.map";
-import { TDT_IMAGE, TDT_Annotation } from "@/config/default";
+import { TDT_IMAGE, TDT_Annotation, geoCode } from "@/config/default";
 
 const store = reactive({ items: [], });
 function onLoadingLayer() {
@@ -38,8 +37,10 @@ function onChangeLabelLayer(obj) {
 
   store.labelLayer = provider(store.viewer, obj);
 }
-function onChangeImage(obj) {
-
+function onCamera(obj) {
+  store.viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(...obj.coord, 100000),
+  })
   // viewer.imageryLayers.get(0).show = false
 }
 
