@@ -21,6 +21,11 @@ const routes = [
             name: "详情",
             component: () => import('@/views/article/detal.vue'),
           },
+          {
+            path: "add",
+            name: "写文章",
+            component: () => import('@/views/article/edit.vue'),
+          }
         ]
       },
     ]

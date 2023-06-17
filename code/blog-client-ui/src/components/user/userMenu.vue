@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <v-sheet> -->
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-avatar
@@ -13,7 +12,7 @@
           <v-img :src="store.user.avatar || '/avatar/default.jpg'"></v-img>
         </v-avatar>
       </template>
-      <v-card>
+      <v-card flat>
         <v-card-title>
           <span>LH-hua</span>
         </v-card-title>
@@ -26,16 +25,8 @@
             <v-divider></v-divider>
           <v-btn block>退 出</v-btn>
         </v-card-actions>
-        <!-- <v-list>
-          <v-list-item>
-            <v-list-item-title>记录一下</v-list-item-title>
-            <v-divider></v-divider>
-            <v-list-item-title>退 出</v-list-item-title>
-          </v-list-item>
-        </v-list> -->
       </v-card>
     </v-menu>
-    <!-- </v-sheet> -->
   </div>
 </template>
 
