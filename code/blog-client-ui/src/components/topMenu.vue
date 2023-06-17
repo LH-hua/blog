@@ -5,7 +5,7 @@
     >
     <v-spacer></v-spacer>
     <v-btn
-      v-for="item in data.menu"
+      v-for="item in store.menu"
       :key="item.url"
       variant="text"
       @click="onTorouter(item)"
@@ -13,7 +13,9 @@
       <v-icon :icon="item.icon" />
       {{ item.name }}
     </v-btn>
+    <userMenu v-if="store.token"></userMenu>
     <v-avatar
+      v-else
       style="cursor: pointer"
       class="me-10 ms-4"
       color="grey-darken-1"
@@ -21,8 +23,8 @@
       @click="onDialogShow"
       >登 录</v-avatar
     >
-    <v-dialog v-model="data.dialog" width="1024">
-      <login v-if="data.login"></login>
+    <v-dialog v-model="store.dialog" width="1024">
+      <login v-if="store.login"></login>
       <!-- <regsite v-else></regsite> -->
     </v-dialog>
   </v-container>
@@ -33,8 +35,9 @@ import { reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 // components
 import login from "@/components/user/login.vue";
+import userMenu from "./user/userMenu.vue";
 // import regsite from "@/components/user/regsite.vue";
-const data = reactive({
+const store = reactive({
   menu: [
     {
       id: "0",
@@ -66,18 +69,17 @@ const data = reactive({
   ],
   login: true,
   dialog: false,
+  token: localStorage.getItem("token"),
 });
 
 const router = useRouter();
 const route = useRoute();
 
 function onDialogShow() {
-  data.dialog = !data.dialog;
+  store.dialog = !store.dialog;
 }
 
 function onTorouter(obj) {
-  console.log(route);
-  console.log(obj);
   if (obj.tag) {
     const href = router.resolve(obj.url);
     window.open(href.href, "_blank");

@@ -1,4 +1,4 @@
 import { post } from "./request";
-export function login(data){
-    return post("/api/user/login",data)
+export function useLogin(data){
+    return post("/api/user/post/login",data)
 }

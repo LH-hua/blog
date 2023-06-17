@@ -9,7 +9,7 @@
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="390px"
             cover
-            >
+          >
           </v-img>
         </v-col>
         <v-col>
@@ -61,20 +61,24 @@
 <script setup>
 import { reactive } from "vue";
 
+import { useLogin } from "@/http/user";
+
 const data = reactive({
   userName: "",
   userPassword: "",
   onVisible: "mdi-eye-off",
   textType: "password",
-})
+});
 
 function onLogin() {
-  login({
+  useLogin({
     username: data.userName,
     password: data.userPassword,
-  }).then(res => {
-    console.log(res)
-  })
+  }).then((res) => {
+    console.log(res);
+    localStorage.setItem('token',res.data.token)
+    localStorage.setItem('user',JSON.stringify(res.data.data))
+  });
 }
 
 function onVisible() {
