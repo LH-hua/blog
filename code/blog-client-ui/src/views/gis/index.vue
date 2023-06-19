@@ -2,6 +2,10 @@
   <div>
     <div class="tools">
       <v-sheet :width="230" class="pa-4">
+        <v-radio-group v-model="store.mode" @update:modelValue="onMode" inline>
+          <v-radio label="三维" value="3D"></v-radio>
+          <v-radio label="二维" value="2D"></v-radio>
+        </v-radio-group>
         <v-select label="图层" density :items="TDT_IMAGE" item-title="name" item-value="key" variant="outlined"
           return-object @update:modelValue="onChangeImageLayer"></v-select>
         <v-select label="注记" density :items="TDT_Annotation" item-title="name" item-value="key" variant="outlined"
@@ -16,13 +20,19 @@
 
 <script setup>
 import { onMounted, reactive } from "vue";
-import { map, provider } from "@/utils/ceisum.map";
+import { map, provider, SceneMode } from "@/utils/ceisum.map";
 import { TDT_IMAGE, TDT_Annotation, geoCode } from "@/config/default";
 
-const store = reactive({ items: [], });
+const store = reactive({ items: [],mode:"3D" });
 function onLoadingLayer() {
   console.log(store)
 }
+
+function onMode(val) {
+  console.log(val)
+  SceneMode(store.viewer,val)
+}
+
 function onChangeImageLayer(obj) {
   if (store.imageLayer) {
     store.viewer.imageryLayers.remove(store.imageLayer);
@@ -45,16 +55,9 @@ function onCamera(obj) {
 }
 
 onMounted(() => {
-  // for (let index = 0; index < TDT_IMAGE.length; index++) {
-  //   const item = TDT_IMAGE[index];
-  //   store.items.push({
-  //     title: item.name,
-  //     value: item.key,
-  //     ...item,
-  //   });
-  // }
 
   store.viewer = map("container");
+  
   const promise = Cesium.GeoJsonDataSource.load("/json/中华人民共和国.json")
   promise.then(dataSources => {
     store.viewer.dataSources.add(dataSources)
