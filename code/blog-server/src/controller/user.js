@@ -51,6 +51,12 @@ const user = {
       })
       next(error)
     }
+  },
+  upImage: async (req, res, next) => {
+    console.log(req.body)
+    res.send({
+      msg:req.body
+    })
   }
 }
 module.exports = user
