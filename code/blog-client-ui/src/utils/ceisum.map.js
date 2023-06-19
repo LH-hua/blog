@@ -49,3 +49,11 @@ export function provider(viewer, obj) {
   viewer.imageryLayers.add(providerImage)
   return providerImage
 }
+
+export function SceneMode(viewer, val) {
+  if (val == '2D') {
+    viewer.scene.mode = Cesium.SceneMode.SCENE2D
+  } else {
+    viewer.scene.mode = Cesium.SceneMode.SCENE3D
+  }
+}
