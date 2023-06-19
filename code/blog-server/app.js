@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname,'./assets')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 
+
 app.use(cors())
 
 require('./src/mongodb/conect')
