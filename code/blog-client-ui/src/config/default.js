@@ -18,15 +18,15 @@ export const TDT_IMAGE = [
 export const TDT_Annotation = [
   {
     name: '矢量注记',
-    key: 'cva_c'
+    key: 'cva_w'
   },
   {
     name: '影像注记',
-    key: 'cia_c'
+    key: 'cia_w'
   },
   {
     name: '地形注记',
-    key: 'cta_c'
+    key: 'cta_w'
   },
 ]
 export const geoCode = [
