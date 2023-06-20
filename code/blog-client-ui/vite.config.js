@@ -35,7 +35,7 @@ export default defineConfig({
       '/image': {
         target: 'http://127.0.0.1:3333',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/image/, ''),
+        // rewrite: (path) => path.replace(/^\/image/, ''),
       }
     }
   }

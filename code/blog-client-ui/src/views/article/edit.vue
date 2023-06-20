@@ -34,6 +34,7 @@
 
 <script setup>
 import { reactive, onMounted } from "vue";
+import axios from 'axios'
 
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -58,7 +59,25 @@ function initEdit() {
     height: "770px",
     initialEditType: "markdown",
     previewStyle: "vertical",
+    toolbarItems:false,
     placeholder: "使用markdown语法编辑内容......",
+     hooks: {
+       addImageBlobHook: (blob, callback) => {
+        const formData = new FormData();
+        formData.append('image', blob, 'image.png');
+
+        axios.post('http://localhost:3333/user/post/upload-image', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(res => {
+          callback(res.data.src);
+        }).catch(error => {
+          console.error(error);
+          callback(null);
+        });
+      }
+    }
   };
   store.markedown = new Editor(options);
 }
