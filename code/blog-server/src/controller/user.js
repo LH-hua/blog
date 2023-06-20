@@ -78,6 +78,7 @@ const user = {
       res.send({
         msg: "error:" + error
       })
+      next(err)
     }
   }
 }

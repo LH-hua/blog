@@ -13,6 +13,17 @@
  *               }
  *           }
  *       }
+ *        "parameters":{
+ *          FileParam:{
+ *            name: file
+ *            in: formData
+ *            description: The file to upload.
+ *            required: true
+ *            type: file
+ *
+ *          }
+ *
+ *          }
  *   }
  */
 
@@ -64,3 +75,20 @@
      *        404:
      *          description: Order not found
      * */
+
+
+
+/**
+ * @swagger
+ * /user/post/upload-image:
+ *   post:
+ *     tags:
+ *      - 用户
+ *     summary: 图片上传.
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *     responses:
+ *       200:
+ *         description: OK
+ */
