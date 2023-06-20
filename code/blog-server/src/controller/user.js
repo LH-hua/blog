@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const multiparty = require('multiparty')
 const { secret } = require('../config/secret.config')
 
 const salt = bcrypt.genSaltSync(10)
@@ -53,10 +54,31 @@ const user = {
     }
   },
   upImage: async (req, res, next) => {
-    console.log(req.body)
-    res.send({
-      msg:req.body
-    })
+    try {
+      const form = new multiparty.Form({ autoFiles: true, uploadDir: `${__dirname}../../../assets/image` })
+      form.parse(req, (err, fields, files) => {
+        if (err) {
+          res.send({
+            msg: '文件错误:' + err
+          })
+          next(err)
+          return
+        }
+      })
+      form.on('file', (name, file) => {
+        let fileArr
+        if (process.platform === 'win32') {
+          fileArr = file.path.split('\\')
+        } else {
+          fileArr = file.path.split('/');
+        }
+        res.send({ src: `image/${fileArr[fileArr.length - 1]}` })
+      })
+    } catch (error) {
+      res.send({
+        msg: "error:" + error
+      })
+    }
   }
 }
 module.exports = user

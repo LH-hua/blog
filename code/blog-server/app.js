@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path")
+const fs = require("fs")
 
 // 主机运行配置文件
 const { port, hostUrl } = require('./src/config/host.config')
@@ -11,7 +12,10 @@ const swaggerInstall = require('./src/utils/swagger')
 const router = require('./src/route')
 
 const app = new express();
-app.use(express.static(path.join(__dirname,'./assets')))
+fs.chmod(path.join(__dirname, './assets'), 0o700, (err) => {
+  console.log(err)
+})
+app.use(express.static(path.join(__dirname, './assets')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 

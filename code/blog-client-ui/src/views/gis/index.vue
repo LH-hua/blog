@@ -39,6 +39,7 @@ function onChangeImageLayer(obj) {
   }
 
   store.imageLayer = provider(store.viewer, obj);
+  console.log(store.viewer.imageryLayers)
 }
 function onChangeLabelLayer(obj) {
   if (store.labelLayer) {
@@ -57,29 +58,30 @@ function onCamera(obj) {
 onMounted(() => {
 
   store.viewer = map("container");
-  
-  const promise = Cesium.GeoJsonDataSource.load("/json/中华人民共和国.json")
-  promise.then(dataSources => {
-    store.viewer.dataSources.add(dataSources)
-    const entities = dataSources.entities.values
-    const colorHash = {}
-    for (let i = 0;i < entities.length;i++) {
-      const entity = entities[i]
-      const name = entity.name
-      let color = colorHash[name]
-      if (!color) {
-        color = Cesium.Color.fromRandom({
-          alpha: 0.5,
-        });
-        colorHash[name] = color
-      }
 
-      //Set the polygon material to our random color.
-      entity.polygon.material = color;
-      //Remove the outlines.
-      entity.polygon.outline = false
-    }
-  })
+
+  // const promise = Cesium.GeoJsonDataSource.load("/json/中华人民共和国.json")
+  // promise.then(dataSources => {
+  //   store.viewer.dataSources.add(dataSources)
+  //   const entities = dataSources.entities.values
+  //   const colorHash = {}
+  //   for (let i = 0;i < entities.length;i++) {
+  //     const entity = entities[i]
+  //     const name = entity.name
+  //     let color = colorHash[name]
+  //     if (!color) {
+  //       color = Cesium.Color.fromRandom({
+  //         alpha: 0.5,
+  //       });
+  //       colorHash[name] = color
+  //     }
+
+  //     //Set the polygon material to our random color.
+  //     entity.polygon.material = color;
+  //     //Remove the outlines.
+  //     entity.polygon.outline = false
+  //   }
+  // })
 
 });
 </script>
