@@ -20,7 +20,7 @@ function onDetal(obj) {
 }
 onBeforeMount(() => {
   getArticleList().then((res) => {
-    data.data = res.msg;
+    data.data = res.data;
   });
 });
 </script>

@@ -41,6 +41,11 @@ export default defineConfig({
         target: 'http://127.0.0.1:3333',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/post/, ''),
+      },
+      '/post/detal': {
+        target: 'http://127.0.0.1:3333',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/post\/detal/, ''),
       }
     }
   }

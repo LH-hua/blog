@@ -10,7 +10,8 @@ const article = {
             let result = await posts.find({}, { body: 0 })
             // console.log(result)
             res.send({
-                msg: result
+              data: result,
+              status:200
             })
         } catch (error) {
             next(error)
@@ -20,7 +21,10 @@ const article = {
         let { _id } = _.assign(req.body, req.query, req.params)
         try {
             let result = await posts.findOne({ _id: _id })
-            res.send(result)
+          res.send({
+            data: result,
+            status: 200
+          })
         } catch (error) {
             next(error)
         }

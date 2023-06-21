@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-sheet class="pa-5">
-      <v-card :title="data.data.title" :subtitle="data.data.date" flat>
+      <v-card :title="store.data.title" :subtitle="store.data.date" flat>
         <v-card-text>
           <div class="typo">
-            <div v-html="data.data.body"></div>
+            <div v-html="store.data.body"></div>
           </div>
         </v-card-text>
       </v-card>
@@ -22,7 +22,12 @@ import "@/assets/css/typo.css";
 
 import { getArticleDetal } from "@/http/article";
 
-const data = reactive({ data: {} });
+const store = reactive({
+  data: {
+    title: '',
+    date: '',
+    body:''
+} });
 
 const route = useRoute();
 
@@ -46,8 +51,8 @@ const md = new MarkdownIt({
 onMounted(() => {
   const postId = route.params.id;
   getArticleDetal({ _id: postId }).then((res) => {
-    res.body = md.render(res.body);
-    data.data = res;
+    res.data.body = md.render(res.data.body);
+    store.data = res.data;
   });
 });
 </script>
