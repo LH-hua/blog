@@ -8,6 +8,7 @@ const salt = bcrypt.genSaltSync(10)
 
 const user = {
   login: async (req, res, next) => {
+    console.log(req.body)
     try {
       let result = await User.findOne({ username: req.body.username })
       if (!result) {
@@ -50,7 +51,7 @@ const user = {
         msg: '注册失败',
         error: error
       })
-      next(error)
+      // next(error)
     }
   },
   upImage: async (req, res, next) => {

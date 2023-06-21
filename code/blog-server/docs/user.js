@@ -13,18 +13,6 @@
  *               }
  *           }
  *       }
- *        "parameters":{
- *          FileParam:{
- *            name: file
- *            in: formData
- *            description: The file to upload.
- *            required: true
- *            type: file
- *
- *          }
- *
- *          }
- *   }
  */
 
 /**,

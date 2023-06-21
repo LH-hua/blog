@@ -19,7 +19,8 @@
 
 <script setup>
 import { reactive, onMounted } from "vue";
-import axios from "axios";
+import { formdata } from "@/http/request"
+import { addArticle } from "@/http/article"
 
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -50,20 +51,11 @@ function initEdit() {
       addImageBlobHook: (blob, callback) => {
         const formData = new FormData();
         formData.append("image", blob, "image.png");
-
-        axios
-          .post("http://localhost:3333/user/post/upload-image", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            callback(res.data.src);
-          })
-          .catch((error) => {
-            console.error(error);
-            callback(null);
-          });
+        formdata('/api/user/post/upload-image',formData).then(res => {
+          callback(res.data.src)
+        }).catch(err => {
+          callback(null)
+        })
       },
     },
   };
@@ -72,14 +64,15 @@ function initEdit() {
 
 function release() {
   store.marticl.body = store.markedown.getMarkdown();
-  let marticl = store.marticl;
-  for (const key in marticl) {
-    if (marticl[key] == "") {
-      store.dialog = true;
-      return;
-    }
-  }
-  post("/api/post/add/articles", store.marticl).then((res) => {
+  // let marticl = store.marticl;
+  // for (const key in marticl) {
+  //   if (marticl[key] == "") {
+  //     store.dialog = true;
+  //     return;
+  //   }
+  // }
+  console.log(store.marticl)
+  addArticle(store.marticl).then((res) => {
     console.log(res);
   });
 }
