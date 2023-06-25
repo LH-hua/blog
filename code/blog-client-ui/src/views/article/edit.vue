@@ -2,18 +2,18 @@
   <v-sheet class="pa-5">
     <v-card flat>
       <v-card-title>
-        <v-text-field label="输入标题" v-model="store.marticl.title"></v-text-field>
+        <v-text-field density="compact" label="输入标题" v-model="store.marticl.title"></v-text-field>
       </v-card-title>
       <v-card-text>
         <div ref="markedEdit" id="markedEdit"></div>
       </v-card-text>
-      <v-card-actions>
-        <div>
-          <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
-          <v-btn variant="outlined" @click="release">发布</v-btn>
-        </div>
-      </v-card-actions>
+      <!-- <v-card-actions>
+      </v-card-actions> -->
     </v-card>
+    <div>
+      <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
+      <v-btn variant="outlined" @click="release">发布</v-btn>
+    </div>
   </v-sheet>
 </template>
 
@@ -32,7 +32,7 @@ const store = reactive({
     title: "",
     body: "",
     userId: "8",
-    textCount:0
+    textCount: 0
   },
 });
 
@@ -51,7 +51,7 @@ function initEdit() {
       addImageBlobHook: (blob, callback) => {
         const formData = new FormData();
         formData.append("image", blob, "image.png");
-        formdata('/api/user/post/upload-image',formData).then(res => {
+        formdata('/api/user/post/upload-image', formData).then(res => {
           callback(res.data.src)
         }).catch(err => {
           callback(null)

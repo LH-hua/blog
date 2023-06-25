@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar density="compact" flat>
     <top-menu></top-menu>
   </v-app-bar>
 

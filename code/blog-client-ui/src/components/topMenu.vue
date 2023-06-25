@@ -1,6 +1,6 @@
 <template>
-  <v-container class="fill-height d-flex align-center">
-    <v-avatar class="me-10 ms-4 logo" color="grey-darken-1" size="40"
+  <v-container class=" d-flex align-center">
+    <v-avatar class="logo" color="grey-darken-1"
       >LH</v-avatar
     >
     <v-spacer></v-spacer>
@@ -17,9 +17,7 @@
     <v-avatar
       v-else
       style="cursor: pointer"
-      class="me-10 ms-4"
       color="grey-darken-1"
-      size="45"
       @click="onDialogShow"
       >登 录</v-avatar
     >
