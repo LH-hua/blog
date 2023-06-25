@@ -31,6 +31,7 @@ const user = {
         type: 'success',
         msg: '登录成功',
         token: token,
+        status:200,
         data: result
       })
     } catch (error) {

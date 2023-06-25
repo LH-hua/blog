@@ -22,14 +22,14 @@
       >登 录</v-avatar
     >
     <v-dialog v-model="store.dialog" width="1024">
-      <login v-if="store.login"></login>
+      <login v-if="store.login" @close="close"></login>
       <!-- <regsite v-else></regsite> -->
     </v-dialog>
   </v-container>
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive,defineEmits } from "vue";
 import { useRouter, useRoute } from "vue-router";
 // components
 import login from "@/components/user/login.vue";
@@ -70,10 +70,16 @@ const store = reactive({
   token: localStorage.getItem("token"),
 });
 
+
 const router = useRouter();
 const route = useRoute();
 
 function onDialogShow() {
+  store.dialog = !store.dialog;
+}
+
+function close(val){
+  console.log(val)
   store.dialog = !store.dialog;
 }
 

@@ -23,7 +23,7 @@
         
         <v-card-actions>
             <v-divider></v-divider>
-          <v-btn block>退 出</v-btn>
+          <v-btn block @click="exit">退 出</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -34,4 +34,8 @@
 import { reactive } from "vue";
 
 const store = reactive({ user: JSON.parse(localStorage.getItem("user")) });
+function exit(){
+  localStorage.clear()
+  location.reload()
+}
 </script>

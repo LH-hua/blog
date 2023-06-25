@@ -23,6 +23,7 @@
                 prepend-inner-icon="mdi-account"
                 compact
                 required
+                :rules="[useNameRules]"
               ></v-text-field>
               <v-text-field
                 v-model="data.userPassword"
@@ -34,6 +35,7 @@
                 @click:appendInner="onVisible"
                 compact
                 required
+                :rules="[usePasswordRules]"
               ></v-text-field>
             </template>
             <template v-slot:actions>
@@ -59,15 +61,31 @@
   </div>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, defineEmits, computed } from "vue";
 
 import { useLogin } from "@/http/user";
 
 const data = reactive({
+  msg: "",
   userName: "",
   userPassword: "",
   onVisible: "mdi-eye-off",
   textType: "password",
+});
+
+const useNameRules = computed(() => {
+  if (!data.msg) return true;
+  return data.msg;
+});
+const usePasswordRules = computed(() => {
+  if (!data.msg) return true;
+  return data.msg;
+});
+
+const emit = defineEmits({
+  close: (Boolean) => {
+    return Boolean;
+  },
 });
 
 function onLogin() {
@@ -75,9 +93,14 @@ function onLogin() {
     username: data.userName,
     password: data.userPassword,
   }).then((res) => {
-    console.log(res);
-    localStorage.setItem('token',res.data.token)
-    localStorage.setItem('user',JSON.stringify(res.data.data))
+    if (res.data.status == 200) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.data));
+      emit("close", true);
+      location.reload();
+    } else {
+      data.msg = res.data.msg;
+    }
   });
 }
 
