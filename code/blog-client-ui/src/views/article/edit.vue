@@ -3,7 +3,7 @@
     <v-sheet class="pa-5">
       <v-card flat>
         <v-card-title>
-          <v-text-field density="compact" label="输入标题" v-model="store.marticl.title"></v-text-field>
+          <v-text-field density="compact" variant="outlined" label="输入标题" v-model="store.marticl.title"></v-text-field>
         </v-card-title>
         <v-card-text>
           <div style="display:flex;align-items: center;justify-content: space-between;">

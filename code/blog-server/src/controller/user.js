@@ -73,7 +73,7 @@ const user = {
         } else {
           fileArr = file.path.split('/');
         }
-        res.send({ src: `image/${fileArr[fileArr.length - 1]}` })
+        res.send({ src: `/image/${fileArr[fileArr.length - 1]}` })
       })
     } catch (error) {
       res.send({
