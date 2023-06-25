@@ -22,6 +22,10 @@ app.use(express.json())
 
 app.use(cors())
 
+app.get('/',(req,res,next) => {
+	res.send('你好，世界')
+})
+
 require('./src/mongodb/conect')
 swaggerInstall(app)
 router(app)
