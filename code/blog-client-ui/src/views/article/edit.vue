@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div style="position: relative;">
     <v-sheet class="pa-5">
-      <v-card flat class="card">
+      <v-card flat>
         <v-card-title>
           <v-text-field density="compact" label="输入标题" v-model="store.marticl.title"></v-text-field>
         </v-card-title>
         <v-card-text>
+          <div style="display:flex;align-items: center;justify-content: space-between;">
+            <v-textarea v-model="store.marticl.discr" rounded="true" density="compact" placeholder="用几句话描述或者总结一下"
+              label="描述/总结" variant="outlined"></v-textarea>
+            <div style="width:50%;display: flex;align-items:center;justify-content: end;">
+              <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
+              <v-btn @click="release" color="#2196F3" flat>发布</v-btn>
+            </div>
+          </div>
           <div ref="markedEdit" id="markedEdit"></div>
         </v-card-text>
-        <!-- <v-card-actions>
-      </v-card-actions> -->
       </v-card>
-    </v-sheet>
-    <v-sheet style="margin-top: 5px;" class="pa-2">
-      <div >
-        <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
-        <v-btn @click="release"  color="#2196F3" flat>发布</v-btn>
-      </div>
     </v-sheet>
   </div>
 </template>
@@ -33,6 +33,7 @@ const store = reactive({
   markedown: null,
   dialog: false,
   marticl: {
+    discr: "",
     title: "",
     body: "",
     userId: "8",
@@ -45,7 +46,7 @@ onMounted(() => {
 });
 
 function initEdit() {
-  const height = (document.body.offsetHeight - 265) + 'px'
+  const height = (document.body.offsetHeight - 270) + 'px'
   const options = {
     el: document.querySelector("#markedEdit"),
     height: height,
@@ -83,7 +84,8 @@ function release() {
 }
 </script>
 <style scoped lang="scss">
-.card{
-  height: calc(100vh - 180px);
+.footer {
+  // position: sticky;
+  // bottom: 10px;
 }
 </style>
