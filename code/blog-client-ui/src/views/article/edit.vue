@@ -1,20 +1,24 @@
 <template>
-  <v-sheet class="pa-5">
-    <v-card flat>
-      <v-card-title>
-        <v-text-field density="compact" label="输入标题" v-model="store.marticl.title"></v-text-field>
-      </v-card-title>
-      <v-card-text>
-        <div ref="markedEdit" id="markedEdit"></div>
-      </v-card-text>
-      <!-- <v-card-actions>
+  <div>
+    <v-sheet class="pa-5">
+      <v-card flat class="card">
+        <v-card-title>
+          <v-text-field density="compact" label="输入标题" v-model="store.marticl.title"></v-text-field>
+        </v-card-title>
+        <v-card-text>
+          <div ref="markedEdit" id="markedEdit"></div>
+        </v-card-text>
+        <!-- <v-card-actions>
       </v-card-actions> -->
-    </v-card>
-    <div>
-      <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
-      <v-btn variant="outlined" @click="release">发布</v-btn>
-    </div>
-  </v-sheet>
+      </v-card>
+    </v-sheet>
+    <v-sheet style="margin-top: 5px;" class="pa-2">
+      <div >
+        <span style="margin-right: 20px;">文章字数：{{ store.marticl.textCount }}</span>
+        <v-btn @click="release"  color="#2196F3" flat>发布</v-btn>
+      </div>
+    </v-sheet>
+  </div>
 </template>
 
 <script setup>
@@ -41,9 +45,10 @@ onMounted(() => {
 });
 
 function initEdit() {
+  const height = (document.body.offsetHeight - 265) + 'px'
   const options = {
     el: document.querySelector("#markedEdit"),
-    height: "990px",
+    height: height,
     initialEditType: "markdown",
     previewStyle: "vertical",
     placeholder: "使用markdown语法编辑内容......",
@@ -77,4 +82,8 @@ function release() {
   });
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card{
+  height: calc(100vh - 180px);
+}
+</style>
