@@ -79,6 +79,9 @@ function release() {
   // }
   console.log(store.marticl)
   addArticle(store.marticl).then((res) => {
+    if (res.data.status == 200) {
+      location.reload()
+    }
     console.log(res);
   });
 }

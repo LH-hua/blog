@@ -4,7 +4,6 @@ import { CESIUM_TOKEN, TDT_SUBBDOMAINS, TDT_TOKEN } from '../config/default'
 
 
 export function map(id) {
-  console.log(Cesium)
   Cesium.Ion.defaultAccessToken = CESIUM_TOKEN
   Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(90, -20, 110, 90);
   const viewer = new Cesium.Viewer(id, {

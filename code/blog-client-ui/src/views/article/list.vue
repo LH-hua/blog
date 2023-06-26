@@ -15,12 +15,16 @@ const data = reactive({
   data: [],
 });
 
+
 function onDetal(obj) {
   router.push('detal/' + obj._id)
 }
+
 onBeforeMount(() => {
   getArticleList().then((res) => {
     data.data = res.data;
   });
 });
+
+
 </script>
