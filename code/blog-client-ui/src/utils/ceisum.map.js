@@ -18,10 +18,10 @@ export function map(id) {
     vrButton: false,  // VR
     terrainProvider: Cesium.createWorldTerrain()
   })
-  window.Cesium = Cesium
   viewer._cesiumWidget._creditContainer.style.display = "none"
   // 修改homeButton的默认返回位置
-
+  window.viewer = viewer
+  window.Cesium = Cesium
   return viewer
 }
 //矢量
