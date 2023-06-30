@@ -64,13 +64,18 @@ module.exports = sys = {
     <p>欢迎注册LH账号：您的验证码为:${Captcha.text}</P>
     <p>不要告诉任何人哦</p>
     <p><string>验证码15分钟内有效</string></p>
+    <p>LH</p>
       `, // html body
       })
       const result = await captcha.create({ captcha: Captcha.text })
       if (result) {
+        // 15分钟后删除验证码
         setTimeout(function () {
           captcha.deleteOne({ captcha: Captcha.text })
-        }, 90000)
+            .then(res => {
+            console.log(res)
+          })
+        }, 900000)
       }
     } catch (error) {
       next(error)
