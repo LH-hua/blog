@@ -16,6 +16,7 @@ router.post('/menuAndRouter', (req, res, next) => {
 router.post('/addMenu', (req, res, next) => {
   // 判断数据是否正确
   next()
-},sys.addMenu)
+}, sys.addMenu)
+
 
 module.exports = router
