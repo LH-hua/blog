@@ -3,14 +3,15 @@
     <v-sheet width="800" class="pa-8 text-white mx-auto">
       <v-row dense no-gutters>
         <v-col>
-          <v-img
+          <!-- <v-img
             src="/image/default.jpg"
             class="align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="390px"
             cover
           >
-          </v-img>
+          </v-img> -->
+          <div id="chart" style="height: 390px"></div>
         </v-col>
         <v-col>
           <v-card flat height="100%">
@@ -61,9 +62,12 @@
   </div>
 </template>
 <script setup>
-import { reactive, defineEmits, computed } from "vue";
+import { reactive, defineEmits, computed,onMounted } from "vue";
 
 import { useLogin } from "@/http/user";
+import gz from "@/assets/json/gz.json";
+
+import * as echarts from "echarts";
 
 const data = reactive({
   msg: "",
@@ -88,6 +92,10 @@ const emit = defineEmits({
   },
 });
 
+onMounted(() => {
+  initChart()
+})
+
 function onLogin() {
   useLogin({
     username: data.userName,
@@ -111,5 +119,21 @@ function onVisible() {
   } else {
     (data.onVisible = "mdi-eye"), (data.textType = "text");
   }
+}
+
+function initChart() {
+  const chartDom = document.querySelector("#chart");
+  const myChart = echarts.init(chartDom);
+  echarts.registerMap("gz", gz);
+  const option = {
+    series: [
+      {
+        name: "gz",
+        type: "map",
+        map: "gz",
+      },
+    ],
+  };
+  myChart.setOption(option);
 }
 </script>
