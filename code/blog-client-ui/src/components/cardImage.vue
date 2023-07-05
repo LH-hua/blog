@@ -13,8 +13,8 @@
           ">
           <v-avatar image="/avatar/default.jpg"></v-avatar>
           <span>LH-hua</span>
-          <span>我的心眼很小，你走了就空了。</span>
-          <div>若你在这方世界消失，我便屠尽这方生灵</div>
+          <span>虽千万人，吾往矣。</span>
+          <div>还没想好</div>
         </div>
       </v-card-title>
       <v-card-text>
