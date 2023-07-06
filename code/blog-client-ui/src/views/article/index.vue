@@ -2,10 +2,12 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="2" class="">
-          <div style="position: fixed;">
+        <v-col cols="2">
+          <v-sheet rounded="lg">
             <card-image></card-image>
-            <br />
+          </v-sheet>
+          <br/>
+          <v-sheet>
             <v-card flat>
               <v-card-title
                 ><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title
@@ -15,10 +17,10 @@
                 <p>有问题欢迎讨论交流</p>
               </v-card-text>
             </v-card>
-          </div>
+          </v-sheet>
         </v-col>
 
-        <v-col>
+        <v-col cols="10">
           <router-view></router-view>
         </v-col>
       </v-row>
