@@ -3,58 +3,52 @@
     <v-sheet width="800" class="pa-8 text-white mx-auto">
       <v-row dense no-gutters>
         <v-col>
-          <!-- <v-img
-            src="/image/default.jpg"
-            class="align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="390px"
-            cover
-          >
-          </v-img> -->
           <div id="chart" style="height: 390px"></div>
         </v-col>
         <v-col>
           <v-card flat height="100%">
-            <template v-slot:title>密码登录</template>
+            <!-- <template v-slot:title>登录</template> -->
             <template v-slot:text>
+              <div class="text-subtitle-1 text-medium-emphasis">用户</div>
               <v-text-field
                 v-model="data.userName"
                 variant="outlined"
-                label="用户名"
                 prepend-inner-icon="mdi-account"
-                compact
+                density="compact"
                 required
                 :rules="[useNameRules]"
               ></v-text-field>
+              <div class="text-subtitle-1 text-medium-emphasis">密码</div>
               <v-text-field
                 v-model="data.userPassword"
-                label="密码"
                 :type="data.textType"
                 variant="outlined"
                 prepend-inner-icon="mdi-shield-key"
                 :append-inner-icon="data.onVisible"
                 @click:appendInner="onVisible"
-                compact
+                density="compact"
                 required
                 :rules="[usePasswordRules]"
               ></v-text-field>
-            </template>
-            <template v-slot:actions>
-              <v-btn height="40" class="flex-grow-1" variant="outlined" density>
-                注 册
-              </v-btn>
-
+              <div style="height:40px;display: flex;align-items: center;justify-content: end;">
+                <a href="" class="text-caption text-decoration-none text-blue" rel="noopener noreferrer">忘记密码？</a>
+              </div>
               <v-btn
                 class="flex-grow-1 text-none text-subtitle-1"
                 color="#2196F3"
                 variant="flat"
                 height="40"
                 @click="onLogin"
+                block
                 density
               >
                 登 录
               </v-btn>
+              <div style="height:40px;display: flex;align-items: center;justify-content: center;">
+                <a href="" class="text-blue">没有账号？点击我注册一个</a>
+              </div>
             </template>
+            <template v-slot:actions> </template>
           </v-card>
         </v-col>
       </v-row>
@@ -62,7 +56,7 @@
   </div>
 </template>
 <script setup>
-import { reactive, defineEmits, computed,onMounted } from "vue";
+import { reactive, defineEmits, computed, onMounted } from "vue";
 
 import { useLogin } from "@/http/user";
 import gz from "@/assets/json/gz.json";
@@ -93,8 +87,8 @@ const emit = defineEmits({
 });
 
 onMounted(() => {
-  initChart()
-})
+  initChart();
+});
 
 function onLogin() {
   useLogin({
