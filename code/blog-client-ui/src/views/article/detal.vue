@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-sheet class="pa-5">
-      <v-card :title="store.data.title" :subtitle="store.data.date" flat>
+      <v-card :title="store.data.title" :subtitle="store.data.date" flat min-height="900px">
         <v-card-text>
           <div class="typo">
             <div v-html="store.data.body"></div>
@@ -17,7 +17,7 @@ import { reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
-import "highlight.js/scss/tokyo-night-light.scss";
+// import "highlight.js/scss/tokyo-night-light.scss";
 import "@/assets/css/typo.css";
 
 import { getArticleDetal } from "@/http/article";
