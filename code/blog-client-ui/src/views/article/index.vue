@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="2">
+        <v-col cols="3">
           <v-sheet rounded="lg">
             <card-image></card-image>
           </v-sheet>
@@ -20,7 +20,7 @@
           </v-sheet>
         </v-col>
 
-        <v-col cols="10">
+        <v-col>
           <router-view></router-view>
         </v-col>
       </v-row>
