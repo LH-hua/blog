@@ -30,8 +30,20 @@
                 required
                 :rules="[usePasswordRules]"
               ></v-text-field>
-              <div style="height:40px;display: flex;align-items: center;justify-content: end;">
-                <a href="" class="text-caption text-decoration-none text-blue" rel="noopener noreferrer">忘记密码？</a>
+              <div
+                style="
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: end;
+                "
+              >
+                <a
+                  href=""
+                  class="text-caption text-decoration-none text-blue"
+                  rel="noopener noreferrer"
+                  >忘记密码？</a
+                >
               </div>
               <v-btn
                 class="flex-grow-1 text-none text-subtitle-1"
@@ -44,7 +56,14 @@
               >
                 登 录
               </v-btn>
-              <div style="height:40px;display: flex;align-items: center;justify-content: center;">
+              <div
+                style="
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
                 <a href="" class="text-blue">没有账号？点击我注册一个</a>
               </div>
             </template>
@@ -57,11 +76,15 @@
 </template>
 <script setup>
 import { reactive, defineEmits, computed, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 import { useLogin } from "@/http/user";
 import gz from "@/assets/json/gz.json";
 
 import * as echarts from "echarts";
+
+const route = useRoute();
+const router = useRouter();
 
 const data = reactive({
   msg: "",
@@ -91,6 +114,57 @@ onMounted(() => {
 });
 
 function onLogin() {
+  const routes = [
+    { path: "/", redirect: "/post/list" },
+    {
+      path: "/",
+      name: "home",
+      component: () => import("@/views/home.vue"),
+      children: [
+        {
+          path: "post",
+          name: "test",
+          component: () => import("@/views/article/index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "列表",
+              component: () => import("@/views/article/list.vue"),
+            },
+            {
+              path: "detal/:id",
+              name: "详情",
+              component: () => import("@/views/article/detal.vue"),
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: "/gis",
+      name: "gis",
+      component: () => import("@/views/gis/index.vue"),
+    },
+    {
+      path: "/indoors",
+      name: "indoors",
+      component: () => import("@/views/indoors/index.vue"),
+    },
+    {
+      path: "/add",
+      name: "写文章",
+      component: () => import("@/views/article/edit.vue"),
+    },
+    {
+      path: "/:catchAll(.*)",
+      name: "404",
+      component: () => import("@/views/404.vue"),
+    },
+  ];
+  routes.forEach(item => {
+    router.addRoute(item);
+  })
+  
   useLogin({
     username: data.userName,
     password: data.userPassword,

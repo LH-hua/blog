@@ -20,7 +20,7 @@
           </v-sheet>
         </v-col>
 
-        <v-col>
+        <v-col cols="9">
           <router-view></router-view>
         </v-col>
       </v-row>
