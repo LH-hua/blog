@@ -7,7 +7,7 @@ const moment = require('moment')
 const article = {
   articles: async (req, res, next) => {
     try {
-      let result = await posts.find({}, { body: 0 })
+      let result = await posts.find({}, { body: 0 }).sort({date:-1})
       // console.log(result)
       res.send({
         data: result,
@@ -31,7 +31,7 @@ const article = {
   },
   add: async (req, res) => {
     const { title, body } = req.body
-    const result = await posts.create({
+    const result = await posts.insertMany({
       dete: moment().format('YYYY-MM-DD HH:mm:ss'),
       title: title,
       body: body

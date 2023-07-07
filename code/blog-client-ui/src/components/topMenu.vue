@@ -1,5 +1,5 @@
 <template>
-  <v-container class=" d-flex align-center">
+  <v-container  class=" d-flex align-center">
     <v-avatar class="logo" color="grey-darken-1"
       >LH</v-avatar
     >
