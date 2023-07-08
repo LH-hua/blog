@@ -1,8 +1,6 @@
 <template>
-  <v-container  class=" d-flex align-center">
-    <v-avatar class="logo" color="grey-darken-1"
-      >LH</v-avatar
-    >
+  <v-container class="d-flex align-center">
+    <v-avatar class="logo" color="grey-darken-1">LH</v-avatar>
     <v-spacer></v-spacer>
     <v-btn
       v-for="item in store.menu"
@@ -13,7 +11,7 @@
       <v-icon :icon="item.icon" />
       {{ item.name }}
     </v-btn>
-    <userMenu v-if="store.token"></userMenu>
+    <userMenu v-if="user.userStatus"></userMenu>
     <v-avatar
       v-else
       style="cursor: pointer"
@@ -29,12 +27,17 @@
 </template>
 
 <script setup>
-import { reactive,defineEmits } from "vue";
+import { reactive, defineEmits,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 // components
 import login from "@/components/user/login.vue";
 import userMenu from "./user/userMenu.vue";
 // import regsite from "@/components/user/regsite.vue";
+
+// pinia
+
+import { userInfo } from "../store/userStore";
+
 const store = reactive({
   menu: [
     {
@@ -70,16 +73,23 @@ const store = reactive({
   token: localStorage.getItem("token"),
 });
 
-
 const router = useRouter();
 const route = useRoute();
+
+const user = userInfo()
+
+onMounted(() => {
+  if(localStorage.getItem("token")){
+    user.changeStatus()
+  }
+})
 
 function onDialogShow() {
   store.dialog = !store.dialog;
 }
 
-function close(val){
-  console.log(val)
+function close(val) {
+  console.log(val);
   store.dialog = !store.dialog;
 }
 

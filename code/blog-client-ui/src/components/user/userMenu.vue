@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="user-container">
+    <v-btn flat block>记录一下</v-btn>
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-avatar
@@ -18,7 +19,6 @@
         </v-card-title>
         <v-card-text>
           <v-btn flat block>个人信息</v-btn>
-          <v-btn flat block>记录一下</v-btn>
         </v-card-text>
         
         <v-card-actions>
@@ -39,3 +39,9 @@ function exit(){
   location.reload()
 }
 </script>
+
+<style scoped>
+.user-container{
+  display: flex;
+}
+</style>

@@ -83,8 +83,13 @@ import gz from "@/assets/json/gz.json";
 
 import * as echarts from "echarts";
 
+// pinia
+
+import { userInfo } from "@/store/userStore";
+
 const route = useRoute();
 const router = useRouter();
+const user = userInfo();
 
 const data = reactive({
   msg: "",
@@ -114,70 +119,19 @@ onMounted(() => {
 });
 
 function onLogin() {
-  const routes = [
-    { path: "/", redirect: "/post/list" },
-    {
-      path: "/",
-      name: "home",
-      component: () => import("@/views/home.vue"),
-      children: [
-        {
-          path: "post",
-          name: "test",
-          component: () => import("@/views/article/index.vue"),
-          children: [
-            {
-              path: "list",
-              name: "列表",
-              component: () => import("@/views/article/list.vue"),
-            },
-            {
-              path: "detal/:id",
-              name: "详情",
-              component: () => import("@/views/article/detal.vue"),
-            },
-          ],
-        },
-      ],
-    },
-    {
-      path: "/gis",
-      name: "gis",
-      component: () => import("@/views/gis/index.vue"),
-    },
-    {
-      path: "/indoors",
-      name: "indoors",
-      component: () => import("@/views/indoors/index.vue"),
-    },
-    {
-      path: "/add",
-      name: "写文章",
-      component: () => import("@/views/article/edit.vue"),
-    },
-    {
-      path: "/:catchAll(.*)",
-      name: "404",
-      component: () => import("@/views/404.vue"),
-    },
-  ];
-  routes.forEach(item => {
-    router.addRoute(item);
-  })
-  
-  useLogin({
+  // const routes = {
+  //   path: "add",
+  //   name: "写文章",
+  //   component: () => import("@/views/article/edit.vue"),
+  // };
+  // router.addRoute("test",routes);
+  // router.push("/post/add");
+
+  const res = user.useLogin({
     username: data.userName,
     password: data.userPassword,
-  }).then((res) => {
-    if (res.data.status == 200) {
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.data));
-      emit("close", true);
-      location.reload();
-    } else {
-      data.msg = res.data.msg;
-    }
   });
+  emit("close", res.satus);
 }
 
 function onVisible() {
