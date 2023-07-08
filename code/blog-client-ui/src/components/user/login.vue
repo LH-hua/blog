@@ -119,13 +119,6 @@ onMounted(() => {
 });
 
 function onLogin() {
-  // const routes = {
-  //   path: "add",
-  //   name: "写文章",
-  //   component: () => import("@/views/article/edit.vue"),
-  // };
-  // router.addRoute("test",routes);
-  // router.push("/post/add");
 
   const res = user.useLogin({
     username: data.userName,

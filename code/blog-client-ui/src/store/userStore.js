@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
-import { useLogin } from "@/http/user";
+import { useLogin } from "@/http/user"
+import { asyncRoute } from "@/router/dynamicRoute"
 
 export const userInfo = defineStore("info", {
     state: () => ({
@@ -16,17 +17,16 @@ export const userInfo = defineStore("info", {
                 if (res.data.status == 200) {
                     this.isLogin = true
                     this.info = res.data.data
-                    localStorage.setItem("token", res.data.token);
-                    localStorage.setItem("user", JSON.stringify(res.data.data));
+                    localStorage.setItem("token", res.data.token)
+                    localStorage.setItem("user", JSON.stringify(res.data.data))
+                    asyncRoute(res.data.token)
                     return { info: this.info, satus: true }
                 }
             } catch (error) {
                 return { info: error, satus: false }
             }
-
-
         },
-        changeStatus(){
+        changeStatus() {
             this.isLogin = true
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="user-container">
-    <v-btn flat block>记录一下</v-btn>
+    <v-btn flat block @click="onTo">记录一下</v-btn>
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-avatar
@@ -32,8 +32,14 @@
 
 <script setup>
 import { reactive } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const store = reactive({ user: JSON.parse(localStorage.getItem("user")) });
+const router = useRouter();
+
+function onTo(){
+  router.push("/post/add");
+}
 function exit(){
   localStorage.clear()
   location.reload()

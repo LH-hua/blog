@@ -88,8 +88,7 @@ function onDialogShow() {
   store.dialog = !store.dialog;
 }
 
-function close(val) {
-  console.log(val);
+function close() {
   store.dialog = !store.dialog;
 }
 

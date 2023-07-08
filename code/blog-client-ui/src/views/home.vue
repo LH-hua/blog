@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import cardImage from "@/components/cardImage.vue";
+// import cardImage from "@/components/cardImage.vue";
 import topMenu from "@/components/topMenu.vue";
 
 import { onMounted } from "vue";

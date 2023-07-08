@@ -7,7 +7,7 @@ const routes = [
     component: () => import('@/views/home.vue'),
     children: [
       {
-        path: "post",
+        path: "post/",
         name: "post",
         component: () => import('@/views/article/index.vue'),
         children: [
@@ -36,11 +36,11 @@ const routes = [
     name: "indoors",
     component: () => import('@/views/indoors/index.vue'),
   },
-  {
-    path: "/:catchAll(.*)",
-    name: "404",
-    component: () => import('@/views/404.vue'),
-  }
+  // {
+  //   path: "/:catchAll(.*)",
+  //   name: "404",
+  //   component: () => import('@/views/404.vue'),
+  // }
 ]
 
 export default routes
