@@ -23,6 +23,14 @@ const vuetify = createVuetify({
     defaultSet: 'mdi',
   }
 })
+import {asyncRoute} from "@/router/dynamicRoute"
+
+
+// onMounted(() => {
+  if(localStorage.getItem("token")){
+    asyncRoute(localStorage.getItem("token"))
+  }
+// })
 
 
 createApp(App)
