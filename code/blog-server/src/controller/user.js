@@ -57,7 +57,7 @@ const user = {
   },
   upImage: async (req, res, next) => {
     try {
-      const form = new multiparty.Form({ autoFiles: true, uploadDir: process.platform == 'win32' ?  `${__dirname}../../../assets/image` :  '/var/local/media/nodeAssets' })
+      const form = new multiparty.Form({ autoFiles: true, uploadDir: process.platform == 'win32' ?  `${__dirname}../../../assets/image` :  '/var/local/media/nodeAssets/image' })
       form.parse(req, (err, fields, files) => {
         if (err) {
           res.send({
