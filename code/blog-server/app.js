@@ -15,7 +15,7 @@ const app = new express();
 fs.chmod(path.join(__dirname, './assets'), 0o700, (err) => {
   console.log(err)
 })
-app.use(express.static(path.join(__dirname, './assets')))
+app.use(express.static(process.platform == 'win32' ? path.join(__dirname, './assets') : '/var/local/media/nodeAssets'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 
