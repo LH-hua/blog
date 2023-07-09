@@ -30,7 +30,7 @@
 
 /**
  * @swagger
- * /sys/token/addMenu:
+ * /api/sys/token/addMenu:
  *    post:
  *      tags:
  *      - 系统
@@ -57,7 +57,7 @@
 
 /**
  * @swagger
- * /sys/token/menuAndRouter:
+ * /api/sys/token/menuAndRouter:
  *    post:
  *      tags:
  *      - 系统
