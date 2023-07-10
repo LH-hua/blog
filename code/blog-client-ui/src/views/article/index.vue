@@ -1,35 +1,12 @@
 <template>
   <div>
-    <v-container>
-      <v-row>
-        <v-col cols="3">
-          <v-sheet rounded="lg">
-            <card-image></card-image>
-          </v-sheet>
-          <br/>
-          <v-sheet>
-            <v-card flat>
-              <v-card-title
-                ><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title
-              >
-              <v-card-text>
-                <p>这是LH个人博客，记录和分享日常</p>
-                <p>有问题欢迎讨论交流</p>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-        </v-col>
+    <router-view></router-view>
 
-        <v-col cols="9">
-          <router-view></router-view>
-        </v-col>
-      </v-row>
-    </v-container>
+    
   </div>
 </template>
 
 <script setup>
-import cardImage from "@/components/cardImage.vue";
 
 import { onMounted } from "vue";
 onMounted(() => {});

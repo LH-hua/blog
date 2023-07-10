@@ -20,3 +20,9 @@ import topMenu from "@/components/topMenu.vue";
 import { onMounted } from "vue";
 onMounted(() => {});
 </script>
+
+<style>
+.v-app-bar{
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
