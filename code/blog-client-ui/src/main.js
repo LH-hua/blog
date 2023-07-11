@@ -11,6 +11,9 @@ import '@mdi/font/css/materialdesignicons.css'
 // 自定义样式
 import '@/style/global.css'
 
+// 布局组件
+import sideMain from '@/layout/sideMain.vue'
+
 // import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -32,9 +35,11 @@ import {asyncRoute} from "@/router/dynamicRoute"
   }
 // })
 
+const app = createApp(App)
 
-createApp(App)
-  .use(pinia)
-  .use(router)
-  .use(vuetify)
-  .mount('#app')
+app.component('sideMain',sideMain)
+
+app.use(pinia)
+app.use(router)
+app.use(vuetify)
+app.mount('#app')
