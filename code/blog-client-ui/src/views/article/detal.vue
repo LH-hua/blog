@@ -7,7 +7,7 @@
             <v-icon>mdi-account</v-icon>
           </v-card-title>
           <v-card-subtitle>
-            {{ store.user.signature || '还没想好呢' }}
+            {{ store.user.signature || "还没想好呢" }}
           </v-card-subtitle>
         </v-card>
       </v-sheet>
@@ -15,7 +15,7 @@
       <v-sheet>
         <v-card flat>
           <v-card-title>目录</v-card-title>
-          
+          <div class="table-of-contents"></div>
         </v-card>
       </v-sheet>
     </template>
@@ -40,13 +40,14 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import {ref, reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import MarkdownIt from "markdown-it";
+import anchor from "markdown-it-anchor";
+import toc from "markdown-it-toc-done-right";
 import hljs from "highlight.js";
 // import "highlight.js/scss/tokyo-night-light.scss";
 import "@/assets/css/typo.css";
-
 
 import { getArticleDetal } from "@/http/article";
 
@@ -56,15 +57,16 @@ const store = reactive({
     date: "",
     body: "",
   },
-  user:{
-
-  }
+  user: {},
 });
 
+const md = ref(null)
 
 const route = useRoute();
 
-const md = new MarkdownIt({
+function initMd(){
+  const left = document.querySelector('.table-of-contents')
+  md.value = new MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -77,16 +79,30 @@ const md = new MarkdownIt({
     }
 
     return (
-      '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + "</code></pre>"
+      '<pre class="hljs"><code>' + md.value.utils.escapeHtml(str) + "</code></pre>"
     );
   },
+}).use(anchor, { permalink: true, permalinkBefore: true }).use(toc, {
+  callback: function (html, ast) {
+    console.log(html);
+    //把目录单独列出来
+    left.innerHTML= html;
+  },
 });
-onMounted(() => {
+}
+
+function getData(){
   const postId = route.params.id;
   getArticleDetal({ _id: postId }).then((res) => {
-    res.data.body = md.render(res.data.body);
+    res.data.body = md.value.render(res.data.body);
     store.data = res.data;
   });
+}
+
+
+onMounted(() => {
+  initMd()
+  getData()
 });
 </script>
 
