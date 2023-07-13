@@ -92,7 +92,6 @@ function initMd() {
     .use(anchor, { permalink: true, permalinkBefore: true })
     .use(toc, {
       callback: function (html, ast) {
-        console.log(html);
         //把目录单独列出来
         left.innerHTML = html;
         allADemo();
@@ -103,9 +102,14 @@ function initMd() {
 function allADemo() {
   const allA = document.querySelectorAll(".table-of-contents a");
   allA.forEach((item) => {
+    
+    item.style.color = 'rgba(0,0,0,0.5)'
+    item.style.fontWeight = 800
+    console.log(item)
     item.addEventListener("click", function (e) {
       e.preventDefault();
-      e.style.Color = 'red'
+      
+      
       item.scrollIntoView(true);
     });
   });
@@ -127,5 +131,7 @@ onMounted(() => {
 
 <style leng="less" scoped>
 /* @import '../../assets/css/typo.css'; */
+
+
 
 </style>
