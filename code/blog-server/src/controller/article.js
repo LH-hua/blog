@@ -31,13 +31,13 @@ const article = {
   },
   add: async (req, res) => {
     try {
-      const { title, body } = req.body
+      const { title, body,userId } = req.body
       const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-      console.log(date)
       const result = await posts.insertMany({
         date: date,
         title: title,
-        body: body
+        body: body,
+        userId:userId
       })
       if (result) {
         res.send({

@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userId:{
+        type:String,
+        default:'',
+    },
     date: {
         type: String,
         default: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
