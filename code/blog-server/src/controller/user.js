@@ -14,7 +14,7 @@ const user = {
       if (!result) {
         res.send({
           type: 'info',
-          msg: '用户名不存在'
+          msg: '用户名不存在',
         })
         return
       }
@@ -22,7 +22,7 @@ const user = {
       if (!isTure) {
         res.send({
           type: 'error',
-          msg: '密码错误'
+          msg: '密码错误',
         })
         return
       }
@@ -37,13 +37,13 @@ const user = {
       //   [0]   __v: 0
       //   [0] }
       console.log(result)
-      const token = jwt.sign({ id: result._id,username:result.username,password:result.password }, secret)
+      const token = jwt.sign({ id: result._id, username: result.username, password: result.password }, secret)
       res.send({
         type: 'success',
         msg: '登录成功',
         token: token,
         status: 200,
-        data: result
+        data: result,
       })
     } catch (error) {
       next(error)
@@ -53,7 +53,7 @@ const user = {
     try {
       const result = await User.create({
         username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, salt)
+        password: bcrypt.hashSync(req.body.password, salt),
       })
       if (result) {
         res.status(200).send(result)
@@ -61,18 +61,21 @@ const user = {
     } catch (error) {
       res.status(404).send({
         msg: '注册失败',
-        error: error
+        error: error,
       })
       // next(error)
     }
   },
   upImage: async (req, res, next) => {
     try {
-      const form = new multiparty.Form({ autoFiles: true, uploadDir: process.platform == 'win32' ? `${__dirname}../../../assets/image` : '/var/local/media/nodeAssets/image' })
+      const form = new multiparty.Form({
+        autoFiles: true,
+        uploadDir: process.platform == 'win32' ? `${__dirname}../../../assets/image` : '/var/local/media/nodeAssets/image',
+      })
       form.parse(req, (err, fields, files) => {
         if (err) {
           res.send({
-            msg: '文件错误:' + err
+            msg: '文件错误:' + err,
           })
           next(err)
           return
@@ -83,20 +86,20 @@ const user = {
         if (process.platform === 'win32') {
           fileArr = file.path.split('\\')
         } else {
-          fileArr = file.path.split('/');
+          fileArr = file.path.split('/')
         }
         res.send({ src: `/image/${fileArr[fileArr.length - 1]}` })
       })
     } catch (error) {
       res.send({
-        msg: "error:" + error
+        msg: 'error:' + error,
       })
       next(err)
     }
   },
-  userInfo: async (req,res) => {
-    const {id} = req.query
+  userInfo: async (req, res) => {
+    const { id } = req.query
     console.log(id)
-  }
+  },
 }
 module.exports = user

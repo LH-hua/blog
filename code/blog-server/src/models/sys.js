@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const menuSchema = new mongoose.Schema({
   id: {
     type: Number,
@@ -17,7 +17,7 @@ const menuSchema = new mongoose.Schema({
   },
   children: {
     type: Array,
-    default:[]
-  }
+    default: [],
+  },
 })
 module.exports = posts = mongoose.model('menu', menuSchema)

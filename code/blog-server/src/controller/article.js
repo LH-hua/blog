@@ -1,8 +1,6 @@
-
 const posts = require('../models/post')
 const _ = require('lodash')
 const moment = require('moment')
-
 
 const article = {
   articles: async (req, res, next) => {
@@ -11,7 +9,7 @@ const article = {
       // console.log(result)
       res.send({
         data: result,
-        status: 200
+        status: 200,
       })
     } catch (error) {
       next(error)
@@ -23,7 +21,7 @@ const article = {
       let result = await posts.findOne({ _id: _id })
       res.send({
         data: result,
-        status: 200
+        status: 200,
       })
     } catch (error) {
       next(error)
@@ -31,24 +29,22 @@ const article = {
   },
   add: async (req, res) => {
     try {
-      const { title, body,userId } = req.body
+      const { title, body, userId } = req.body
       const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
       const result = await posts.insertMany({
         date: date,
         title: title,
         body: body,
-        userId:userId
+        userId: userId,
       })
       if (result) {
         res.send({
           type: 'success',
           status: 200,
-          msg: '文章添加成功了'
+          msg: '文章添加成功了',
         })
       }
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  },
 }
 module.exports = article

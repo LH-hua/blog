@@ -8,20 +8,18 @@ module.exports = sys = {
       const result = await menu.find({})
       res.send({
         msg: 'ok',
-        data: result
+        data: result,
       })
 
       // 正确返回菜单
-    } catch (error) {
-
-    }
+    } catch (error) {}
   },
   addMenu: async (req, res, next) => {
     try {
       const { token } = req.headers
       if (token == undefined) {
         res.send({
-          msg:'未定义 token 值'
+          msg: '未定义 token 值',
         })
         return
       }
@@ -30,11 +28,9 @@ module.exports = sys = {
       if (result) {
         res.send({
           msg: '添加成功',
-          data:result
+          data: result,
         })
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   },
 }
