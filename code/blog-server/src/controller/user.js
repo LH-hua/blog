@@ -50,6 +50,7 @@ const user = {
     }
   },
   regsiter: async (req, res, next) => {
+    console.log(req)
     try {
       const result = await User.create({
         username: req.body.username,

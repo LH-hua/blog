@@ -17,7 +17,7 @@
 
 /**,
 * @swagger
-* /user/post/login:
+* /api/post/login:
 *    post:
 *      tags:
 *      - 用户
@@ -40,7 +40,7 @@
 *        404:
 *          description: Order not found
 *
-* /user/post/regsiter:
+* /api/post/regsiter:
 *    post:
 *      tags:
 *      - 用户
@@ -85,7 +85,7 @@
 
 /**
  * @swagger
- * /user/post/upload-image:
+ * /api/post/upload-image:
  *   post:
  *     tags:
  *      - 用户
