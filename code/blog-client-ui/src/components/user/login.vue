@@ -30,40 +30,13 @@
                 required
                 :rules="[usePasswordRules]"
               ></v-text-field>
-              <div
-                style="
-                  height: 40px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: end;
-                "
-              >
-                <a
-                  href=""
-                  class="text-caption text-decoration-none text-blue"
-                  rel="noopener noreferrer"
-                  >忘记密码？</a
-                >
+              <div style="height: 40px; display: flex; align-items: center; justify-content: end">
+                <a href="" class="text-caption text-decoration-none text-blue" rel="noopener noreferrer">忘记密码？</a>
               </div>
-              <v-btn
-                class="flex-grow-1 text-none text-subtitle-1"
-                color="#2196F3"
-                variant="flat"
-                height="40"
-                @click="onLogin"
-                block
-                density
-              >
+              <v-btn class="flex-grow-1 text-none text-subtitle-1" color="#2196F3" variant="flat" height="40" @click="onLogin" block density>
                 登 录
               </v-btn>
-              <div
-                style="
-                  height: 40px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
+              <div style="height: 40px; display: flex; align-items: center; justify-content: center">
                 <a href="" class="text-blue">没有账号？点击我注册一个</a>
               </div>
             </template>
@@ -75,80 +48,79 @@
   </div>
 </template>
 <script setup>
-import { reactive, defineEmits, computed, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { reactive, defineEmits, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-import { useLogin } from "@/http/user";
-import gz from "@/assets/json/gz.json";
+import { useLogin } from '@/http/user'
+import gz from '@/assets/json/gz.json'
 
-import * as echarts from "echarts";
+import * as echarts from 'echarts'
 
 // pinia
 
-import { userInfo } from "@/store/userStore";
+import { userInfo } from '@/store/userStore'
 
-const route = useRoute();
-const router = useRouter();
-const user = userInfo();
+const route = useRoute()
+const router = useRouter()
+const user = userInfo()
 
 const data = reactive({
-  msg: "",
-  userName: "",
-  userPassword: "",
-  onVisible: "mdi-eye-off",
-  textType: "password",
-});
+  msg: '',
+  userName: '',
+  userPassword: '',
+  onVisible: 'mdi-eye-off',
+  textType: 'password',
+})
 
 const useNameRules = computed(() => {
-  if (!data.msg) return true;
-  return data.msg;
-});
+  if (!data.msg) return true
+  return data.msg
+})
 const usePasswordRules = computed(() => {
-  if (!data.msg) return true;
-  return data.msg;
-});
+  if (!data.msg) return true
+  return data.msg
+})
 
 const emit = defineEmits({
   close: (Boolean) => {
-    return Boolean;
+    return Boolean
   },
-});
+})
 
 onMounted(() => {
-  initChart();
-});
+  initChart()
+})
 
 function onLogin() {
-
   const res = user.useLogin({
     username: data.userName,
     password: data.userPassword,
-  });
-  emit("close", res.satus);
+  })
+  emit('close', res.satus)
 }
 
 function onVisible() {
-  if (data.onVisible !== "mdi-eye-off") {
-    data.onVisible = "mdi-eye-off";
-    data.textType = "password";
+  if (data.onVisible !== 'mdi-eye-off') {
+    data.onVisible = 'mdi-eye-off'
+    data.textType = 'password'
   } else {
-    (data.onVisible = "mdi-eye"), (data.textType = "text");
+    ;(data.onVisible = 'mdi-eye'), (data.textType = 'text')
   }
 }
 
 function initChart() {
-  const chartDom = document.querySelector("#chart");
-  const myChart = echarts.init(chartDom);
-  echarts.registerMap("gz", gz);
+  const chartDom = document.querySelector('#chart')
+  const myChart = echarts.init(chartDom)
+  echarts.registerMap('gz', gz)
   const option = {
     series: [
       {
-        name: "gz",
-        type: "map",
-        map: "gz",
+        name: 'gz',
+        type: 'map',
+        map: 'gz',
       },
     ],
-  };
-  myChart.setOption(option);
+  }
+  myChart.setOption(option)
 }
 </script>

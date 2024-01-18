@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import pinia from "./store"
+import pinia from './store'
 // import './style.css'
 import App from './App.vue'
 
@@ -24,20 +24,19 @@ const vuetify = createVuetify({
   directives,
   icons: {
     defaultSet: 'mdi',
-  }
+  },
 })
-import {asyncRoute} from "@/router/dynamicRoute"
-
+import { asyncRoute } from '@/router/dynamicRoute'
 
 // onMounted(() => {
-  if(localStorage.getItem("token")){
-    asyncRoute(localStorage.getItem("token"))
-  }
+if (localStorage.getItem('token')) {
+  asyncRoute(localStorage.getItem('token'))
+}
 // })
 
 const app = createApp(App)
 
-app.component('sideMain',sideMain)
+app.component('sideMain', sideMain)
 
 app.use(pinia)
 app.use(router)

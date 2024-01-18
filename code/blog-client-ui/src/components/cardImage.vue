@@ -2,23 +2,14 @@
   <v-sheet>
     <v-card flat>
       <v-card-title>
-        <div style="
-            width: 100%;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-          ">
+        <div style="width: 100%; height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 14px">
           <v-avatar image="/avatar/default.jpg"></v-avatar>
           <span>LH-hua</span>
           <span>虽千万人，吾往矣。</span>
           <div>还没想好</div>
         </div>
       </v-card-title>
-      <v-card-text>
-      </v-card-text>
+      <v-card-text> </v-card-text>
       <template v-slot:actions>
         <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="toGithub">
           <v-icon icon="mdi-github"></v-icon>
@@ -43,18 +34,17 @@
       <v-list-item prepend-icon="mdi-qqchat" title="1589715612"></v-list-item>
       <v-divider></v-divider>
     </v-list>
-
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { reactive } from "vue";
-const drawer = reactive({ drawer: false });
+import { reactive } from 'vue'
+const drawer = reactive({ drawer: false })
 
 function onAbort() {
-  drawer.drawer = !drawer.drawer;
+  drawer.drawer = !drawer.drawer
 }
 function toGithub() {
-  window.open("https://github.com/LH-hua");
+  window.open('https://github.com/LH-hua')
 }
 </script>

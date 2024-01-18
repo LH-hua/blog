@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-
-import { onMounted } from "vue";
-onMounted(() => {});
+import { onMounted } from 'vue'
+onMounted(() => {})
 </script>

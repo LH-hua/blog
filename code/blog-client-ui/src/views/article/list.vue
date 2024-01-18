@@ -33,27 +33,27 @@
 </template>
 
 <script setup>
-import { reactive, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { getArticleList } from "@/http/article";
+import { getArticleList } from '@/http/article'
 
-import cardImage from "@/components/cardImage.vue";
+import cardImage from '@/components/cardImage.vue'
 
-const router = useRouter();
+const router = useRouter()
 const data = reactive({
   data: [],
-});
+})
 
 function onDetal(obj) {
-  router.push("detal/" + obj._id);
+  router.push('detal/' + obj._id)
 }
 
 onBeforeMount(() => {
   getArticleList().then((res) => {
-    data.data = res.data;
-  });
-});
+    data.data = res.data
+  })
+})
 </script>
 
 <style scoped></style>

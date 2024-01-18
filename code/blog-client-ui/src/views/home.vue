@@ -7,22 +7,20 @@
     <router-view></router-view>
   </v-main>
   <v-footer flat class="bg-black" height="20">
-    <div class="px-4 py-2 bg-black text-center w-100">
-      {{ new Date().getFullYear() }} — LH
-    </div>
+    <div class="px-4 py-2 bg-black text-center w-100">{{ new Date().getFullYear() }} — LH</div>
   </v-footer>
 </template>
 
 <script setup>
 // import cardImage from "@/components/cardImage.vue";
-import topMenu from "@/components/topMenu.vue";
+import topMenu from '@/components/topMenu.vue'
 
-import { onMounted } from "vue";
-onMounted(() => {});
+import { onMounted } from 'vue'
+onMounted(() => {})
 </script>
 
 <style>
-.v-app-bar{
+.v-app-bar {
   border-bottom: 1px solid #e0e0e0;
 }
 </style>
