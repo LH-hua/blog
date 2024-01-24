@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { dbUrl } = require('../config/mongo.config')
 mongoose
-  .connect(dbUrl, { useUnifiedTopology: true })
+  .connect(dbUrl)
   .then(() => {
     console.log(`已连接至${dbUrl}数据库`)
   })

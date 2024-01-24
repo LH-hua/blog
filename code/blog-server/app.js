@@ -5,11 +5,11 @@ const path = require('path')
 const fs = require('fs')
 
 // 主机运行配置文件
-const { port, hostUrl } = require('./src/config/host.config')
+const { port, hostUrl } = require('./app/config/host.config')
 
 // 使用swagger API 文档
-const swaggerInstall = require('./src/utils/swagger')
-const router = require('./src/route')
+const swaggerInstall = require('./app/utils/swagger')
+const router = require('./app/route')
 
 const app = new express()
 fs.chmod(path.join(__dirname, './assets'), 0o700, (err) => {
@@ -25,7 +25,7 @@ app.get('/', (req, res, next) => {
   res.send('你好，世界')
 })
 
-require('./src/mongodb/conect')
+require('./app/mongodb/conect')
 swaggerInstall(app)
 router(app)
 

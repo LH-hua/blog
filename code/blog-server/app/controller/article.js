@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const article = {
   articles: async (req, res, next) => {
+    console.log(1111111)
     try {
       let result = await posts.find({}, { body: 0 }).sort({ date: -1 })
       // console.log(result)

@@ -18,7 +18,7 @@
 
 /**,
  * @swagger
- * /api/article/articles:
+ * /api/post/articles:
  *    get:
  *      tags:
  *      - 文章
@@ -48,34 +48,34 @@
  * */
 
 /**,
-* @swagger
-* /api/article/detail:
-*    get:
-*      tags:
-*      - 文章
-*      summary: 根据文章ID查询文章
-*      produces:
-*      - application/json
-*      parameters:
-*      - name: _id
-*        in: query
-*        description: 文章ID
-*        required: false
-*        type: integer
-*      responses:
-*        200:
-*          description: successful operation
-*          schema:
-*            ref: #/definitions/Order
-*        400:
-*          description: Invalid ID supplied
-*        404:
-*          description: Order not found
-* */
+ * @swagger
+ * /api/post/detail:
+ *    get:
+ *      tags:
+ *      - 文章
+ *      summary: 根据文章ID查询文章
+ *      produces:
+ *      - application/json
+ *      parameters:
+ *      - name: _id
+ *        in: query
+ *        description: 文章ID
+ *        required: false
+ *        type: integer
+ *      responses:
+ *        200:
+ *          description: successful operation
+ *          schema:
+ *            ref: #/definitions/Order
+ *        400:
+ *          description: Invalid ID supplied
+ *        404:
+ *          description: Order not found
+ * */
 
 /**
  * @swagger
- * /api/article/add:
+ * /api/post/add:
  *    post:
  *      tags:
  *      - 文章
@@ -99,4 +99,3 @@
  *          description: Order not found
  *
  */
-
