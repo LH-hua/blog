@@ -6,9 +6,8 @@ const { secret } = require('../config/secret.config')
 
 const salt = bcrypt.genSaltSync(10)
 
-const user = {
-  login: async (req, res, next) => {
-    console.log(req.body)
+class user {
+  async login (req, res, next) {
     try {
       let result = await User.findOne({ username: req.body.username })
       if (!result) {
@@ -48,8 +47,8 @@ const user = {
     } catch (error) {
       next(error)
     }
-  },
-  regsiter: async (req, res, next) => {
+  }
+  async regsiter (req, res, next) {
     console.log(req)
     try {
       const result = await User.create({
@@ -66,8 +65,8 @@ const user = {
       })
       // next(error)
     }
-  },
-  upImage: async (req, res, next) => {
+  }
+  async upImage (req, res, next) {
     try {
       const form = new multiparty.Form({
         autoFiles: true,
@@ -97,10 +96,10 @@ const user = {
       })
       next(err)
     }
-  },
-  userInfo: async (req, res) => {
+  }
+  async userInfo (req, res) {
     const { id } = req.query
     console.log(id)
-  },
+  }
 }
-module.exports = user
+module.exports = new user()

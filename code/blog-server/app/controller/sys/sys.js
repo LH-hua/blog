@@ -2,8 +2,9 @@ const menu = require('../../models/sys')
 const captcha = require('../../models/captcha')
 const nodemailer = require('nodemailer')
 const svgCaptcha = require('svg-captcha')
-module.exports = sys = {
-  currentMenu: async (req, res, next) => {
+
+class Sys {
+  async currentMenu(req, res, next) {
     try {
       const { token } = req.headers
       // 判断token是否正确
@@ -15,9 +16,9 @@ module.exports = sys = {
       })
 
       // 正确返回菜单
-    } catch (error) {}
-  },
-  addMenu: async (req, res, next) => {
+    } catch (error) { }
+  }
+  async addMenu(req, res, next) {
     try {
       const { token } = req.headers
       if (token == undefined) {
@@ -34,9 +35,9 @@ module.exports = sys = {
           data: result,
         })
       }
-    } catch (error) {}
-  },
-  captcha: async (req, res, next) => {
+    } catch (error) { }
+  }
+  async captcha(req, res, next) {
     try {
       const Captcha = svgCaptcha.create()
       res.type('svg').status(200).send(Captcha.data)
@@ -56,12 +57,12 @@ module.exports = sys = {
         to: req.query.email, // 发送多个，以逗号分隔开
         subject: '你正在注册LH账号', // 邮件标题
         html: `
-    <p>您好：</p>
-    <p>欢迎注册LH账号：您的验证码为:${Captcha.text}</P>
-    <p>不要告诉任何人哦</p>
-    <p><string>验证码15分钟内有效</string></p>
-    <p>LH</p>
-      `, // html body
+                <p>您好：</p>
+                <p>欢迎注册LH账号：您的验证码为:${Captcha.text}</P>
+                <p>不要告诉任何人哦</p>
+                <p><string>验证码15分钟内有效</string></p>
+                <p>LH</p>
+              `, // html body
       })
       const result = await captcha.create({ captcha: Captcha.text })
       if (result) {
@@ -75,5 +76,6 @@ module.exports = sys = {
     } catch (error) {
       next(error)
     }
-  },
+  }
 }
+module.exports = new Sys()

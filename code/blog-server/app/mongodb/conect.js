@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { dbUrl } = require('../config/mongo.config')
+mongoose.set('strictQuery', true)
 mongoose
   .connect(dbUrl)
   .then(() => {

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const { secret } = require('../config/secret.config')
 
-const middel = {
-  authorization: (req, res, next) => {
+class Middleware {
+  authorization(req, res, next) {
     if (req.headers.authorization) {
       const result = jwt.verify(req.headers.authorization, secret)
       // console.log(result)
@@ -15,11 +15,11 @@ const middel = {
       })
       return
     }
-  },
-  authorizationTureAndFalse: (req, res, next) => {
+  }
+  authorizationTureAndFalse(req, res, next) {
     try {
-    } catch (error) {}
-  },
+    } catch (error) { }
+  }
 }
 
-module.exports = middel
+module.exports = Middleware
