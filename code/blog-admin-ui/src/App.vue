@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="scroll-hidden">
     <router-view></router-view>
     <alter></alter>
   </v-app>
@@ -20,5 +20,18 @@ import alter from './components/alter/alter.vue'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+</style>
+<style>
+html {
+  overflow: hidden !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 </style>

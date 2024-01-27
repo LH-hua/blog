@@ -620,7 +620,7 @@ vue@^3.2.45:
     "@vue/server-renderer" "3.4.15"
     "@vue/shared" "3.4.15"
 
-vuetify@^3.1.4:
+vuetify@^3.5.1:
   version "3.5.1"
   resolved "https://registry.npmmirror.com/vuetify/-/vuetify-3.5.1.tgz#c2f35dad5e54a090e87e55ed1a4e76091199ed4a"
   integrity sha512-fkhU4UFnX/lBARXg+n9mBCDPTaEDHoYGx9SZ5A/1LlzM7LohoqldmrNgza4WgpPTLIWqr6NvYp2NvT2IrcTfhg==
