@@ -25,26 +25,25 @@
   </div>
 </template>
 <script setup>
-import { reactive, computed, onMounted } from "vue";
-import { article } from "@/http/article";
+import { reactive, computed, onMounted } from 'vue'
+import { article } from '@/http/article'
 
 const state = reactive({
   data: [],
-});
+})
 
 const postList = computed(() => {
-  return state.data;
-});
+  return state.data
+})
 
 const getArticleList = () => {
   article().then((res) => {
-    
-    state.data = res.data.msg;
+    state.data = res.data.msg
     console.log(state.data)
-  });
-};
+  })
+}
 
 onMounted(() => {
-  getArticleList();
-});
+  getArticleList()
+})
 </script>

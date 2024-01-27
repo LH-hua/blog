@@ -1,27 +1,20 @@
 <template>
   <div class="container-alter">
     <Transition>
-      <v-alert
-        v-if="msg.isTrue"
-        :title="msg.title"
-        :text="msg.text"
-        :color="msg.color"
-        closable
-        border="start"
-      ></v-alert>
+      <v-alert v-if="msg.isTrue" :title="msg.title" :text="msg.text" :color="msg.color" closable border="start"></v-alert>
     </Transition>
   </div>
 </template>
 
 <script setup>
-import { usrMassegeStore } from "../../store/massege.js";
-import { computed } from "vue";
+import { usrMassegeStore } from '../../store/massege.js'
+import { computed } from 'vue'
 
 const msg = computed(() => {
-  const massege = usrMassegeStore();
-  console.log(massege.msg());
-  return massege.msg();
-});
+  const massege = usrMassegeStore()
+  console.log(massege.msg())
+  return massege.msg()
+})
 </script>
 
 <style scoped>

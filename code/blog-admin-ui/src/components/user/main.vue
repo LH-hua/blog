@@ -1,18 +1,11 @@
-
 <template>
   <div>
     <v-menu>
       <template v-slot:activator="{ props }">
-        <v-btn
-          color="primary"
-          v-bind="props"
-        >
-          Activator slot
-        </v-btn>
+        <v-btn color="primary" v-bind="props"> Activator slot </v-btn>
       </template>
       <v-list>
-        <v-list-item
-        >
+        <v-list-item>
           <v-list-item-title>fdsafds</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -55,14 +48,9 @@
 </template>
 
 <script setup>
-import { reactive } from "vue"
+import { reactive } from 'vue'
 
 const sate = reactive({
-  items: [
-    { title: "Click Me" },
-    { title: "Click Me" },
-    { title: "Click Me" },
-    { title: "Click Me 2" },
-  ],
-});
+  items: [{ title: 'Click Me' }, { title: 'Click Me' }, { title: 'Click Me' }, { title: 'Click Me 2' }],
+})
 </script>

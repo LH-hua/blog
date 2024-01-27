@@ -16,11 +16,7 @@
           <div v-for="(item, index) in menu" :key="item + index">
             <v-list-group v-if="item.chilren.length > 0" :value="item.text">
               <template v-slot:activator="{ props }">
-                <v-list-item
-                  v-bind="props"
-                  :prepend-icon="item.icon"
-                  :title="item.text"
-                ></v-list-item>
+                <v-list-item v-bind="props" :prepend-icon="item.icon" :title="item.text"></v-list-item>
               </template>
               <v-list-item
                 v-for="(item1, i) in item.chilren"
@@ -31,14 +27,7 @@
                 @click="toRouter(item)"
               ></v-list-item>
             </v-list-group>
-            <v-list-item
-              v-else
-              :value="item.text"
-              active-color="primary"
-              :title="item.text"
-              :prepend-icon="item.icon"
-              @click="toRouter(item)"
-            >
+            <v-list-item v-else :value="item.text" active-color="primary" :title="item.text" :prepend-icon="item.icon" @click="toRouter(item)">
             </v-list-item>
           </div>
         </v-list>
@@ -55,21 +44,21 @@
 </template>
 
 <script setup>
-import layout from "./layout.vue";
-import user from "../components/user";
+import layout from './layout.vue'
+import user from '../components/user'
 
-import { reactive, getCurrentInstance } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, getCurrentInstance } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { menu } from "@/config/menu.js";
+import { menu } from '@/config/menu.js'
 
-const { ctx, proxy } = getCurrentInstance();
-const router = useRouter();
-const _this = ctx;
+const { ctx, proxy } = getCurrentInstance()
+const router = useRouter()
+const _this = ctx
 
 const toRouter = (val) => {
-  console.log(_this);
-  console.log(proxy);
-  router.push(val.path);
-};
+  console.log(_this)
+  console.log(proxy)
+  router.push(val.path)
+}
 </script>

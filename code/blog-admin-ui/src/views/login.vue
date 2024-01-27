@@ -26,16 +26,7 @@
 
           <br />
 
-          <v-btn
-            block
-            color="#00B0FF"
-            size="large"
-            type="submit"
-            variant="elevated"
-            @click="btn_login"
-          >
-            登 录
-          </v-btn>
+          <v-btn block color="#00B0FF" size="large" type="submit" variant="elevated" @click="btn_login"> 登 录 </v-btn>
         </v-form>
       </v-card>
     </v-sheet>
@@ -43,42 +34,42 @@
 </template>
 
 <script setup>
-import { reactive, getCurrentInstance } from "vue";
-import { useRouter } from "vue-router";
-import { login } from "@/http/user";
-import { usrMassegeStore } from "../store/massege";
+import { reactive, getCurrentInstance } from 'vue'
+import { useRouter } from 'vue-router'
+import { login } from '@/http/user'
+import { usrMassegeStore } from '../store/massege'
 
 const state = reactive({
   form: {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   },
-});
-const { ctx, proxy } = getCurrentInstance();
-const _this = ctx;
-const router = useRouter();
+})
+const { ctx, proxy } = getCurrentInstance()
+const _this = ctx
+const router = useRouter()
 const btn_login = () => {
-  const msg = usrMassegeStore();
+  const msg = usrMassegeStore()
   if (!state.form.password || !state.form.username) {
     msg.openMsg({
-      type: "info",
-      text: "请检查用户或密码是否完整",
-    });
-    return;
+      type: 'info',
+      text: '请检查用户或密码是否完整',
+    })
+    return
   }
   login(state.form).then((res) => {
     if (res.data.token) {
-      sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem('token', res.data.token)
       router.push({
-        path: "/admin/article",
-      });
+        path: '/admin/article',
+      })
     }
     msg.openMsg({
       type: res.data.type,
       text: res.data.msg,
     })
-  });
-};
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -88,7 +79,7 @@ const btn_login = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("../assets/bg.jpg");
+  background: url('../assets/bg.jpg');
   background-size: cover;
   //   background-attachment: fixed;
 }

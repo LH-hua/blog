@@ -3,7 +3,7 @@
     <v-app-bar title="" border flat>
       <slot name="header"></slot>
     </v-app-bar>
-    <v-navigation-drawer expand-on-hover >
+    <v-navigation-drawer expand-on-hover>
       <slot name="side"></slot>
     </v-navigation-drawer>
 
@@ -16,6 +16,5 @@
     </v-main>
   </div>
 </template>
-  
-  <script setup>
-</script>
+
+<script setup></script>
