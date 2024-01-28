@@ -1,13 +1,16 @@
 <template>
-  <div style="background-color: #eff3f6;">
-    <v-navigation-drawer expand-on-hover class="elevation-3" floating name="app-navigation">
+  <div style="background-color: #eff3f6">
+    <v-navigation-drawer expand-on-hover :rail="data.show">
       <div class="pa-2">
-        <div class="title font-weight-bold text-uppercase text-primary">test</div>
-        <div class="overline text-grey">1</div>
+        <div class="title font-weight-bold text-uppercase text-primary">L H</div>
+        <div class="overline text-grey">1.0.0</div>
       </div>
       <slot name="side"></slot>
     </v-navigation-drawer>
-    <v-app-bar title="" class="elevation-3">
+    <v-app-bar title="">
+      <v-btn @click="side">
+        <v-icon>{{ data.show ? 'mdi-chevron-double-right' : 'mdi-chevron-double-left' }}</v-icon>
+      </v-btn>
       <slot name="header"></slot>
     </v-app-bar>
 
@@ -31,4 +34,12 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive } from 'vue'
+const data = reactive({
+  show: false,
+})
+function side() {
+  data.show = !data.show
+}
+</script>
