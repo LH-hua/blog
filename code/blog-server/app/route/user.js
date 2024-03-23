@@ -47,6 +47,7 @@ const salt = bcrypt.genSaltSync(10)
 
 router.post('/login', async (req, res, next) => {
   console.log(req.body)
+  console.log(User)
   try {
     let result = await User.findOne({ username: req.body.username })
     if (!result) {

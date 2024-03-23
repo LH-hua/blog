@@ -2,7 +2,21 @@
   <layout>
     <template #main>
       <br />
-      <v-sheet :height="200" :rounded="'lg'"></v-sheet>
+      <v-sheet :rounded="'lg'">
+        <div class="d-flex flex-no-wrap" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
+          <v-avatar class="ma-3" rounded="0" size="150">
+                <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img>
+              </v-avatar>
+          <v-card
+                flat
+                :key="item._id"
+                :title="item.title"
+                :subtitle="item.date"
+                :text="item.descr"
+              >
+              </v-card>
+        </div>
+      </v-sheet>
     </template>
     <template #side>
       <br />
@@ -28,7 +42,12 @@
           </v-card-title>
           <v-card-text> </v-card-text>
           <template v-slot:actions>
-            <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="toGithub">
+            <v-btn
+              class="flex-grow-1 grey-lighten-2"
+              color="#EEEEEE"
+              variant="flat"
+              @click="toGithub"
+            >
               <v-icon icon="mdi-github"></v-icon>
             </v-btn>
             <v-btn
@@ -57,12 +76,29 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-const drawer = reactive({ drawer: false })
+import { reactive,onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router'
+import {get} from '../../http/request'
+
+const router = useRouter()
+const drawer = reactive({ drawer: false });
+const data = reactive({data:[]})
+onBeforeMount(() => {
+  getArticle()
+})
+function getArticle(){
+  console.log(data)
+  get('/api/post/list').then(res => {
+    data.data = res.data
+  })
+}
+function onDetal(obj) {
+  router.push('detal/' + obj._id)
+}
 function onAbort() {
-  drawer.drawer = !drawer.drawer
+  drawer.drawer = !drawer.drawer;
 }
 function toGithub() {
-  window.open('https://github.com/LH-hua')
+  window.open('https://github.com/LH-hua');
 }
 </script>

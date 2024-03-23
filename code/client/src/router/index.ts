@@ -11,7 +11,12 @@ const routes = [
         name: 'list',
         path: '',
         component: () => import('../views/post/list.vue')
-      }
+      },
+      {
+        path: 'detal/:id',
+        name: '详情',
+        component: () => import('../views/post/detal.vue'),
+      },
     ]
   },
 ]

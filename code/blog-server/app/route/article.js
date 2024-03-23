@@ -1,8 +1,10 @@
+const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
 const posts = require('../models/post')
 // const article = require('../controller/article')
 const Middleware = require('../middleware/index')
+const moment = require('moment')
 
 // 65feac185b722ffab4dc8d5f
 /**
@@ -69,6 +71,8 @@ router.get('/list', async (req, res, next) => {
  *
  */
 router.get('/detail', async (req, res, next) => {
+  console.log(req.params)
+  console.log(req.query)
   let { _id } = _.assign(req.body, req.query, req.params)
   try {
     let result = await posts.findOne({ _id: _id })
@@ -84,7 +88,7 @@ router.get('/detail', async (req, res, next) => {
 
 /**
  * @swagger
- * /api/post/add:
+ * /api/post/create:
  *  post:
  *      summary: 新增文章
  *      tags: [Post]
@@ -102,7 +106,7 @@ router.get('/detail', async (req, res, next) => {
  *             description: 成功
  *
  */
-router.post('/add', async (req, res) => {
+router.post('/create', async (req, res, next) => {
   try {
     const { title, body, userId } = req.body
     const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
@@ -118,6 +122,7 @@ router.post('/add', async (req, res) => {
         status: 200,
         msg: '文章添加成功了',
       })
+      next()
     }
   } catch (error) {}
 })

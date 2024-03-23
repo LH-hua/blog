@@ -12,4 +12,4 @@ const captchaSchema = new mongoose.Schema({
   },
 })
 
-module.exports = captcha = mongoose.model('captcha', captchaSchema)
+module.exports = mongoose.model('captcha', captchaSchema)

@@ -24,4 +24,4 @@ const postSchema = new mongoose.Schema({
     default: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
   },
 })
-module.exports = posts = mongoose.model('posts', postSchema)
+module.exports = mongoose.model('posts', postSchema)
