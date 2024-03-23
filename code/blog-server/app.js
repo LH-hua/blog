@@ -40,6 +40,6 @@ app.use(function (err, req, res, next) {
 app.listen(port, () => {
   console.log('---------------------------------------------------------------------')
   console.log(`app run at ${hostUrl}`)
-  console.log(`API 文档 在 ${hostUrl}/swagger`)
+  console.log(`API 文档 在 ${hostUrl}/api-docs`)
   console.log('---------------------------------------------------------------------')
 })

@@ -13,7 +13,7 @@ const options = {
     },
   },
   // 去哪个路由下收集 swagger 注释
-  apis: [path.join(__dirname, '../../docs/*.js')],
+  apis: [path.join(__dirname, '../route/*.js')],
 }
 
 var swaggerJson = function (req, res) {
@@ -29,6 +29,6 @@ var swaggerInstall = function (app) {
   // 开放相关接口，
   app.get('/swagger.json', swaggerJson)
   // 使用 swaggerSpec 生成 swagger 文档页面，并开放在指定路由
-  app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 }
 module.exports = swaggerInstall
