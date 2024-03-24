@@ -23,6 +23,7 @@ config
 *.njsproj
 *.sln
 *.sw?
+.env*
 
 # git
 .gitignore

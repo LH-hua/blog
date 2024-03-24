@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const multiparty = require('multiparty')
-const { secret } = require('../config/secret.config')
 const { Router } = require('express')
 const router = Router()
 // const user = require('../controller/user')
@@ -66,7 +65,7 @@ router.post('/login', async (req, res, next) => {
       return
     }
     console.log(result)
-    const token = jwt.sign({ id: result._id, username: result.username, password: result.password }, secret)
+    const token = jwt.sign({ id: result._id, username: result.username, password: result.password }, process.env.secret)
     res.send({
       type: 'success',
       msg: '登录成功',

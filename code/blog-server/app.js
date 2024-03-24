@@ -1,11 +1,10 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const fs = require('fs')
-
-// 主机运行配置文件
-const { port, hostUrl } = require('./app/config/host.config')
+dotenv.config()
 
 // 使用swagger API 文档
 const swaggerInstall = require('./app/utils/swagger')
@@ -37,9 +36,9 @@ app.use(function (err, req, res, next) {
   })
 })
 
-app.listen(port, () => {
+app.listen(process.env.port, () => {
   console.log('---------------------------------------------------------------------')
-  console.log(`app run at ${hostUrl}`)
-  console.log(`API 文档 在 ${hostUrl}/api-docs`)
+  console.log(`app run at ${process.env.host_path}`)
+  console.log(`API 文档 在 http://${process.env.host_path}/api-docs`)
   console.log('---------------------------------------------------------------------')
 })

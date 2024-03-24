@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken')
-const { secret } = require('../config/secret.config')
 
 class Middleware {
   authorization(req, res, next) {
     if (req.headers.authorization) {
-      const result = jwt.verify(req.headers.authorization, secret)
+      const result = jwt.verify(req.headers.authorization, process.env.secret)
       // console.log(result)
       req.body.userId = result.id
       next()
@@ -18,7 +17,7 @@ class Middleware {
   }
   authorizationTureAndFalse(req, res, next) {
     try {
-    } catch (error) { }
+    } catch (error) {}
   }
 }
 
