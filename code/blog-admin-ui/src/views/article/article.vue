@@ -33,12 +33,13 @@ const state = reactive({
 })
 
 const postList = computed(() => {
+  console.log(state.data)
   return state.data
 })
 
 const getArticleList = () => {
   article().then((res) => {
-    state.data = res.data.msg
+    state.data = res.data.data
     console.log(state.data)
   })
 }

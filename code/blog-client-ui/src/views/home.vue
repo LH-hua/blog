@@ -3,8 +3,10 @@
     <top-menu></top-menu>
   </v-app-bar>
 
-  <v-main class="bg-grey-lighten-3">
-    <router-view></router-view>
+  <v-main>
+    <div>
+      <router-view></router-view>
+    </div>
   </v-main>
   <v-footer flat class="bg-black" height="20">
     <div class="px-4 py-2 bg-black text-center w-100">{{ new Date().getFullYear() }} — LH</div>

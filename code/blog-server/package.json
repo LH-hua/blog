@@ -23,6 +23,7 @@
     "mongoose": "^6.6.7",
     "multiparty": "^4.2.3",
     "nodemailer": "^6.9.3",
+    "openai": "^4.29.2",
     "svg-captcha": "^1.4.0",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0"

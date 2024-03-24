@@ -1,13 +1,13 @@
 <template>
   <v-container class="d-flex align-center">
-    <v-avatar class="logo" color="grey-darken-1">LH</v-avatar>
+    <div class="font-weight-bold bg-blue-darken-2 pa-4 " >LH</div>
     <v-spacer></v-spacer>
     <v-btn v-for="item in store.menu" :key="item.url" variant="text" @click="onTorouter(item)">
       <v-icon :icon="item.icon" />
       {{ item.name }}
     </v-btn>
     <userMenu v-if="user.userStatus"></userMenu>
-    <v-avatar v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登 录</v-avatar>
+    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登 录</div>
     <v-dialog v-model="store.dialog" width="1024">
       <login v-if="store.login" @close="close"></login>
       <!-- <regsite v-else></regsite> -->

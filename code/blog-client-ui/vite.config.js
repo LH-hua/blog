@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   optimizeDeps: {
     include: ['cesium'],
@@ -17,10 +17,11 @@ export default defineConfig({
     CESIUM_BASE_URL: JSON.stringify('/cesium/'),
   },
   server: {
-    open:true,
+    open: true,
     // https:true,
     cors: true,
-    host:'0.0.0.0',
+    host: '0.0.0.0',
+    port: '5170',
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:3333/api',
@@ -46,7 +47,7 @@ export default defineConfig({
         target: 'http://127.0.0.1:3333',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/post\/detal/, ''),
-      }
-    }
-  }
+      },
+    },
+  },
 })

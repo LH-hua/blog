@@ -1,25 +1,23 @@
 <template>
-  <v-sheet>
-    <v-card flat>
-      <v-card-title>
-        <div style="width: 100%; height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 14px">
-          <v-avatar image="/avatar/default.jpg"></v-avatar>
-          <span>LH-hua</span>
-          <span>虽千万人，吾往矣。</span>
-          <div>还没想好</div>
-        </div>
-      </v-card-title>
-      <v-card-text> </v-card-text>
-      <template v-slot:actions>
-        <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="toGithub">
-          <v-icon icon="mdi-github"></v-icon>
-        </v-btn>
-        <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="onAbort">
-          <v-icon icon="mdi-account"></v-icon>
-        </v-btn>
-      </template>
-    </v-card>
-  </v-sheet>
+  <v-card flat>
+    <v-card-title>
+      <div style="width: 100%; height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 14px">
+        <v-avatar image="/avatar/default.jpg"></v-avatar>
+        <span>LH-hua</span>
+        <span>虽千万人，吾往矣。</span>
+        <div>还没想好</div>
+      </div>
+    </v-card-title>
+    <v-card-text> </v-card-text>
+    <template v-slot:actions>
+      <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="toGithub">
+        <v-icon icon="mdi-github"></v-icon>
+      </v-btn>
+      <v-btn class="flex-grow-1 grey-lighten-2" color="#EEEEEE" variant="flat" @click="onAbort">
+        <v-icon icon="mdi-account"></v-icon>
+      </v-btn>
+    </template>
+  </v-card>
   <v-navigation-drawer v-model="drawer.drawer" temporary>
     <v-list>
       <v-list-item prepend-avatar="/avatar/default.jpg" title="LH-hua"></v-list-item>

@@ -3,7 +3,7 @@
     <template #main>
       <br />
       <v-sheet :rounded="'lg'">
-        <div class="d-flex flex-no-wrap" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
+        <!-- <div class="d-flex flex-no-wrap" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
           <v-avatar class="ma-3" rounded="0" size="150">
                 <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img>
               </v-avatar>
@@ -13,9 +13,17 @@
                 :title="item.title"
                 :subtitle="item.date"
                 :text="item.descr"
+                :width="'100%'"
               >
               </v-card>
-        </div>
+        </div> -->
+        <v-list>
+          <v-list-item>
+            <v-list-img>
+              
+            </v-list-img>
+          </v-list-item>
+        </v-list>
       </v-sheet>
     </template>
     <template #side>

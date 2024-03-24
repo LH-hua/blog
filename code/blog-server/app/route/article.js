@@ -46,7 +46,7 @@ const moment = require('moment')
  */
 router.get('/list', async (req, res, next) => {
   try {
-    let result = await posts.find({}, { body: 0 }).sort({ date: -1 })
+    let result = await posts.find({}).sort({ date: -1 })
     res.send({
       data: result,
       status: 200,
