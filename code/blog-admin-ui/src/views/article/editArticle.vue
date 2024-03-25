@@ -1,20 +1,42 @@
 <template>
   <div>
-    <v-form v-model="valid">
-      <v-container>
-        <v-row dense>
-          <v-col cols="4">
-            <v-text-field v-model="state.title" :rules="nameRules" label="标题" required density="compact"></v-text-field>
-          </v-col>
-
-          <v-col cols="1">
-            <div>
+    <div style="width:50%">
+      <v-form v-model="valid">
+        <v-container>
+          <v-row dense>
+            <v-col cols="1">
+              <v-list-subheader>标题：</v-list-subheader>
+            </v-col>
+            <v-col cols="10">
+              <v-text-field v-model="state.title" :rules="nameRules" variant="outlined" required density="compact"></v-text-field>
+              <!-- <div>
               <v-btn color="secondary" @click="submit" variant="flat">发布</v-btn>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
+            </div> -->
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col cols="1">
+              <v-list-subheader>封面：</v-list-subheader>
+            </v-col>
+            <v-col cols="10">
+              <v-file-input
+                v-model="state.title"
+                variant="outlined"
+                prepend-icon=""
+                accept="image/png, image/jpeg, image/bmp"
+                required
+                density="compact"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col>
+              <v-btn color="secondary" @click="submit" variant="flat">发布</v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+    </div>
     <v-divider></v-divider>
     <div>
       <div id="editor"></div>
