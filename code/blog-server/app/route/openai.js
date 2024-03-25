@@ -1,4 +1,3 @@
-// import OpenAI from 'openai'
 const OpenAI = require('openai')
 const { Router } = require('express')
 const router = Router()
@@ -9,12 +8,12 @@ const openai = new OpenAI({
 /**
  * @swagger
  *  tags:
- *      - name: chartgpt
- *        description: chartgpt
+ *      - name: openAI
+ *        description: openAI
  *
  * components:
  *  schemas:
- *      chartGPT:
+ *      openAI:
  *        type: object
  *        properties:
  *          test1:
@@ -25,18 +24,18 @@ const openai = new OpenAI({
 
 /**
  * @swagger
- * /api/chart/test:
+ * /api/open-ai/test:
  *   post:
- *     summary: chartGPT
+ *     summary: openAI
  *     description: 测试
- *     tags: [chartgpt]
+ *     tags: [openAI]
  *     requestBody:
  *       description: 创建测试对象
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/chartGPT'
+ *             $ref: '#/components/schemas/openAI'
  *     responses:
  *       '200':
  *         description: 成功

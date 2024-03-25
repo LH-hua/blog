@@ -2,9 +2,11 @@ const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
 const posts = require('../models/post')
+const captchaDb = require('../models/captcha')
 // const article = require('../controller/article')
 const Middleware = require('../middleware/index')
 const moment = require('moment')
+const sendData = require('../utils/dataFun')
 
 // 65feac185b722ffab4dc8d5f
 /**
@@ -63,7 +65,7 @@ router.get('/list', async (req, res, next) => {
  *      tags: [Post]
  *      parameters:
  *          - name: _id
- *            in: _id
+ *            in: query
  *            description: '文章ID'
  *      responses:
  *          200:
@@ -110,21 +112,78 @@ router.post('/create', async (req, res, next) => {
   try {
     const { title, body, userId } = req.body
     const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-    const result = await posts.insertMany({
-      date: date,
-      title: title,
-      body: body,
-      userId: userId,
-    })
-    if (result) {
-      res.send({
-        type: 'success',
-        status: 200,
-        msg: '文章添加成功了',
-      })
-      next()
-    }
+    posts.insertMany(
+      {
+        date: date,
+        title: title,
+        body: body,
+        userId: userId,
+      },
+      (err, data) => {
+        sendData(err, data, res)
+      }
+    )
+    // if (result) {
+    //   res.send({
+    //     type: 'success',
+    //     status: 200,
+    //     msg: '文章添加成功了',
+    //   })
+    //   next()
+    // }
   } catch (error) {}
+})
+
+/**
+ * @swagger
+ * /api/post/create-captcha:
+ *  get:
+ *      summary: 添加文章标签
+ *      tags: [Post]
+ *      parameters:
+ *        - name: text
+ *          in: query
+ *          description: '添加标签'
+ *          required: true
+ *          type: "string"
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/create-captcha', async (req, res, next) => {
+  const { text } = req.query
+  console.log(req.params)
+  console.log(req.query)
+  console.log(req.body)
+  console.log(text)
+  if (!text) {
+    res.send({
+      msg: '内容不能为空',
+    })
+    return
+  }
+  const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  captchaDb.insertMany({ captcha: text, time: date }, (err, data) => {
+    sendData(err, data, res)
+  })
+})
+
+/**
+ * @swagger
+ * /api/post/captcha:
+ *  get:
+ *      summary: 文章标签
+ *      tags: [Post]
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/captcha', async (req, res, next) => {
+  captchaDb.find({}, (err, data) => {
+    sendData(err, data, res)
+  })
 })
 
 module.exports = router

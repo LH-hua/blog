@@ -7,5 +7,5 @@ module.exports = (app) => {
   app.use('/api/post', article)
   app.use('/api/user', user)
   app.use('/api/sys', sys)
-  app.use('/api/chart', chartGPT)
+  app.use('/api/open-ai', chartGPT)
 }

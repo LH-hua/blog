@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const moment = require('moment')
 
 const captchaSchema = new mongoose.Schema({
   captcha: {
@@ -8,7 +7,7 @@ const captchaSchema = new mongoose.Schema({
   },
   time: {
     type: String,
-    default: moment().format('YYYY-MM-DD HH:mm:ss'),
+    default: '',
   },
 })
 
