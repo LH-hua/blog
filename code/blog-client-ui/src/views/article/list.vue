@@ -42,9 +42,7 @@
               </v-card-item-text>
             </v-card-item>
             <v-card-actions>
-              <div class="text-subtitle-1">
-                {{ item.date }}
-              </div>
+              <v-chip variant="text"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon>{{ item.date }} </v-chip>
             </v-card-actions>
           </v-card>
           <div>
