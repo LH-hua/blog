@@ -11,3 +11,7 @@ export function getArticleDetal(params) {
 export function addArticle(data) {
   return post('/api/post/add', data)
 }
+
+export function getCaptcha(data) {
+  return get('/api/post/captcha', data)
+}

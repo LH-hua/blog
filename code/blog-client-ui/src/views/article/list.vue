@@ -7,6 +7,17 @@
       <br />
       <v-sheet rounded="lg">
         <v-card flat>
+          <v-card-title>标签</v-card-title>
+          <v-card-text>
+            <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha">
+              <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+      <br />
+      <v-sheet rounded="lg">
+        <v-card flat>
           <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
           <v-card-text>
             <p>这是LH个人博客，记录和分享日常</p>
@@ -36,9 +47,11 @@
               </div>
             </v-card-actions>
           </v-card>
-          <v-avatar class="ma-3" rounded="0" size="150">
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img>
-          </v-avatar>
+          <div>
+            <v-img :width="263" aspect-ratio="4/3" rounded cover src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"></v-img>
+          </div>
+          <!-- <v-avatar class="ma-3" rounded="0" size="150"> -->
+          <!-- </v-avatar> -->
         </div>
         <!-- <v-list lines="three">
           <v-list-img>
@@ -59,13 +72,14 @@ import { reactive, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import markdown from 'markdown-it'
 
-import { getArticleList } from '@/http/article'
+import { getArticleList, getCaptcha } from '@/http/article'
 
 import cardImage from '@/components/cardImage.vue'
 
 const router = useRouter()
 const data = reactive({
   data: [],
+  captcha: [],
 })
 const md = new markdown()
 
@@ -86,6 +100,9 @@ onBeforeMount(() => {
   getArticleList().then((res) => {
     mdTotext(res.data)
     data.data = res.data
+  })
+  getCaptcha().then((res) => {
+    data.captcha = res.data
   })
 })
 </script>
