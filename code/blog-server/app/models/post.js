@@ -7,6 +7,10 @@ const postSchema = new mongoose.Schema({
   },
   id: Number,
   userId: Number,
+  cover: {
+    type: String,
+    default: '',
+  },
   descr: {
     type: String,
     default: null,

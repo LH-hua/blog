@@ -49,7 +49,7 @@ const sendData = require('../utils/dataFun')
 router.get('/list', async (req, res, next) => {
   try {
     let result = await posts.find({}).sort({ date: -1 })
-    res.send({
+    return res.send({
       data: result,
       status: 200,
     })
@@ -123,15 +123,52 @@ router.post('/create', async (req, res, next) => {
         sendData(err, data, res)
       }
     )
-    // if (result) {
-    //   res.send({
-    //     type: 'success',
-    //     status: 200,
-    //     msg: '文章添加成功了',
-    //   })
-    //   next()
-    // }
   } catch (error) {}
+})
+
+/**
+ * @swagger
+ * /api/post/update:
+ *  post:
+ *      summary: 更新文章
+ *      tags: [Post]
+ *      security:
+ *        - basicAuth: []
+ *      requestBody:
+ *        description: "Update post object"
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                title:
+ *                  type: string
+ *                  description: '文章标题'
+ *                body:
+ *                  type: string
+ *                  description: '更新内容'
+ *                id:
+ *                  type: string
+ *                  description: '文章id'
+ *                cover:
+ *                  type: string
+ *                  description: '封面图片'
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.post('/update', (req, res, next) => {
+  const { title, body, id, cover } = req.body
+  if (!id) {
+    return res.send({
+      msg: '文章id不能为空！',
+    })
+  }
+  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover }, (err, data) => {
+    sendData(err, data, res)
+  })
 })
 
 /**
