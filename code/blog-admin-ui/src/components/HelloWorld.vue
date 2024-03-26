@@ -8,7 +8,9 @@ defineProps({
 const count = ref(0)
 </script>
 
-<template></template>
+<template>
+  <div>fdsaf</div>
+</template>
 
 <style scoped>
 .read-the-docs {

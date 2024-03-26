@@ -5,6 +5,7 @@
         <tr>
           <th class="text-left">时间</th>
           <th class="text-left">标题</th>
+          <th class="text-left">标签</th>
           <th class="text-left">作者</th>
           <th class="text-left">操作</th>
         </tr>
@@ -13,23 +14,43 @@
         <tr v-for="item in postList" :key="item">
           <td>{{ item.date }}</td>
           <td>{{ item.title }}</td>
+          <td>{{ item.title }}</td>
           <td>{{ item.auther }}</td>
           <td>
-            <v-btn variant="flat" size="small" color="error"> 删除 </v-btn>
-            &nbsp;
-            <v-btn variant="flat" size="small" color="secondary"> 编辑 </v-btn>
+            <div>
+              <v-btn variant="flat" size="small" color="error"> 删 除 </v-btn>
+              &nbsp;
+              <v-btn v-bind="activatorProps" text="编 辑" variant="flat" size="small" color="secondary" @click="Query(item._id)"></v-btn>
+            </div>
           </td>
         </tr>
       </tbody>
     </v-table>
+    <v-dialog v-model="state.dialog" width="1000" max-width="1500">
+      <v-card>
+        <v-toolbar title="文章编辑"></v-toolbar>
+        <v-card-text>
+          <editPost :title="state.detal.title" :body="state.detal.body" :cover="state.detal.cover" :captcha="state.detal.captcha"></editPost>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script setup>
 import { reactive, computed, onMounted } from 'vue'
-import { article } from '@/http/article'
+import { article, getPostDetal } from '@/http/article'
+
+import editPost from '@/components/editArticle.vue'
 
 const state = reactive({
   data: [],
+  dialog: false,
+  detal: {
+    title: '',
+    body: '',
+    cover: '',
+    captcha: [],
+  },
 })
 
 const postList = computed(() => {
@@ -40,7 +61,13 @@ const postList = computed(() => {
 const getArticleList = () => {
   article().then((res) => {
     state.data = res.data.data
-    console.log(state.data)
+  })
+}
+
+const Query = (id) => {
+  getPostDetal({ _id: id }).then((res) => {
+    state.detal = res.data.data
+    state.dialog = true
   })
 }
 
