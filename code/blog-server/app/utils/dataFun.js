@@ -5,7 +5,7 @@ module.exports = (err, data, res) => {
       err: err,
     })
   }
-  return res.sendStatus(200).send({
+  return res.send({
     msg: 'ok',
     data: data,
   })

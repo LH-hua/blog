@@ -26,11 +26,11 @@
         </tr>
       </tbody>
     </v-table>
-    <v-dialog v-model="state.dialog" width="1000" max-width="1500">
+    <v-dialog v-model="state.dialog" width="1000" max-width="2000">
       <v-card>
         <v-toolbar title="文章编辑"></v-toolbar>
         <v-card-text>
-          <editPost :title="state.detal.title" :body="state.detal.body" :cover="state.detal.cover" :captcha="state.detal.captcha"></editPost>
+          <editPost :title="state.detal.title" :id="state.detal._id" :body="state.detal.body" :cover="state.detal.cover" :captcha="state.detal.captcha"></editPost>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -50,6 +50,7 @@ const state = reactive({
     body: '',
     cover: '',
     captcha: [],
+    _id:''
   },
 })
 

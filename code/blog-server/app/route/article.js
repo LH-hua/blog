@@ -47,15 +47,18 @@ const sendData = require('../utils/dataFun')
  *
  */
 router.get('/list', async (req, res, next) => {
-  try {
-    let result = await posts.find({}).sort({ date: -1 })
-    return res.send({
-      data: result,
-      status: 200,
-    })
-  } catch (error) {
-    next(error)
-  }
+  posts.find({}, (err, data) => {
+    sendData(err, data, res)
+  })
+  // try {
+  //   let result = await posts.find({}).sort({ date: -1 })
+  //   return res.send({
+  //     data: result,
+  //     status: 200,
+  //   })
+  // } catch (error) {
+  //   console.log(error)
+  // }
 })
 /**
  * @swagger
@@ -86,7 +89,6 @@ router.get('/detail', async (req, res, next) => {
     next(error)
   }
 })
-//   security: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmVhYzE4NWI3MjJmZmFiNGRjOGQ1ZiIsInVzZXJuYW1lIjoidGVzdCIsInBhc3N3b3JkIjoiJDJhJDEwJHVjUS9lM1gzd3NDRElBZ1FqVmFuSS53OEg3SExXSVZDNFBxeU4uYm9FeEVmVFlveDZiN3MuIiwiaWF0IjoxNzExMTg5NDI2fQ.CHKgUDuup4YPcCOvVT_-HpogWbPt2PPe3auomNxW9V8'
 
 /**
  * @swagger
@@ -160,13 +162,14 @@ router.post('/create', async (req, res, next) => {
  *
  */
 router.post('/update', (req, res, next) => {
-  const { title, body, id, cover } = req.body
+  const { title, body, id, cover, captcha } = req.body
   if (!id) {
     return res.send({
       msg: '文章id不能为空！',
     })
   }
-  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover }, (err, data) => {
+  console.log(captcha)
+  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, (err, data) => {
     sendData(err, data, res)
   })
 })

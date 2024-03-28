@@ -19,6 +19,10 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  captcha: {
+    type: Array,
+    default: [],
+  },
   userId: {
     type: String,
     default: '',
