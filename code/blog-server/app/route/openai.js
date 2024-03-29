@@ -1,6 +1,7 @@
 const OpenAI = require('openai')
 const { Router } = require('express')
 const router = Router()
+console.log(process.env.openai_api_key)
 const openai = new OpenAI({
   organization: process.env.openai_api_key,
 })
