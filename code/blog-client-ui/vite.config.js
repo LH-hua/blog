@@ -33,10 +33,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/avatar/, ''),
       },
-      '/image': {
-        target: 'http://127.0.0.1:3333',
+      '/images': {
+        target: 'http://127.0.0.1:6789/',
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/image/, ''),
+        rewrite: (path) => path.replace(/^\/images/, ''),
       },
       '/post/image': {
         target: 'http://127.0.0.1:3333',

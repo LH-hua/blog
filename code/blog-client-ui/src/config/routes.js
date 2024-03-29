@@ -22,6 +22,11 @@ const routes = [
           },
         ],
       },
+      {
+        path: 'preject',
+        name: '项目展示',
+        component: () => import('@/views/preject/index.vue'),
+      },
     ],
   },
   {

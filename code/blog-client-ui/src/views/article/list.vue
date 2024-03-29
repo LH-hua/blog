@@ -1,18 +1,9 @@
 <template>
   <div>
     <div class="top-nav">
-      <v-sheet rounded="lg" :width="500">
-        <v-text-field
-          :loading="loading"
-          append-inner-icon="mdi-magnify"
-          density="compact"
-          label="Search templates"
-          variant="solo"
-          hide-details
-          single-line
-          @click:append-inner="onClick"
-        ></v-text-field>
-      </v-sheet>
+      <div style="width: 500px;">
+        <v-combobox density="compact" menu-icon="" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="solo"></v-combobox>
+      </div>
     </div>
     <div class="main">
       <side-main>
@@ -151,14 +142,14 @@ onBeforeMount(() => {
   }
 }
 @keyframes rotate {
-    0% {
-        transform: translate(-50%, 0) rotateZ(0deg);
-    }
-    50% {
-        transform: translate(-50%, -2%) rotateZ(20deg);
-    }
-    100% {
-        transform: translate(-50%, 0%) rotateZ(45deg);
-    }
+  0% {
+    transform: translate(-50%, 0) rotateZ(0deg);
+  }
+  50% {
+    transform: translate(-50%, -2%) rotateZ(20deg);
+  }
+  100% {
+    transform: translate(-50%, 0%) rotateZ(45deg);
+  }
 }
 </style>
