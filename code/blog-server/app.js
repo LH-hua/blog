@@ -36,6 +36,17 @@ app.use(function (err, req, res, next) {
   })
 })
 
+if (process.env.NODE_ENV === 'development') {
+  // ...
+  console.log('development')
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // ...
+  console.log('production')
+}
+console.log(process.env.NODE_ENV)
+
 app.listen(process.env.port, () => {
   console.log('---------------------------------------------------------------------')
   console.log(`app run at ${process.env.host_path}`)

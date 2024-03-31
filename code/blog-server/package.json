@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "set NODE_ENV=dev && nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/esbuild main.js --bundle --minify --outfile=dist.js --platform=node"
   },

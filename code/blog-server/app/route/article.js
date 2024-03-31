@@ -40,25 +40,22 @@ const sendData = require('../utils/dataFun')
  *  get:
  *      summary: 文章列表
  *      tags: [Post]
- *      parameters: []
+ *      parameters:
+ *        - name: title
+ *          in: query
+ *          description: 文章标题
  *      responses:
  *          200:
  *             description: 成功
  *
  */
 router.get('/list', async (req, res, next) => {
-  posts.find({}, (err, data) => {
+  const { title } = _.assign(req.body, req.query, req.params)
+  console.log(title)
+  const regex = new RegExp(title, 'i')
+  posts.find({ title: regex }, (err, data) => {
     sendData(err, data, res)
   })
-  // try {
-  //   let result = await posts.find({}).sort({ date: -1 })
-  //   return res.send({
-  //     data: result,
-  //     status: 200,
-  //   })
-  // } catch (error) {
-  //   console.log(error)
-  // }
 })
 /**
  * @swagger
