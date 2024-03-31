@@ -1,7 +1,10 @@
 const { Router } = require('express')
 const router = Router()
-
-router.use('/token', require('./sys'))
-router.use('/code', require('./captcha'))
+/**
+ * @swagger
+ * tags:
+ *  - name: Sys
+ *    description: 系统
+ */
 
 module.exports = router

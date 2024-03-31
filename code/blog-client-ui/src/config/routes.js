@@ -30,16 +30,6 @@ const routes = [
     ],
   },
   {
-    path: '/gis',
-    name: 'gis',
-    component: () => import('@/views/gis/index.vue'),
-  },
-  {
-    path: '/indoors',
-    name: 'indoors',
-    component: () => import('@/views/indoors/index.vue'),
-  },
-  {
     path: '/:catchAll(.*)',
     name: '404',
     component: () => import('@/views/404.vue'),

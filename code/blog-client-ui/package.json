@@ -12,7 +12,6 @@
     "@mdi/font": "^7.2.96",
     "@toast-ui/editor": "^3.2.2",
     "axios": "^1.4.0",
-    "cesium": "^1.106.1",
     "echarts": "^5.4.2",
     "highlight.js": "^11.8.0",
     "markdown-it": "^13.0.1",
@@ -20,7 +19,6 @@
     "markdown-it-toc-done-right": "^4.2.0",
     "pinia": "2.0",
     "sass": "^1.62.1",
-    "three": "^0.153.0",
     "vue": "^3.2.47",
     "vue-router": "^4.2.1",
     "vuetify": "^3.3.0"

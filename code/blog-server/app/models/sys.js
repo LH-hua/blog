@@ -20,4 +20,9 @@ const menuSchema = new mongoose.Schema({
     default: [],
   },
 })
-module.exports = posts = mongoose.model('menu', menuSchema)
+
+const sysSchema = new mongoose.Schema({})
+module.exports = {
+  menu: mongoose.model('menu', menuSchema),
+  sys: mongoose.model('sys', sysSchema),
+}
