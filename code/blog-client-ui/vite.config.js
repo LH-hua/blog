@@ -34,7 +34,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/avatar/, ''),
       },
       '/images': {
-        target: 'http://127.0.0.1:6789/',
+        target: 'http://127.0.0.1:6789/preject',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/images/, ''),
       },

@@ -1,8 +1,40 @@
 <template>
   <div>
     <div class="top-nav">
-      <div style="width: 500px;">
-        <v-combobox density="compact" menu-icon="" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="solo"></v-combobox>
+      <div style="width: 500px">
+        <v-menu>
+          <template v-slot:activator="{ props }">
+            <v-text-field
+              v-bind="props"
+              density="compact"
+              variant="solo"
+              placeholder="输入搜索内容"
+              append-inner-icon="mdi-search-web"
+              flat
+              clearable
+              v-model="data.serachValue"
+              @click:clear="handlerClear"
+              @keyup.enter="handlerEnter"
+            ></v-text-field>
+          </template>
+          <v-card v-if="data.serachItems.length">
+            <v-toolbar density="compact" extended :extension-height="10" color="white">
+              <v-toolbar-title>
+                <div style="color: rgba(0, 0, 0, 0.5)">搜索历史</div>
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn style="color: rgba(0, 0, 0, 0.5)" @click="clearHandler">
+                清除
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-text>
+              <v-chip-group selected-class="text-primary">
+                <v-chip v-for="item in data.serachItems" :key="item" @click="handlerChip(item)">{{ item }}</v-chip>
+              </v-chip-group>
+            </v-card-text>
+          </v-card>
+        </v-menu>
       </div>
     </div>
     <div class="main">
@@ -76,9 +108,41 @@ const router = useRouter()
 const data = reactive({
   data: [],
   captcha: [],
+  serachItems: [],
+  serachValue: '',
 })
 const md = new markdown()
 
+function handlerChip(item) {
+  data.serachValue = item
+  handlerEnter()
+}
+function handlerEnter() {
+  // 键盘enter事件
+  console.log('enter')
+  if (data.serachValue) {
+
+    getArticleList({title:data.serachValue}).then((res) => {
+      mdTotext(res.data)
+      data.data = res.data
+    })
+    const histroy = getStroage()
+    if (histroy instanceof Array) {
+      const T = histroy.includes(data.serachValue)
+      if(T) return
+      histroy.push(data.serachValue)
+      setStroage(histroy)
+    }
+  }
+}
+// function handlerClear(){
+
+// }
+function clearHandler() {
+  // 清除历史搜索内容
+  localStorage.removeItem('serach')
+  data.serachItems = []
+}
 function onDetal(obj) {
   router.push('detal/' + obj._id)
 }
@@ -92,6 +156,19 @@ function mdTotext(data) {
     item.body = text.trim()
   })
 }
+
+function setStroage(data) {
+
+  const value = JSON.stringify(data)
+  localStorage.setItem('serach', value)
+}
+function getStroage() {
+  let storageHistory = []
+  if (localStorage.getItem('serach') !== null) {
+    storageHistory = JSON.parse(localStorage.getItem('serach'))
+  }
+  return storageHistory
+}
 onBeforeMount(() => {
   getArticleList().then((res) => {
     mdTotext(res.data)
@@ -100,6 +177,7 @@ onBeforeMount(() => {
   getCaptcha().then((res) => {
     data.captcha = res.data
   })
+  data.serachItems = getStroage()
 })
 </script>
 

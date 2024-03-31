@@ -23,7 +23,7 @@
     <v-container fluid>
       <v-row dense>
         <v-col v-for="card in data.cards" :key="card.title" :cols="6">
-          <v-card>
+          <v-card  hover class="mx-auto">
             <v-img height="300px" :src="card.cover" cover></v-img>
             <v-card-title>{{ card.title }}</v-card-title>
             <v-card-subtitle class="pt-4"> {{ card.subtitle }} </v-card-subtitle>

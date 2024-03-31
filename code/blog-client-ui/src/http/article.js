@@ -1,7 +1,7 @@
 import { get, post } from './request'
 
-export function getArticleList() {
-  return get('/api/post/list')
+export function getArticleList(params) {
+  return get('/api/post/list', params)
 }
 
 export function getArticleDetal(params) {
