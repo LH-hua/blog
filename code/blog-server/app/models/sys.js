@@ -21,8 +21,13 @@ const menuSchema = new mongoose.Schema({
   },
 })
 
-const sysSchema = new mongoose.Schema({})
+const sysSchema = new mongoose.Schema({
+  announcement: {
+    type: String,
+    default: '',
+  },
+})
 module.exports = {
-  menu: mongoose.model('menu', menuSchema),
-  sys: mongoose.model('sys', sysSchema),
+  menuDb: mongoose.model('menu', menuSchema),
+  sysDb: mongoose.model('sys', sysSchema),
 }
