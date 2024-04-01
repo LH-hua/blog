@@ -6,8 +6,8 @@
       <v-icon :icon="item.icon" />
       {{ item.name }}
     </v-btn>
-    <userMenu v-if="user.userStatus"></userMenu>
-    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登 录</div>
+    <!-- <userMenu v-if="user.userStatus"></userMenu>
+    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登 录</div> -->
     <v-dialog v-model="store.dialog" width="1024">
       <login v-if="store.login" @close="close"></login>
       <!-- <regsite v-else></regsite> -->

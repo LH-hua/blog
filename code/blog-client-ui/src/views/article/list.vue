@@ -59,8 +59,7 @@
             <v-card flat>
               <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
               <v-card-text>
-                <p>这是LH个人博客，记录和分享日常</p>
-                <p>有问题欢迎讨论交流</p>
+                {{ data.announcement }}
               </v-card-text>
             </v-card>
           </v-sheet>
@@ -101,6 +100,7 @@ import { useRouter } from 'vue-router'
 import markdown from 'markdown-it'
 
 import { getArticleList, getCaptcha } from '@/http/article'
+import { announcement } from '@/http/sys'
 
 import cardImage from '@/components/cardImage.vue'
 
@@ -110,6 +110,7 @@ const data = reactive({
   captcha: [],
   serachItems: [],
   serachValue: '',
+  announcement:''
 })
 const md = new markdown()
 
@@ -121,15 +122,14 @@ function handlerEnter() {
   // 键盘enter事件
   console.log('enter')
   if (data.serachValue) {
-
-    getArticleList({title:data.serachValue}).then((res) => {
+    getArticleList({ title: data.serachValue }).then((res) => {
       mdTotext(res.data)
       data.data = res.data
     })
     const histroy = getStroage()
     if (histroy instanceof Array) {
       const T = histroy.includes(data.serachValue)
-      if(T) return
+      if (T) return
       histroy.push(data.serachValue)
       setStroage(histroy)
     }
@@ -158,7 +158,6 @@ function mdTotext(data) {
 }
 
 function setStroage(data) {
-
   const value = JSON.stringify(data)
   localStorage.setItem('serach', value)
 }
@@ -176,6 +175,9 @@ onBeforeMount(() => {
   })
   getCaptcha().then((res) => {
     data.captcha = res.data
+  })
+  announcement().then(res => {
+    data.announcement = res.data.announcement
   })
   data.serachItems = getStroage()
 })
