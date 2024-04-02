@@ -45,7 +45,7 @@ import MarkdownIt from 'markdown-it'
 import anchor from 'markdown-it-anchor'
 import toc from 'markdown-it-toc-done-right'
 import hljs from 'highlight.js'
-// import "highlight.js/scss/tokyo-night-light.scss";
+// import "highlight.js/styles/github.css";
 import '@/assets/css/typo.css'
 
 import { getArticleDetal } from '@/http/article'

@@ -67,7 +67,7 @@
 
         <template #main>
           <v-sheet class="pa-5" min-height="70vh" rounded="lg">
-            <div class="d-flex flex-no-wrap justify-space-between" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
+            <div class="ma-2 d-flex flex-no-wrap justify-space-between" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
               <v-card flat hover>
                 <v-card-item>
                   <v-card-item-title class="text-h6 font-weight-medium">
@@ -80,11 +80,14 @@
                   </v-card-item-text>
                 </v-card-item>
                 <v-card-actions>
-                  <v-chip variant="text"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon>{{ item.date }} </v-chip>
+                  <v-chip-group selected-class="text-primary">
+                    <v-chip density="compact" v-for="items in item.captcha" :key="item">{{ items }}</v-chip>
+                  </v-chip-group>
+                  <v-chip variant="text" density="compact"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon>{{ formartTime(item.date) }} </v-chip>
                 </v-card-actions>
               </v-card>
               <div>
-                <v-img :width="263" aspect-ratio="4/3" rounded cover src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"></v-img>
+                <v-img :width="250" :height="180" aspect-ratio="4/3" :rounded="8" cover :src="item.cover"></v-img>
               </div>
             </div>
           </v-sheet>
@@ -98,6 +101,7 @@
 import { reactive, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import markdown from 'markdown-it'
+import moment from 'moment'
 
 import { getArticleList, getCaptcha } from '@/http/article'
 import { announcement } from '@/http/sys'
@@ -110,9 +114,13 @@ const data = reactive({
   captcha: [],
   serachItems: [],
   serachValue: '',
-  announcement:''
+  announcement: '',
 })
 const md = new markdown()
+
+function formartTime(val) {
+  return moment(val).format('YYYY-MM-DD HH:mm')
+}
 
 function handlerChip(item) {
   data.serachValue = item
@@ -176,7 +184,7 @@ onBeforeMount(() => {
   getCaptcha().then((res) => {
     data.captcha = res.data
   })
-  announcement().then(res => {
+  announcement().then((res) => {
     data.announcement = res.data.announcement
   })
   data.serachItems = getStroage()
