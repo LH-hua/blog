@@ -53,9 +53,12 @@ router.get('/list', async (req, res, next) => {
   const { title } = _.assign(req.body, req.query, req.params)
   console.log(title)
   const regex = new RegExp(title, 'i')
-  posts.find({ title: regex }, (err, data) => {
-    sendData(err, data, res)
-  })
+  posts
+    .find({ title: regex })
+    .sort({ date: -1 })
+    .exec((err, data) => {
+      sendData(err, data, res)
+    })
 })
 /**
  * @swagger
@@ -89,45 +92,7 @@ router.get('/detail', async (req, res, next) => {
 
 /**
  * @swagger
- * /api/post/create:
- *  post:
- *      summary: 新增文章
- *      tags: [Post]
- *      security:
- *        - basicAuth: []
- *      requestBody:
- *        description: "Created post object"
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Post'
- *      responses:
- *          200:
- *             description: 成功
- *
- */
-router.post('/create', async (req, res, next) => {
-  try {
-    const { title, body, userId } = req.body
-    const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-    posts.insertMany(
-      {
-        date: date,
-        title: title,
-        body: body,
-        userId: userId,
-      },
-      (err, data) => {
-        sendData(err, data, res)
-      }
-    )
-  } catch (error) {}
-})
-
-/**
- * @swagger
- * /api/post/update:
+ * /api/post/findOneAndUpdate:
  *  post:
  *      summary: 更新文章
  *      tags: [Post]
@@ -158,15 +123,16 @@ router.post('/create', async (req, res, next) => {
  *             description: 成功
  *
  */
-router.post('/update', (req, res, next) => {
+router.post('/findOneAndUpdate', (req, res, next) => {
   const { title, body, id, cover, captcha } = req.body
+  console.log(req.body)
   if (!id) {
     return res.send({
       msg: '文章id不能为空！',
     })
   }
   console.log(captcha)
-  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, (err, data) => {
+  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, { upsert: true }, (err, data) => {
     sendData(err, data, res)
   })
 })

@@ -28,8 +28,8 @@ const postSchema = new mongoose.Schema({
     default: '',
   },
   date: {
-    type: String,
-    default: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+    type: Date,
+    default: Date.now,
   },
 })
 module.exports = mongoose.model('posts', postSchema)
