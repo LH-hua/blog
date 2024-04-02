@@ -125,16 +125,15 @@ router.get('/detail', async (req, res, next) => {
  */
 router.post('/findOneAndUpdate', (req, res, next) => {
   const { title, body, id, cover, captcha } = req.body
-  console.log(req.body)
   if (!id) {
-    return res.send({
-      msg: '文章id不能为空！',
+    posts.create({ title: title, body: body, cover, captcha }, (err, data) => {
+      sendData(err, data, res)
+    })
+  } else {
+    posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, { upsert: true, new: true }, (err, data) => {
+      sendData(err, data, res)
     })
   }
-  console.log(captcha)
-  posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, { upsert: true }, (err, data) => {
-    sendData(err, data, res)
-  })
 })
 
 /**

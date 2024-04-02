@@ -34,11 +34,12 @@ router.post('/upload-image', (req, res, next) => {
   try {
     const form = new multiparty.Form({
       autoFiles: true,
-      uploadDir: process.platform == 'win32' ? `${__dirname.repeat('app\route', '')}assets/image` : '/var/local/media/nodeAssets/image',
+      // uploadDir: process.platform == 'win32' ? `${__dirname.repeat('app\route', '')}assets/image` : '/var/local/media/nodeAssets/image',
+      uploadDir: process.platform == 'win32' ? 'F:/DCIM/preject' : '/var/local/media/nodeAssets/image',
     })
     form.parse(req, (err, fields, files) => {
       if (err) {
-        res.sendStatus(500).send({
+        res.send({
           msg: '保存失败',
           err: err,
         })
@@ -52,7 +53,7 @@ router.post('/upload-image', (req, res, next) => {
       } else {
         fileArr = file.path.split('/')
       }
-      res.sendStatus(200).send({ src: `/image/${fileArr[fileArr.length - 1]}` })
+      res.send({ src: `/images/${fileArr[fileArr.length - 1]}` })
     })
   } catch (error) {
     res.send({

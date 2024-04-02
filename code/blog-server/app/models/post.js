@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  id: Number,
+  id: String,
   userId: Number,
   cover: {
     type: String,
