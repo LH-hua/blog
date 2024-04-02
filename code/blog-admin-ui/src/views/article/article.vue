@@ -30,7 +30,14 @@
       <v-card>
         <v-toolbar title="文章编辑"></v-toolbar>
         <v-card-text>
-          <editPost :title="state.detal.title" :id="state.detal._id" :body="state.detal.body" :cover="state.detal.cover" :captcha="state.detal.captcha"></editPost>
+          <editPost
+            :title="state.detal.title"
+            :id="state.detal._id"
+            :body="state.detal.body"
+            :cover="state.detal.cover"
+            :captcha="state.detal.captcha"
+            @ok="submit"
+          ></editPost>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -50,9 +57,14 @@ const state = reactive({
     body: '',
     cover: '',
     captcha: [],
-    _id:''
+    _id: '',
   },
 })
+
+const submit = (val) => {
+  console.log(val)
+  state.dialog = false
+}
 
 const postList = computed(() => {
   console.log(state.data)

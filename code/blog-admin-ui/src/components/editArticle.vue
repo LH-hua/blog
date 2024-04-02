@@ -24,11 +24,11 @@
                   accept="image/png, image/jpeg, image/bmp"
                   required
                   density="compact"
-                  @change="handleFileUpload"
+                  @change="changeFile"
                 ></v-file-input>
               </v-col>
               <v-col cols="2" v-if="imageData.image">
-                <v-btn color="secondary" variant="flat">上传</v-btn>
+                <v-btn color="secondary" variant="flat" @click="handlerUpLoad">上传</v-btn>
               </v-col>
             </v-row>
             <v-row dense>
@@ -37,7 +37,7 @@
               </v-col>
               <v-col cols="10">
                 <v-select
-                  v-model="imageData.select"
+                  v-model="content.captcha"
                   item-title="captcha"
                   item-value="captcha"
                   :items="imageData.captcha"
@@ -66,12 +66,13 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, defineProps, defineEmits } from 'vue'
+import { ref, reactive, onMounted, defineProps } from 'vue'
 
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { addArticle, getCaptcha } from '@/http/article'
+import {upload} from '@/http/user'
 
 const props = defineProps({
   title: {
@@ -97,12 +98,20 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['ok'])
 const imageData = reactive({
-  image: '',
+  image: props.cover,
+  blob:null,
   captcha: [],
   select: { captcha: null },
 })
-const content = ref(props)
+const content = ref({
+  title:props.title,
+  body:props.body,
+  cover:props.cover,
+  captcha:props.captcha,
+  id:props.id,
+})
 let editor = reactive(null)
 
 const initEditor = () => {
@@ -115,8 +124,17 @@ const initEditor = () => {
   })
 }
 
-const handleFileUpload = async (file) => {
+const handlerUpLoad = () => {
+  const form = new FormData()
+  form.append('image',imageData.blob)
+  upload(form).then(res => {
+    content.value.cover = res.data.src
+    console.log(content.value)
+  })
+}
+const changeFile = async (file) => {
   const uploadedFile = file.target.files[0] // 假设只上传一个文件
+  imageData.blob = uploadedFile
   imageData.image = await imgbase(uploadedFile)
 }
 function imgbase(file) {
@@ -138,11 +156,13 @@ const submit = () => {
     title: content.value.title,
     id: content.value.id,
     body: body,
-    captcha: imageData.select,
+    captcha: content.value.captcha,
+    cover:content.value.cover
   }
   console.log(data)
   addArticle(data).then((res) => {
     console.log(res)
+    emit('ok','emit')
   })
 }
 

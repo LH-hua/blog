@@ -7,12 +7,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server: {
-    port:8848,
-    open:true,
+    port: 8848,
+    open: true,
     // https:true,
     cors: true,
     proxy: {
@@ -21,6 +21,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-    }
-  }
+      '/images': {
+        target: 'http://127.0.0.1:6789/preject',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/images/, ''),
+      },
+    },
+  },
 })
