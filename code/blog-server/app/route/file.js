@@ -35,7 +35,7 @@ router.post('/upload-image', (req, res, next) => {
     const form = new multiparty.Form({
       autoFiles: true,
       // uploadDir: process.platform == 'win32' ? `${__dirname.repeat('app\route', '')}assets/image` : '/var/local/media/nodeAssets/image',
-      uploadDir: process.platform == 'win32' ? 'F:/DCIM/preject' : '/var/local/media/nodeAssets/image',
+      uploadDir: process.platform == 'win32' ? 'F:/DCIM/preject' : '/var/local/media/nodeAssets/images',
     })
     form.parse(req, (err, fields, files) => {
       if (err) {
