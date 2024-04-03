@@ -1,56 +1,38 @@
 <template>
-  <div>
-    <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-btn color="primary" v-bind="props"> Activator slot </v-btn>
-      </template>
-      <v-list>
-        <v-list-item>
-          <v-list-item-title>fdsafds</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-    <!-- <v-btn
-      color="primary"
-    >
-      1233
-      <div>
-        fdsaf
-      </div>
-      <v-menu activator="parent">
-        <v-list>
-          <v-list-item
-            
-          >
-            <v-list-item-title>dsf</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-btn> -->
-
-    <!-- <v-btn  icon="mdi-heart"  id="menu-activator">
-      <v-avatar color="brown" size="large">
-        <span class="text-h5">fsafsd</span>
-      </v-avatar>
-    </v-btn> -->
-    <!-- <v-menu activator="#menu-activator">
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in sate.items"
-          :key="index"
-          :value="index"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu> -->
-  </div>
+  <v-menu min-width="200px" rounded>
+    <template v-slot:activator="{ props }">
+      <v-btn icon v-bind="props">
+        <v-avatar color="brown" size="large">
+          <span class="text-h5">{{ data.user.initials }}</span>
+        </v-avatar>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-card-text>
+        <div class="mx-auto text-center">
+          <v-avatar color="brown">
+            <span class="text-h5">{{ data.user.initials }}</span>
+          </v-avatar>
+          <h3>{{ data.user.fullName }}</h3>
+          <p class="text-caption mt-1">
+            {{ data.user.email }}
+          </p>
+          <v-divider class="my-3"></v-divider>
+          <v-btn variant="text" rounded> Edit Account </v-btn>
+          <v-divider class="my-3"></v-divider>
+          <v-btn variant="text" rounded> 退出 </v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-menu>
 </template>
-
 <script setup>
 import { reactive } from 'vue'
-
-const sate = reactive({
-  items: [{ title: 'Click Me' }, { title: 'Click Me' }, { title: 'Click Me' }, { title: 'Click Me 2' }],
+const data = reactive({
+  user: {
+    initials: 'JD',
+    fullName: 'John Doe',
+    email: 'john.doe@doe.com',
+  },
 })
 </script>

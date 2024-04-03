@@ -14,7 +14,11 @@
         <tr v-for="item in postList" :key="item">
           <td>{{ item.date }}</td>
           <td>{{ item.title }}</td>
-          <td>{{ item.title }}</td>
+          <td>
+            <div class="d-flex ga-2">
+              <v-chip color="primary" v-for="items in item.captcha" :key="items"> {{ items }} </v-chip>
+            </div>
+          </td>
           <td>{{ item.auther }}</td>
           <td>
             <div>

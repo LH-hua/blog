@@ -18,11 +18,6 @@
       <v-container class="h-100">
         <slot name="main"></slot>
       </v-container>
-      <!-- <v-card flat>
-        <v-card-text>
-          <slot name="main"></slot>
-        </v-card-text>
-      </v-card> -->
     </v-main>
     <v-footer app>
       <div class="overline">

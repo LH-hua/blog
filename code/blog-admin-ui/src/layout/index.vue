@@ -5,7 +5,7 @@
         <v-row no-gutters>
           <v-col cols="11"></v-col>
           <v-col cols="1">
-            <!-- <user/> -->
+            <user></user>
           </v-col>
         </v-row>
       </v-container>
@@ -45,7 +45,7 @@
 
 <script setup>
 import layout from './layout.vue'
-import user from '../components/user'
+import user from '@/components/user'
 
 import { reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'

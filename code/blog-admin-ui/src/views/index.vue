@@ -1,5 +1,6 @@
 <template>
-  <layout></layout>
+  <layout>
+  </layout>
 </template>
 
 <script setup>
