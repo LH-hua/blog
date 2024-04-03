@@ -70,20 +70,23 @@
             <div class="ma-2 d-flex flex-no-wrap justify-space-between" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
               <v-card flat hover>
                 <v-card-item>
-                  <v-card-item-title class="text-h6 font-weight-medium">
+                  <v-card-title class="text-h6 font-weight-medium">
                     {{ item.title }}
-                  </v-card-item-title>
-                  <v-card-item-text>
-                    <div style="height: 70px; overflow: hidden">
+                  </v-card-title>
+                  <v-card-subtitle>
+                    {{ formartTime(item.date) }}
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <div style="height: 100px; overflow: hidden">
                       {{ item.body }}
                     </div>
-                  </v-card-item-text>
+                  </v-card-text>
                 </v-card-item>
                 <v-card-actions>
-                  <v-chip-group selected-class="text-primary">
-                    <v-chip density="compact" v-for="items in item.captcha" :key="item">{{ items }}</v-chip>
-                  </v-chip-group>
-                  <v-chip variant="text" density="compact"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon>{{ formartTime(item.date) }} </v-chip>
+                  <!-- <v-chip variant="text" density="compact"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon> </v-chip> -->
+                  <!-- <v-chip-group> -->
+                  <v-chip v-for="items in item.captcha" :key="item" color="primary">{{ items }}</v-chip>
+                  <!-- </v-chip-group> -->
                 </v-card-actions>
               </v-card>
               <div>
