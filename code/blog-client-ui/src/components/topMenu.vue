@@ -1,6 +1,21 @@
 <template>
   <v-container class="d-flex align-center">
-    <div class="font-weight-bold bg-blue-darken-2 pa-4 " >LH</div>
+    <div
+      class="font-weight-bold"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        border: 2px solid black;
+        background-image: linear-gradient(120deg, rgb(161, 196, 253) 0%, rgb(194, 233, 251) 100%);
+      "
+    >
+      LH
+    </div>
     <v-spacer></v-spacer>
     <v-btn v-for="item in store.menu" :key="item.url" variant="text" @click="onTorouter(item)">
       <v-icon :icon="item.icon" />

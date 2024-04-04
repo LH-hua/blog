@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    outDir: 'client', // 设置打包输出的目录为 dist
+  },
   plugins: [vue()],
   resolve: {
     alias: {

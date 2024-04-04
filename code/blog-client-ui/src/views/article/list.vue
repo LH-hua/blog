@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="top-nav">
       <div style="width: 500px">
         <v-menu>
@@ -195,6 +195,18 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
+.container {
+  /* background-image: url('/image/bg.jpg'); */
+  /* background-size: cover; */
+  /* background-attachment: fixed;
+  background-position: 0% 0%; */
+  /* background-image: radial-gradient(90deg, #16d9e3 0%, #30c7ec 47%, #46aef7 100%); */
+  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  /* background-image: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%); */
+  /* background-color: #ffdee9; */
+  /* background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%); */
+}
 .top-nav {
   display: flex;
   justify-content: center;
@@ -203,44 +215,38 @@ onBeforeMount(() => {
   position: relative;
   align-items: center;
   min-height: 10vh;
-  background-color: rgb(118, 218, 255);
+  background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
   overflow: hidden;
-
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    min-width: 100vw;
-    min-height: 10vw;
-    /* background-color: #fff; */
-    animation-name: rotate;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-  }
-
-  &:before {
-    bottom: 5vh;
-    border-radius: 45%;
-    animation-duration: 10s;
-  }
-
-  &:after {
-    bottom: 5vh;
-    opacity: 0.5;
-    border-radius: 47%;
-    animation-duration: 10s;
-  }
+  /* 使用 clip-path 属性创建贝塞尔曲线效果 */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);
 }
-@keyframes rotate {
+/* 定义导航栏下边框样式 */
+.top-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* 调整位置，使阴影效果位于下边框内部 */
+  left: 0;
+  width: 100%;
+  height: 5px; /* 下边框高度 */
+  background-color: transparent; /* 下边框颜色 */
+  box-shadow: 0 0 50px 30px #d9e7ff; /* 添加发光效果 */
+}
+/* .wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 50%;
+  animation: wave-animation 10s infinite linear alternate; 
+  fill: rgb(255, 255, 255);
+}
+
+@keyframes wave-animation {
   0% {
-    transform: translate(-50%, 0) rotateZ(0deg);
-  }
-  50% {
-    transform: translate(-50%, -2%) rotateZ(20deg);
+    transform: translateX(0);
   }
   100% {
-    transform: translate(-50%, 0%) rotateZ(45deg);
+    transform: translateX(-50%);
   }
-}
+} */
 </style>

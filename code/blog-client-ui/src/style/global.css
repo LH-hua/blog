@@ -3,3 +3,6 @@
     max-width: 1200px !important;
   }
 }
+body {
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
