@@ -10,7 +10,6 @@
               variant="solo"
               placeholder="输入搜索内容"
               append-inner-icon="mdi-search-web"
-              flat
               clearable
               v-model="data.serachValue"
               @click:clear="handlerClear"
@@ -40,35 +39,44 @@
     <div class="main">
       <side-main>
         <template #right>
-          <v-sheet rounded="lg">
-            <card-image></card-image>
-          </v-sheet>
-          <br />
-          <v-sheet rounded="lg">
-            <v-card flat>
-              <v-card-title>标签</v-card-title>
-              <v-card-text>
-                <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha">
-                  <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
-                </v-chip>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-          <br />
-          <v-sheet rounded="lg">
-            <v-card flat>
-              <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
-              <v-card-text>
-                {{ data.announcement }}
-              </v-card-text>
-            </v-card>
-          </v-sheet>
+          <div style="align-self: flex-start; position: sticky; top: 65px">
+            <v-sheet rounded="lg" :elevation="3">
+              <card-image></card-image>
+            </v-sheet>
+            <br />
+            <v-sheet rounded="lg" :elevation="3">
+              <v-card flat>
+                <v-card-title>标签</v-card-title>
+                <v-card-text>
+                  <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha">
+                    <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
+                  </v-chip>
+                </v-card-text>
+              </v-card>
+            </v-sheet>
+            <br />
+            <v-sheet rounded="lg" :elevation="3">
+              <v-card flat>
+                <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
+                <v-card-text>
+                  {{ data.announcement }}
+                </v-card-text>
+              </v-card>
+            </v-sheet>
+          </div>
         </template>
 
         <template #main>
-          <v-sheet class="pa-5" min-height="70vh" rounded="lg">
-            <div class="ma-2 d-flex flex-no-wrap justify-space-between" v-for="item in data.data" :key="item._id" @click="onDetal(item)">
-              <v-card flat hover>
+          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" :elevation="3">
+            <v-card
+              v-for="item in data.data"
+              :key="item._id"
+              @click="onDetal(item)"
+              class="ma-2 d-flex flex-no-wrap align-center justify-space-between"
+              flat
+              hover
+            >
+              <v-card flat>
                 <v-card-item>
                   <v-card-title class="text-h6 font-weight-medium">
                     {{ item.title }}
@@ -83,16 +91,12 @@
                   </v-card-text>
                 </v-card-item>
                 <v-card-actions>
-                  <!-- <v-chip variant="text" density="compact"> <v-icon icon="mdi-clock-time-eight-outline"></v-icon> </v-chip> -->
-                  <!-- <v-chip-group> -->
                   <v-chip v-for="items in item.captcha" :key="item" color="primary">{{ items }}</v-chip>
-                  <!-- </v-chip-group> -->
                 </v-card-actions>
               </v-card>
-              <div>
-                <v-img :width="250" :height="180" aspect-ratio="4/3" :rounded="8" cover :src="item.cover"></v-img>
-              </div>
-            </div>
+
+              <v-img style="border-radius: 4px;" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" :rounded="'8'" cover :src="'/image/bg.jpg'"></v-img>
+            </v-card>
           </v-sheet>
         </template>
       </side-main>
@@ -195,6 +199,9 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
+.bg {
+  backdrop-filter: blur(10px);
+}
 .container {
   /* background-image: url('/image/bg.jpg'); */
   /* background-size: cover; */
@@ -215,7 +222,7 @@ onBeforeMount(() => {
   position: relative;
   align-items: center;
   min-height: 10vh;
-  background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+  background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
   overflow: hidden;
   /* 使用 clip-path 属性创建贝塞尔曲线效果 */
   clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);

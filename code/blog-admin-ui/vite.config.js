@@ -4,6 +4,9 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    outDir: 'admin', // 设置打包输出的目录为 dist
+  },
   base: '/admin',
   plugins: [vue()],
   resolve: {

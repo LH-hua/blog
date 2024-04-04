@@ -69,6 +69,11 @@ const vuetify = createVuetify({
       myCustomLightTheme,
     },
   },
+  defaults: {
+    VSheet: {
+      style: 'background: transparent',
+    },
+  },
 })
 import { asyncRoute } from '@/router/dynamicRoute'
 
