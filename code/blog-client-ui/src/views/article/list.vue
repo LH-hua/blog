@@ -37,14 +37,18 @@
       </div>
     </div>
     <div class="main">
+      <v-icon>
+        <!-- {{ $vuetify.icons.custom.bilibili }} -->
+      </v-icon>
+
       <side-main>
         <template #right>
           <div style="align-self: flex-start; position: sticky; top: 65px">
-            <v-sheet rounded="lg" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="3">
               <card-image></card-image>
             </v-sheet>
             <br />
-            <v-sheet rounded="lg" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="3">
               <v-card flat>
                 <v-card-title>标签</v-card-title>
                 <v-card-text>
@@ -55,7 +59,7 @@
               </v-card>
             </v-sheet>
             <br />
-            <v-sheet rounded="lg" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="3">
               <v-card flat>
                 <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
                 <v-card-text>
@@ -94,8 +98,11 @@
                   <v-chip v-for="items in item.captcha" :key="item" color="primary">{{ items }}</v-chip>
                 </v-card-actions>
               </v-card>
-
-              <v-img style="border-radius: 4px;" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" :rounded="'8'" cover :src="'/image/bg.jpg'"></v-img>
+              <v-img v-if="item.cover" style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover :src="item.cover">
+                <template v-slot:error>
+                  <v-img style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover src="/image/err.jpg"></v-img>
+                </template>
+              </v-img>
             </v-card>
           </v-sheet>
         </template>
@@ -209,7 +216,7 @@ onBeforeMount(() => {
   background-position: 0% 0%; */
   /* background-image: radial-gradient(90deg, #16d9e3 0%, #30c7ec 47%, #46aef7 100%); */
   /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  /* background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%); */
   /* background-image: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%); */
   /* background-color: #ffdee9; */
   /* background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%); */

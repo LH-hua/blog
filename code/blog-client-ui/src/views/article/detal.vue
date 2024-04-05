@@ -1,41 +1,36 @@
 <template>
-  <side-main>
-    <template #right>
-      <div style="align-self: flex-start; position: sticky; top: 65px">
-        <v-sheet rounded="lg">
-          <v-card flat>
-            <v-card-title>
-              <v-icon>mdi-account</v-icon>
-            </v-card-title>
-            <v-card-subtitle>
-              {{ store.user.signature || '还没想好呢' }}
-            </v-card-subtitle>
-          </v-card>
-        </v-sheet>
-        <br />
-        <v-sheet rounded="lg">
-          <v-card flat>
-            <v-card-title>目录</v-card-title>
+  <div class="container">
+    <side-main>
+      <template #right>
+        <div style="align-self: flex-start; position: sticky; top: 65px">
+          <v-sheet rounded="lg" class="pa-2" :elevation="1">
+            <card-image></card-image>
+          </v-sheet>
+          <br />
+          <v-sheet rounded="lg" class="pa-2" :elevation="1">
+            <v-card flat>
+              <v-card-title>目录</v-card-title>
+              <v-card-text>
+                <div class="table-of-contents"></div>
+              </v-card-text>
+            </v-card>
+          </v-sheet>
+        </div>
+      </template>
+
+      <template #main>
+        <v-sheet class="pa-2" rounded="lg" :elevation="3">
+          <v-card :title="store.data.title" :subtitle="store.data.date" flat min-height="900px">
             <v-card-text>
-              <div class="table-of-contents"></div>
+              <div class="typo">
+                <div v-html="store.data.body"></div>
+              </div>
             </v-card-text>
           </v-card>
         </v-sheet>
-      </div>
-    </template>
-
-    <template #main>
-      <v-sheet class="pa-5">
-        <v-card :title="store.data.title" :subtitle="store.data.date" flat min-height="900px">
-          <v-card-text>
-            <div class="typo">
-              <div v-html="store.data.body"></div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-sheet>
-    </template>
-  </side-main>
+      </template>
+    </side-main>
+  </div>
 </template>
 
 <script setup>
@@ -49,6 +44,9 @@ import hljs from 'highlight.js'
 import '@/assets/css/typo.css'
 
 import { getArticleDetal } from '@/http/article'
+
+import cardImage from '@/components/cardImage.vue'
+
 
 const store = reactive({
   data: {

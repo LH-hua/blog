@@ -9,7 +9,7 @@
     </div>
   </v-main>
   <v-footer flat class="bg-black" height="20">
-    <div class="px-4 py-2 bg-black text-center w-100">{{ new Date().getFullYear() }} — LH</div>
+    <div class="px-4 py-2 text-center w-100">{{ new Date().getFullYear() }} — LH</div>
   </v-footer>
 </template>
 
