@@ -11,6 +11,15 @@ export const menu = [
   {
     parent: null,
     id: 1,
+    text: '作品',
+    icon: 'mdi-compass-rose',
+    path: 'preject',
+    scr: 'preject',
+    chilren: [],
+  },
+  {
+    parent: null,
+    id: 1,
     text: '记笔记',
     icon: 'mdi-clock',
     path: 'editArticle',

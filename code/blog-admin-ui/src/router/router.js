@@ -15,6 +15,10 @@ const routes = [
         path: 'editArticle',
         component: () => import('@/views/article/editArticle.vue'),
       },
+      {
+        path: 'preject',
+        component: () => import('@/views/preject/index.vue'),
+      },
     ],
   },
   {

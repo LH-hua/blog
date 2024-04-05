@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #eff3f6">
+  <div>
     <v-navigation-drawer expand-on-hover :rail="data.show">
       <div class="pa-2">
         <div class="title font-weight-bold text-uppercase text-primary">L H</div>

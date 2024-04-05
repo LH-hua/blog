@@ -34,11 +34,13 @@
       </v-card>
     </template>
     <template #main>
-      <v-card style="height: 89vh">
-        <v-card-text>
-          <router-view></router-view>
-        </v-card-text>
-      </v-card>
+      <!-- <v-card style="height: 89vh" flat> -->
+      <!-- <v-card-text> -->
+      <v-sheet class="pa-2 bg" rounded="lg" style="height: 88vh;" :elevation="3">
+        <router-view></router-view>
+      </v-sheet>
+      <!-- </v-card-text> -->
+      <!-- </v-card> -->
     </template>
   </layout>
 </template>
@@ -62,3 +64,10 @@ const toRouter = (val) => {
   router.push(val.path)
 }
 </script>
+
+<style scoped>
+.bg {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+</style>

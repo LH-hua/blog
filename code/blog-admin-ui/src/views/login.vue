@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <v-sheet width="400px" height="400px" rounded :elevation="9">
-      <v-card height="100%" class="pa-10">
+    <v-sheet class="bg" width="400px" rounded :elevation="9">
+      <v-card height="100%" class="pa-2">
         <v-card-title>
-          <h2 class="text-center">欢迎登录</h2>
+          <h2>欢迎登录</h2>
         </v-card-title>
         <v-card-text>
           <v-form>
@@ -80,10 +80,19 @@ const btn_login = () => {
 .container {
   height: 100vh;
   width: 100vw;
-  color: #ababab;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #eed5db, #aed3e9);
+  background-image: url('../assets/image/logo-bg.jpg');
+  background-size: cover;
+}
+.bg{
+  backdrop-filter: blur(5px);
+  background-color: transparent
+}
+.v-card{
+  background-color: transparent;
+  color: white;
+
 }
 </style>
