@@ -52,7 +52,7 @@
               <v-card flat>
                 <v-card-title>标签</v-card-title>
                 <v-card-text>
-                  <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha">
+                  <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha" @click="handlerCaptch(item.captcha)">
                     <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
                   </v-chip>
                 </v-card-text>
@@ -136,13 +136,19 @@ function formartTime(val) {
   return moment(val).format('YYYY-MM-DD HH:mm')
 }
 
+function handlerCaptch(item){
+  getArticleList({ captcha: item }).then((res) => {
+      mdTotext(res.data)
+      data.data = res.data
+    })
+}
+
 function handlerChip(item) {
   data.serachValue = item
   handlerEnter()
 }
 function handlerEnter() {
   // 键盘enter事件
-  console.log('enter')
   if (data.serachValue) {
     getArticleList({ title: data.serachValue }).then((res) => {
       mdTotext(res.data)
@@ -190,6 +196,8 @@ function getStroage() {
   }
   return storageHistory
 }
+
+
 onBeforeMount(() => {
   getArticleList().then((res) => {
     mdTotext(res.data)
@@ -208,18 +216,6 @@ onBeforeMount(() => {
 <style scoped>
 .bg {
   backdrop-filter: blur(10px);
-}
-.container {
-  /* background-image: url('/image/bg.jpg'); */
-  /* background-size: cover; */
-  /* background-attachment: fixed;
-  background-position: 0% 0%; */
-  /* background-image: radial-gradient(90deg, #16d9e3 0%, #30c7ec 47%, #46aef7 100%); */
-  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
-  /* background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%); */
-  /* background-image: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%); */
-  /* background-color: #ffdee9; */
-  /* background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%); */
 }
 .top-nav {
   display: flex;
@@ -245,22 +241,4 @@ onBeforeMount(() => {
   background-color: transparent; /* 下边框颜色 */
   box-shadow: 0 0 50px 30px #d9e7ff; /* 添加发光效果 */
 }
-/* .wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200%;
-  height: 50%;
-  animation: wave-animation 10s infinite linear alternate; 
-  fill: rgb(255, 255, 255);
-}
-
-@keyframes wave-animation {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-} */
 </style>
