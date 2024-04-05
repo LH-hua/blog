@@ -44,17 +44,25 @@ const sendData = require('../utils/dataFun')
  *        - name: title
  *          in: query
  *          description: 文章标题
+ *        - name: captcha
+ *          in: query
+ *          description: 文章分类
  *      responses:
  *          200:
  *             description: 成功
  *
  */
 router.get('/list', async (req, res, next) => {
-  const { title } = _.assign(req.body, req.query, req.params)
-  console.log(title)
-  const regex = new RegExp(title, 'i')
+  const { title, captcha } = _.assign(req.body, req.query, req.params)
+  const regexTile = new RegExp(title, 'i')
+  const regexCaptch = new RegExp(captcha, 'i')
   posts
-    .find({ title: regex })
+    .find({
+      title: regexTile,
+      captcha: {
+        $in: [regexCaptch],
+      },
+    })
     .sort({ date: -1 })
     .exec((err, data) => {
       sendData(err, data, res)
