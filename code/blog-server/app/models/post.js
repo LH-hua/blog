@@ -1,5 +1,16 @@
 const mongoose = require('mongoose')
-const moment = require('moment')
+
+const captchaSchema = new mongoose.Schema({
+  captcha: {
+    type: String,
+    default: '',
+  },
+  time: {
+    type: String,
+    default: '',
+  },
+})
+
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -23,6 +34,7 @@ const postSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  captchas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'captcha' }],
   userId: {
     type: String,
     default: '',
@@ -32,4 +44,7 @@ const postSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
-module.exports = mongoose.model('posts', postSchema)
+module.exports = {
+  postDB: mongoose.model('posts', postSchema),
+  captchaDB: mongoose.model('captcha', captchaSchema),
+}

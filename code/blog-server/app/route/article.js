@@ -1,12 +1,10 @@
 const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
-const posts = require('../models/post')
-const captchaDb = require('../models/captcha')
-// const article = require('../controller/article')
-const Middleware = require('../middleware/index')
+const { postDB, captchaDB } = require('../models/post')
 const moment = require('moment')
 const sendData = require('../utils/dataFun')
+const mongoose = require('mongoose')
 
 // 65feac185b722ffab4dc8d5f
 /**
@@ -56,12 +54,13 @@ router.get('/list', async (req, res, next) => {
   const { title, captcha } = _.assign(req.body, req.query, req.params)
   const regexTile = new RegExp(title, 'i')
   const regexCaptch = new RegExp(captcha, 'i')
-  posts
+  postDB
     .find({
       title: regexTile,
-      captcha: {
-        $in: [regexCaptch],
-      },
+    })
+    .populate({
+      path: 'captchas',
+      match: { captcha: { $in: [regexCaptch] } },
     })
     .sort({ date: -1 })
     .exec((err, data) => {
@@ -88,7 +87,7 @@ router.get('/detail', async (req, res, next) => {
   console.log(req.query)
   let { _id } = _.assign(req.body, req.query, req.params)
   try {
-    let result = await posts.findOne({ _id: _id })
+    let result = await postDB.findOne({ _id: _id }).populate('captchas')
     res.send({
       data: result,
       status: 200,
@@ -131,16 +130,22 @@ router.get('/detail', async (req, res, next) => {
  *             description: 成功
  *
  */
-router.post('/findOneAndUpdate', (req, res, next) => {
+router.post('/findOneAndUpdate', async (req, res, next) => {
   const { title, body, id, cover, captcha } = req.body
   if (!id) {
-    posts.create({ title: title, body: body, cover, captcha }, (err, data) => {
+    postDB.create({ title: title, body: body, cover, captcha }, (err, data) => {
       sendData(err, data, res)
     })
   } else {
-    posts.findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captcha }, { upsert: true, new: true }, (err, data) => {
-      sendData(err, data, res)
-    })
+    console.log(captcha)
+    const data = await captchaDB.find({ captcha: { $in: captcha } })
+    const captchas = data.map((item) => item._id)
+    postDB
+      .findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captchas: captchas }, { upsert: true, new: true })
+      .populate('captchas')
+      .exec((err, data) => {
+        sendData(err, data, res)
+      })
   }
 })
 
@@ -174,7 +179,7 @@ router.get('/create-captcha', async (req, res, next) => {
     return
   }
   const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-  captchaDb.insertMany({ captcha: text, time: date }, (err, data) => {
+  captchaDB.insertMany({ captcha: text, time: date }, (err, data) => {
     sendData(err, data, res)
   })
 })
@@ -191,7 +196,7 @@ router.get('/create-captcha', async (req, res, next) => {
  *
  */
 router.get('/captcha', async (req, res, next) => {
-  captchaDb.find({}, (err, data) => {
+  captchaDB.find({}, (err, data) => {
     sendData(err, data, res)
   })
 })

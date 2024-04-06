@@ -8,6 +8,10 @@ const rootSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  post: {
+    type: Number,
+  },
+  tags: { type: Number },
   cover: {
     type: String,
     default: null,

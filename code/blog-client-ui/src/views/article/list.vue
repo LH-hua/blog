@@ -95,7 +95,7 @@
                   </v-card-text>
                 </v-card-item>
                 <v-card-actions>
-                  <v-chip v-for="items in item.captcha" :key="item" color="primary">{{ items }}</v-chip>
+                  <v-chip v-for="items in item.captchas" :key="item" color="primary">{{ items.captcha }}</v-chip>
                 </v-card-actions>
               </v-card>
               <v-img v-if="item.cover" style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover :src="item.cover">

@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const rootDB = require('../models/root')
+const { postDB, captchaDB } = require('../models/post')
 const sendData = require('../utils/dataFun')
 const router = Router()
 /**
@@ -13,7 +14,10 @@ const router = Router()
  *             description: 成功
  *
  */
-router.get('/find', (req, res, next) => {
+router.get('/find', async (req, res, next) => {
+  const postCount = await postDB.find().count()
+  const captchaCount = await captchaDB.find().count()
+  await rootDB.findOneAndUpdate({ name: 'lh-hua' }, { post: postCount, tags: captchaCount })
   rootDB.findOne({}, (err, data) => {
     sendData(err, data, res)
   })
