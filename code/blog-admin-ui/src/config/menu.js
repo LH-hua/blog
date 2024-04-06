@@ -20,10 +20,10 @@ export const menu = [
   {
     parent: null,
     id: 1,
-    text: '记笔记',
-    icon: 'mdi-clock',
-    path: 'editArticle',
-    scr: 'article',
+    text: '标签',
+    icon: 'mdi-label',
+    path: 'catptchs',
+    scr: 'catptchs',
     chilren: [],
   },
   {

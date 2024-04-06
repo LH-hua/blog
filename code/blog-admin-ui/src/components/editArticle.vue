@@ -1,22 +1,35 @@
 <template>
   <div>
-    <div class="top-content">
-      <div>
-        <v-form v-model="valid">
+    <div class="d-flex ga-2 justify-space-around">
+      <div>标题：</div>
+      <v-text-field v-model="content.title" variant="outlined" required density="compact"></v-text-field>
+      <v-btn color="secondary" @click="submit" variant="flat">发布</v-btn>
+    </div>
+    <v-dialog v-model="dialog" width="600">
+      <v-card title="封面信息">
+        <v-card-text>
           <v-container>
             <v-row dense>
               <v-col cols="2">
-                <v-list-subheader>标题：</v-list-subheader>
+                <v-list-subheader>分类：</v-list-subheader>
               </v-col>
               <v-col cols="10">
-                <v-text-field v-model="content.title" variant="outlined" required density="compact"></v-text-field>
+                <v-select
+                  v-model="content.captcha"
+                  density="compact"
+                  item-title="captcha"
+                  item-value="captcha"
+                  :items="imageData.captcha"
+                  variant="outlined"
+                  multiple
+                ></v-select>
               </v-col>
             </v-row>
             <v-row dense>
               <v-col cols="2">
                 <v-list-subheader>封面：</v-list-subheader>
               </v-col>
-              <v-col cols="8">
+              <v-col cols="10">
                 <v-file-input
                   variant="outlined"
                   prepend-icon=""
@@ -27,38 +40,21 @@
                   @change="changeFile"
                 ></v-file-input>
               </v-col>
-              <v-col cols="2" v-if="imageData.image">
-                <v-btn color="secondary" variant="flat" @click="handlerUpLoad">上传</v-btn>
-              </v-col>
             </v-row>
             <v-row dense>
-              <v-col cols="2">
-                <v-list-subheader>分类：</v-list-subheader>
-              </v-col>
+              <v-col cols="2"> </v-col>
               <v-col cols="10">
-                <v-select
-                  v-model="content.captcha"
-                  item-title="captcha"
-                  item-value="captcha"
-                  :items="imageData.captcha"
-                  variant="outlined"
-                  multiple
-                ></v-select>
-              </v-col>
-            </v-row>
-            <v-row dense>
-              <v-col>
-                <v-btn color="secondary" @click="submit" variant="flat">发布</v-btn>
+                <v-img v-if="imageData.image" :width="300" :height="200" rounded cover :src="imageData.image"></v-img>
               </v-col>
             </v-row>
           </v-container>
-        </v-form>
-      </div>
-      <div>
-        <v-img v-if="imageData.image" :width="300" :height="200" rounded cover :src="imageData.image"></v-img>
-      </div>
-    </div>
+        </v-card-text>
 
+        <template v-slot:actions>
+          <v-btn class="ms-auto" text="确认发布" @click="ok"></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
     <div>
       <div id="editor"></div>
     </div>
@@ -66,13 +62,13 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, defineProps } from 'vue'
+import { ref, reactive, onMounted, onDeactivated, defineProps } from 'vue'
 
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { addArticle, getCaptcha } from '@/http/article'
-import {upload} from '@/http/user'
+import { upload } from '@/http/user'
 
 const props = defineProps({
   title: {
@@ -87,7 +83,7 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  captcha: {
+  captchas: {
     // 文章分类
     type: Array,
     default: [],
@@ -99,25 +95,28 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['ok'])
+const dialog = ref(false)
+
 const imageData = reactive({
   image: props.cover,
-  blob:null,
+  blob: null,
   captcha: [],
   select: { captcha: null },
 })
 const content = ref({
-  title:props.title,
-  body:props.body,
-  cover:props.cover,
-  captcha:props.captcha,
-  id:props.id,
+  title: props.title,
+  body: props.body,
+  cover: props.cover,
+  captcha: props.captchas,
+  id: props.id,
 })
+
 let editor = reactive(null)
 
 const initEditor = () => {
   editor = new Editor({
     el: document.querySelector('#editor'),
-    height: '800px',
+    height: '1080px',
     initialEditType: 'markdown',
     previewStyle: 'vertical',
     initialValue: content.value.body,
@@ -126,8 +125,8 @@ const initEditor = () => {
 
 const handlerUpLoad = () => {
   const form = new FormData()
-  form.append('image',imageData.blob)
-  upload(form).then(res => {
+  form.append('image', imageData.blob)
+  upload(form).then((res) => {
     content.value.cover = res.data.src
     console.log(content.value)
   })
@@ -150,22 +149,27 @@ function imgbase(file) {
 }
 
 const submit = () => {
+  dialog.value = true
+}
+
+const ok = () => {
   const body = editor.getMarkdown()
-  console.log(content)
   const data = {
     title: content.value.title,
     id: content.value.id,
     body: body,
     captcha: content.value.captcha,
-    cover:content.value.cover
+    cover: content.value.cover,
   }
-  console.log(data)
   addArticle(data).then((res) => {
-    console.log(res)
-    emit('ok','emit')
+    dialog.value = false
+    emit('ok', 'emit')
   })
 }
 
+onDeactivated(() => {
+  imageData.image = null
+})
 onMounted(() => {
   initEditor()
   getCaptcha().then((res) => {
@@ -174,14 +178,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="scss">
-.top-content {
-  display: flex;
-  div:nth-child(1) {
-    flex: 5;
-  }
-  div:nth-child(2) {
-    flex: 2;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

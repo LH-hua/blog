@@ -36,7 +36,7 @@
     <template #main>
       <!-- <v-card style="height: 89vh" flat> -->
       <!-- <v-card-text> -->
-      <v-sheet class="pa-2 bg" rounded="lg" style="height: 88vh;" :elevation="3">
+      <v-sheet class="pa-2 bg" rounded="lg" style="height: 97vh;max-height: 100vh;" :elevation="3">
         <router-view></router-view>
       </v-sheet>
       <!-- </v-card-text> -->

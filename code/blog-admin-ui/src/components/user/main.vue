@@ -3,7 +3,7 @@
     <template v-slot:activator="{ props }">
       <v-btn icon v-bind="props">
         <v-avatar color="brown" size="large">
-          <span class="text-h5">{{ data.user.initials }}</span>
+          <v-img alt="Avatar" :src="data.user.avatar"></v-img>
         </v-avatar>
       </v-btn>
     </template>
@@ -11,28 +11,34 @@
       <v-card-text>
         <div class="mx-auto text-center">
           <v-avatar color="brown">
-            <span class="text-h5">{{ data.user.initials }}</span>
+            <v-img alt="Avatar" :src="data.user.avatar"></v-img>
           </v-avatar>
-          <h3>{{ data.user.fullName }}</h3>
+          <h3>{{ data.user.username }}</h3>
           <p class="text-caption mt-1">
             {{ data.user.email }}
           </p>
           <v-divider class="my-3"></v-divider>
-          <v-btn variant="text" rounded> Edit Account </v-btn>
-          <v-divider class="my-3"></v-divider>
-          <v-btn variant="text" rounded> 退出 </v-btn>
+          <!-- <v-btn variant="text" rounded> Edit Account </v-btn> -->
+          <!-- <v-divider class="my-3"></v-divider> -->
+          <v-btn variant="text" rounded @click="loginOut"> 退出 </v-btn>
         </div>
       </v-card-text>
     </v-card>
   </v-menu>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const data = reactive({
-  user: {
-    initials: 'JD',
-    fullName: 'John Doe',
-    email: 'john.doe@doe.com',
-  },
+  user: {},
+})
+
+const loginOut = () => {
+  localStorage.clear()
+  router.push({ path: 'login' })
+}
+onBeforeMount(() => {
+  data.user = JSON.parse(localStorage.getItem('user-info'))
 })
 </script>

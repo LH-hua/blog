@@ -1,6 +1,20 @@
 <template>
   <v-sheet class="pa-2 bg">
-    <v-table fixed-header height="100%" class="pa-2">
+    <v-card flat>
+      <v-toolbar density="compact" flat>
+        <v-toolbar-title>
+          <v-btn color="secondary"  variant="tonal" @click="handleradd"> 新增 </v-btn>
+
+          {{ state.title }}</v-toolbar-title
+        >
+
+        <v-spacer></v-spacer>
+
+        <v-btn color="secondary" @click="handlerReturn"> 返回 </v-btn>
+      </v-toolbar>
+    </v-card>
+    <br />
+    <v-table v-if="state.showContent === 'list'" fixed-header height="100%" class="pa-2">
       <thead>
         <tr>
           <th class="text-left">时间</th>
@@ -15,34 +29,50 @@
           <td>{{ item.title }}</td>
           <td>
             <div class="d-flex ga-2">
-              <v-chip color="primary" v-for="items in item.captcha" :key="items"> {{ items }} </v-chip>
+              <v-chip color="primary" v-for="items in item.captchas" :key="items"> {{ items.captcha }} </v-chip>
             </div>
           </td>
           <td>
             <div>
-              <v-btn variant="flat" size="small" color="error"> 删 除 </v-btn>
+              <v-btn variant="flat" size="small" color="error" icon="mdi-delete-outline"></v-btn>
               &nbsp;
-              <v-btn v-bind="activatorProps" text="编 辑" variant="flat" size="small" color="secondary" @click="Query(item._id)"></v-btn>
+              <v-btn
+                v-bind="activatorProps"
+                icon="mdi-application-edit-outline"
+                variant="flat"
+                size="small"
+                color="secondary"
+                @click="Query(item._id)"
+              ></v-btn>
             </div>
           </td>
         </tr>
       </tbody>
     </v-table>
-    <v-dialog v-model="state.dialog" width="1000" max-width="2000">
-      <v-card>
-        <v-toolbar title="文章编辑"></v-toolbar>
-        <v-card-text>
-          <editPost
-            :title="state.detal.title"
-            :id="state.detal._id"
-            :body="state.detal.body"
-            :cover="state.detal.cover"
-            :captcha="state.detal.captcha"
-            @ok="submit"
-          ></editPost>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <v-card v-else-if="state.showContent === 'edit'" flat>
+      <v-card-text>
+        <editPost
+          :title="state.detal.title"
+          :id="state.detal._id"
+          :body="state.detal.body"
+          :cover="state.detal.cover"
+          :captchas="state.detal.captchas"
+          @ok="submit"
+        ></editPost>
+      </v-card-text>
+    </v-card>
+    <v-card v-else>
+      <v-card-text>
+        <editPost
+          :title="state.detal.title"
+          :id="state.detal._id"
+          :body="state.detal.body"
+          :cover="state.detal.cover"
+          :captchas="state.detal.captchas"
+          @ok="submit"
+        ></editPost>
+      </v-card-text>
+    </v-card>
   </v-sheet>
 </template>
 <script setup>
@@ -54,6 +84,8 @@ import editPost from '@/components/editArticle.vue'
 
 const state = reactive({
   data: [],
+  title: '列表',
+  showContent: 'list',
   dialog: false,
   detal: {
     title: '',
@@ -64,12 +96,18 @@ const state = reactive({
   },
 })
 
+const handleradd = () => {
+  state.showContent = 'add'
+
+}
+const handlerReturn = () => {
+  state.showContent = 'list'
+}
 const timeFormat = (val) => {
   return moment(val).format('YYYY-MM-DD HH:mm')
 }
 const submit = (val) => {
-  console.log(val)
-  state.dialog = false
+  handlerReturn()
 }
 
 const postList = computed(() => {
@@ -86,6 +124,8 @@ const getArticleList = () => {
 const Query = (id) => {
   getPostDetal({ _id: id }).then((res) => {
     state.detal = res.data.data
+    state.showContent = 'edit'
+    state.title = '文章编辑'
     state.dialog = true
   })
 }
@@ -96,11 +136,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.bg{
+.bg {
   background-color: transparent;
   backdrop-filter: blur(10px);
 }
-.v-table{
-  background: rgba(255,255,255, 0.8);
+.v-table {
+  background: rgba(255, 255, 255, 0.8);
 }
 </style>
