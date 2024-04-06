@@ -1,50 +1,54 @@
 <template>
-  <div class="d-flex flex-wrap ga-4 justify-center">
-    <v-toolbar density="compact">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>作品</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-card flat>
+  <div>
+    <v-card flat color="transparent">
       <v-toolbar density="compact">
-        <v-btn icon color="#90CAF9">
-          <v-icon>mdi-label</v-icon>
-        </v-btn>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title>作品</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon color="#90CAF9">
-          <v-icon>mdi-application-edit</v-icon>
-        </v-btn>
       </v-toolbar>
-      <v-card-item>
-        <v-card-text>
-          <div style="width: 300px" class="d-flex flex-wrap ga-4 align-center justify-center text-h1 text-center">+</div>
-        </v-card-text>
-      </v-card-item>
+      <v-card-text>
+        <div style="column-count: 5;column-gap: 20px;row-gap: 20px;">
+          <v-card flat style="margin-bottom: 20px;" border>
+            <v-toolbar density="compact">
+              <v-btn icon color="#90CAF9">
+                <v-icon>mdi-label</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-item>
+              <v-card-text>
+                <div style="width: 300px" class="d-flex flex-wrap ga-4 align-center justify-center text-h1 text-center">+</div>
+              </v-card-text>
+            </v-card-item>
+          </v-card>
+          <!-- 内容 -->
+          <v-card v-for="item in data.dataList" :key="item._id" flat border style="margin-bottom: 20px;">
+            <v-toolbar density="compact">
+              <v-btn icon color="#90CAF9">
+                <v-icon>mdi-label</v-icon>
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn icon color="#90CAF9" @click="handlerEdit(item)">
+                <v-icon>mdi-application-edit</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-item>
+              <v-img :src="item.cover" :width="'100%'"> </v-img>
+              <v-card-title>
+                {{ item.title }}
+              </v-card-title>
+              <v-card-subtitle>
+                {{ item.subtitle }}
+              </v-card-subtitle>
+            </v-card-item>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="#90CAF9" variant="outlined" @click="handlerOverlay(item)">预览</v-btn>
+            </v-card-actions>
+          </v-card>
+        </div>
+      </v-card-text>
     </v-card>
-    <!-- 内容 -->
-    <v-card v-for="item in data.dataList" :key="item._id" flat>
-      <v-toolbar density="compact">
-        <v-btn icon color="#90CAF9">
-          <v-icon>mdi-label</v-icon>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn icon color="#90CAF9" @click="handlerEdit(item)">
-          <v-icon>mdi-application-edit</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-card-item>
-        <v-img :src="item.cover" :width="330"> </v-img>
-        <v-card-title>
-          {{ item.title }}
-        </v-card-title>
-        <v-card-subtitle>
-          {{ item.subtitle }}
-        </v-card-subtitle>
-      </v-card-item>
-      <v-card-actions>
-        <v-btn block color="#90CAF9" variant="outlined" @click="handlerOverlay(item)">预览</v-btn>
-      </v-card-actions>
-    </v-card>
+
     <v-dialog max-width="500" v-model="dialog">
       <v-card flat>
         <v-card-item>
