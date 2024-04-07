@@ -152,36 +152,49 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
 /**
  * @swagger
  * /api/post/create-captcha:
- *  get:
+ *  post:
  *      summary: 添加文章标签
  *      tags: [Post]
- *      parameters:
- *        - name: text
- *          in: query
- *          description: '添加标签'
- *          required: true
- *          type: "string"
+ *      requestBody:
+ *        description: "Update post object"
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                captcha:
+ *                  type: string
+ *                  description: '分类标签'
+ *                text:
+ *                  type: string
+ *                  description: '标签描述'
+ *                _id:
+ *                  type: string
+ *                  description: '标签id'
  *      responses:
  *          200:
  *             description: 成功
  *
  */
-router.get('/create-captcha', async (req, res, next) => {
-  const { text } = req.query
-  console.log(req.params)
-  console.log(req.query)
-  console.log(req.body)
-  console.log(text)
-  if (!text) {
-    res.send({
-      msg: '内容不能为空',
-    })
-    return
+router.post('/create-captcha', async (req, res, next) => {
+  const { text, captcha, _id } = req.body
+  try {
+    if (!_id) {
+      const newCaptcha = await captchaDB.create({ text, captcha })
+      sendData(null, newCaptcha, res)
+    }
+    if (!captcha) {
+      res.send({
+        msg: '内容不能为空',
+      })
+      return
+    }
+    const editCaptcha = await captchaDB.findOneAndUpdate({ _id: _id }, { captcha: captcha, text: text }, { new: true })
+    sendData(null, editCaptcha, res)
+  } catch (error) {
+    console.log(error)
   }
-  const date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-  captchaDB.insertMany({ captcha: text, time: date }, (err, data) => {
-    sendData(err, data, res)
-  })
 })
 
 /**
@@ -196,9 +209,12 @@ router.get('/create-captcha', async (req, res, next) => {
  *
  */
 router.get('/captcha', async (req, res, next) => {
-  captchaDB.find({}, (err, data) => {
-    sendData(err, data, res)
-  })
+  captchaDB
+    .find({})
+    .sort({ time: -1 })
+    .exec((err, data) => {
+      sendData(err, data, res)
+    })
 })
 
 module.exports = router

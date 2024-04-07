@@ -5,9 +5,10 @@ const captchaSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  text: { type: String },
   time: {
-    type: String,
-    default: '',
+    type: Date,
+    default: Date.now,
   },
 })
 
