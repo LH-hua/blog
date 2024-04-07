@@ -3,7 +3,7 @@ export const menu = [
     parent: null,
     id: 0,
     text: '博客',
-    icon: 'mdi-clock',
+    icon: 'mdi-notebook-edit-outline',
     path: 'article',
     scr: 'article',
     chilren: [],

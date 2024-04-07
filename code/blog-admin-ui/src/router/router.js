@@ -19,6 +19,10 @@ const routes = [
         path: 'preject',
         component: () => import('@/views/preject/index.vue'),
       },
+      {
+        path: 'catptchs',
+        component: () => import('@/views/catptchs/index.vue'),
+      },
     ],
   },
   {
