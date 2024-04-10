@@ -60,7 +60,8 @@ router.get('/list', async (req, res, next) => {
     })
     .populate({
       path: 'captchas',
-      match: { captcha: { $in: [regexCaptch] } },
+      select: 'captcha',
+      match: { 'captcha.captcha': { $in: [regexCaptch] } },
     })
     .sort({ date: -1 })
     .exec((err, data) => {

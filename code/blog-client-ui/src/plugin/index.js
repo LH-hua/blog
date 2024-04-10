@@ -70,7 +70,7 @@ export const vuetify = createVuetify({
       style: 'background: transparent',
     },
     VMain: {
-      style: 'background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)',
+      style: 'background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);--v-layout-top: 0;',
     },
     VFooter: {
       style: 'background-color: #8BC6EC;background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);',

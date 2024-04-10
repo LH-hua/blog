@@ -20,6 +20,11 @@ const routes = [
             name: '详情',
             component: () => import('@/views/article/detal.vue'),
           },
+          {
+            path: 'book',
+            name: '分类',
+            component: () => import('@/views/book/index.vue'),
+          },
         ],
       },
       {

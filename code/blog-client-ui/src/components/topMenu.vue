@@ -54,6 +54,15 @@ const store = reactive({
       children: [],
     },
     {
+      id: '0',
+      pid: '0',
+      icon: 'mdi-bookmark-box-multiple',
+      name: '分类',
+      url: '/post/book',
+      tag: false,
+      children: [],
+    },
+    {
       id: '1',
       pid: '0',
       icon: 'mdi-compass-rose',

@@ -35,12 +35,46 @@
           </v-card>
         </v-menu>
       </div>
+      <svg width="100%" height="200" class="wave" viewBox="0 0 1000 200" preserveAspectRatio="none">
+        <path d="M0 130 Q250 180 500 130 T1000 130 V200 H0 Z" fill="rgba(255, 255, 255, 0.5)">
+          <animate
+            attributeName="d"
+            dur="8s"
+            repeatCount="indefinite"
+            values="M0 130 Q250 80 500 130 T1000 130 V200 H0 Z;
+              M0 130 Q250 180 500 130 T1000 130 V200 H0 Z"
+          />
+        </path>
+        <path d="M0 150 Q250 200 500 150 T1000 150 V200 H0 Z" fill="rgba(255, 255, 255, 0.5)">
+          <animate
+            attributeName="d"
+            dur="7s"
+            repeatCount="indefinite"
+            values="M0 150 Q250 100 500 150 T1000 150 V200 H0 Z;
+              M0 150 Q250 200 500 150 T1000 150 V200 H0 Z"
+          />
+        </path>
+        <path d="M0 170 Q250 220 500 170 T1000 170 V200 H0 Z" fill="rgba(255, 255, 255, 0.5)">
+          <animate
+            attributeName="d"
+            dur="6s"
+            repeatCount="indefinite"
+            values="M0 170 Q250 120 500 170 T1000 170 V200 H0 Z;
+              M0 170 Q250 220 500 170 T1000 170 V200 H0 Z"
+          />
+        </path>
+        <path d="M0 190 Q250 240 500 190 T1000 190 V200 H0 Z" fill="rgba(255, 255, 255, 0.5)">
+          <animate
+            attributeName="d"
+            dur="5s"
+            repeatCount="indefinite"
+            values="M0 190 Q250 140 500 190 T1000 190 V200 H0 Z;
+              M0 190 Q250 240 500 190 T1000 190 V200 H0 Z"
+          />
+        </path>
+      </svg>
     </div>
     <div class="main">
-      <v-icon>
-        <!-- {{ $vuetify.icons.custom.bilibili }} -->
-      </v-icon>
-
       <side-main>
         <template #right>
           <div style="align-self: flex-start; position: sticky; top: 65px">
@@ -52,7 +86,15 @@
               <v-card flat>
                 <v-card-title>标签</v-card-title>
                 <v-card-text>
-                  <v-chip class="ma-2" color="cyan" label size="small" v-for="item in data.captcha" :key="item.captcha" @click="handlerCaptch(item.captcha)">
+                  <v-chip
+                    class="ma-2"
+                    color="cyan"
+                    label
+                    size="small"
+                    v-for="item in data.captcha"
+                    :key="item.captcha"
+                    @click="handlerCaptch(item.captcha)"
+                  >
                     <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
                   </v-chip>
                 </v-card-text>
@@ -136,11 +178,11 @@ function formartTime(val) {
   return moment(val).format('YYYY-MM-DD HH:mm')
 }
 
-function handlerCaptch(item){
+function handlerCaptch(item) {
   getArticleList({ captcha: item }).then((res) => {
-      mdTotext(res.data)
-      data.data = res.data
-    })
+    mdTotext(res.data)
+    data.data = res.data
+  })
 }
 
 function handlerChip(item) {
@@ -197,7 +239,6 @@ function getStroage() {
   return storageHistory
 }
 
-
 onBeforeMount(() => {
   getArticleList().then((res) => {
     mdTotext(res.data)
@@ -213,32 +254,34 @@ onBeforeMount(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bg {
   backdrop-filter: blur(10px);
 }
 .top-nav {
+  height: 20vh;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  position: relative;
   align-items: center;
-  min-height: 10vh;
-  background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
-  overflow: hidden;
+  background: url('/image/bg.jpg');
+  /* overflow: hidden; */
   /* 使用 clip-path 属性创建贝塞尔曲线效果 */
-  clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);
+  /* clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%); */
+  .wave {
+    position: absolute;
+    bottom: 0;
+  }
 }
-/* 定义导航栏下边框样式 */
 .top-nav::after {
   content: '';
-  position: absolute;
-  bottom: -5px; /* 调整位置，使阴影效果位于下边框内部 */
-  left: 0;
   width: 100%;
-  height: 5px; /* 下边框高度 */
-  background-color: transparent; /* 下边框颜色 */
-  box-shadow: 0 0 50px 30px #d9e7ff; /* 添加发光效果 */
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, #fff, transparent);
 }
+/* 定义导航栏下边框样式 */
 </style>
