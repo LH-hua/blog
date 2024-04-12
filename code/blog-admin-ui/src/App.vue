@@ -11,8 +11,8 @@ import alter from './components/alter/alter.vue'
 
 <style scoped>
 .app-bg {
-  background-image: url('./assets/image/logo-bg.jpg');
-  background-size: cover;
+  /* background-image: url('./assets/image/logo-bg.jpg'); */
+  /* background-size: cover; */
 }
 </style>
 <style>

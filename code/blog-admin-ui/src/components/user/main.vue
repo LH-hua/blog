@@ -7,7 +7,7 @@
         </v-avatar>
       </v-btn>
     </template>
-    <v-card>
+    <v-card color="transparent">
       <v-card-text>
         <div class="mx-auto text-center">
           <v-avatar color="brown">

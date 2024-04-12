@@ -2,7 +2,7 @@ export const menu = [
   {
     parent: null,
     id: 0,
-    text: '博客',
+    text: '文章管理',
     icon: 'mdi-notebook-edit-outline',
     path: 'article',
     scr: 'article',
@@ -11,7 +11,7 @@ export const menu = [
   {
     parent: null,
     id: 1,
-    text: '作品',
+    text: '作品管理',
     icon: 'mdi-compass-rose',
     path: 'preject',
     scr: 'preject',
@@ -20,7 +20,7 @@ export const menu = [
   {
     parent: null,
     id: 1,
-    text: '标签',
+    text: '标签管理',
     icon: 'mdi-label',
     path: 'catptchs',
     scr: 'catptchs',

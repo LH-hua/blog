@@ -1,19 +1,36 @@
 <template>
   <v-sheet class="pa-2 bg">
     <v-card flat>
-      <v-toolbar density="compact" flat>
-        <v-toolbar-title>
-          <v-btn color="secondary"  variant="tonal" @click="handleradd"> 新增 </v-btn>
-
-          {{ state.title }}</v-toolbar-title
-        >
-
+      <v-toolbar prominent>
+        <!-- <v-toolbar-title class="d-flex ga-2 justify-start">
+          <div></div>
+        </v-toolbar-title> -->
+        <v-container>
+          <v-row>
+            <v-col cols="2">
+              <v-text-field label="标题" density="compact" variant="outlined" hide-details></v-text-field>
+            </v-col>
+            <v-col cols="2">
+              <v-select
+                label="标签"
+                density="compact"
+                :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+                variant="outlined"
+                hide-details
+              ></v-select>
+            </v-col>
+            <v-col cols="6">
+              <div class="d-flex ga-2 justify-start">
+                <v-btn color="blue" variant="tonal"> 搜索 </v-btn>
+                <v-btn color="secondary" variant="tonal" @click="handleradd"> 新增 </v-btn>
+                <v-btn color="secondary" @click="handlerReturn"> 返回 </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
         <v-spacer></v-spacer>
-
-        <v-btn color="secondary" @click="handlerReturn"> 返回 </v-btn>
       </v-toolbar>
     </v-card>
-    <br />
     <v-table v-if="state.showContent === 'list'" fixed-header height="100%" class="pa-2">
       <thead>
         <tr>
@@ -98,7 +115,6 @@ const state = reactive({
 
 const handleradd = () => {
   state.showContent = 'add'
-
 }
 const handlerReturn = () => {
   state.showContent = 'list'
@@ -141,6 +157,6 @@ onMounted(() => {
   backdrop-filter: blur(10px);
 }
 .v-table {
-  background: rgba(255, 255, 255, 0.8);
+  /* background: rgba(255, 255, 255, 0.8); */
 }
 </style>

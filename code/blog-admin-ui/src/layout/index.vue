@@ -11,7 +11,7 @@
       </v-container>
     </template>
     <template #side>
-      <v-card class="mx-auto" flat>
+      <v-card class="mx-auto" flat color="transparent">
         <v-list density="compact">
           <div v-for="(item, index) in menu" :key="item + index">
             <v-list-group v-if="item.chilren.length > 0" :value="item.text">
@@ -36,7 +36,7 @@
     <template #main>
       <!-- <v-card style="height: 89vh" flat> -->
       <!-- <v-card-text> -->
-      <v-sheet class="pa-2 bg" rounded="lg" style="height: 97vh;max-height: 100vh;" :elevation="3">
+      <v-sheet class="pa-2 bg" rounded="lg" style="height: 97vh;max-height: 100vh;" border>
         <router-view></router-view>
       </v-sheet>
       <!-- </v-card-text> -->
@@ -67,7 +67,7 @@ const toRouter = (val) => {
 
 <style scoped>
 .bg {
-  background-color: transparent;
+  /* background-color: transparent; */
   backdrop-filter: blur(10px);
 }
 </style>

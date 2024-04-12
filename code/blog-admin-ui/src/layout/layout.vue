@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer expand-on-hover :rail="data.show">
+    <v-navigation-drawer color="light-blue" expand-on-hover :rail="data.show">
       <div class="d-flex justify-center align-center pa-2">
         <user></user>
       </div>

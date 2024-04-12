@@ -265,7 +265,8 @@ onBeforeMount(() => {
   justify-content: center;
   align-items: center;
   align-items: center;
-  background: url('/image/bg.jpg');
+  background: url('/image/nav.jpg');
+  background-size: cover;
   /* overflow: hidden; */
   /* 使用 clip-path 属性创建贝塞尔曲线效果 */
   /* clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%); */
