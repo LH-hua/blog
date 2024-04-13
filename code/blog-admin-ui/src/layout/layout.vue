@@ -1,10 +1,9 @@
 <template>
   <div>
+    <v-app-bar  color="light-blue"  flat>
+      <slot name="header"></slot>
+    </v-app-bar>
     <v-navigation-drawer color="light-blue" expand-on-hover :rail="data.show">
-      <div class="d-flex justify-center align-center pa-2">
-        <user></user>
-      </div>
-      <v-divider></v-divider>
       <slot name="side"></slot>
     </v-navigation-drawer>
     <v-main>

@@ -1,24 +1,17 @@
 <template>
   <div>
-    <v-card flat color="rgba(0, 0, 0, 0)">
-      <v-img height="200" class="text-white" cover src="https://cdn.vuetifyjs.com/docs/images/cards/purple-flowers.jpg">
-        <v-toolbar density="compact" theme="dark" color="rgba(0, 0, 0, 0)">
-          <v-app-bar-nav-icon>
-            <v-icon>mdi-label</v-icon>
-          </v-app-bar-nav-icon>
-          <v-toolbar-title>标签</v-toolbar-title>
-          <v-spacer></v-spacer>
+    <v-card flat >
+      <v-toolbar density="compact" >
           <v-btn icon @click="handlerAdd">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar>
-      </v-img>
-      <v-card-text style="height: calc(97vh - 220px); overflow-y: scroll">
+      <v-card-text style="height: calc(97vh - 120px); overflow-y: scroll">
         <v-timeline align="start">
           <v-timeline-item dot-color="pink" size="small" v-for="item in data" :key="item.captcha">
             <v-card flat>
               <v-card-item>
-                <v-toolbar density="compact" theme="dark">
+                <v-toolbar density="compact" >
                   <v-app-bar-nav-icon>
                     <v-icon>mdi-label</v-icon>
                   </v-app-bar-nav-icon>

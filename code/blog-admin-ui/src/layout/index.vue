@@ -1,14 +1,11 @@
 <template>
   <layout>
     <template #header>
-      <v-container>
-        <v-row no-gutters>
-          <v-col cols="11"></v-col>
-          <v-col cols="1">
-            <user></user>
-          </v-col>
-        </v-row>
-      </v-container>
+      <div class="pa-2">
+        <h2>LHGO后台管理系统</h2>
+      </div>
+      <v-spacer></v-spacer>
+      <user></user>
     </template>
     <template #side>
       <v-card class="mx-auto" flat color="transparent">
@@ -36,7 +33,7 @@
     <template #main>
       <!-- <v-card style="height: 89vh" flat> -->
       <!-- <v-card-text> -->
-      <v-sheet class="pa-2 bg" rounded="lg" style="height: 97vh;max-height: 100vh;" border>
+      <v-sheet class="pa-2 bg" rounded="lg" style="height: 90vh; max-height: 100vh" border>
         <router-view></router-view>
       </v-sheet>
       <!-- </v-card-text> -->
