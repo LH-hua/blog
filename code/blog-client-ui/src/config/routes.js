@@ -1,10 +1,15 @@
 const routes = [
-  { path: '/', redirect: '/post/list' },
+  { path: '/', redirect: '/index' },
   {
     path: '/',
-    name: 'home',
+    name: 'index',
     component: () => import('@/views/home.vue'),
     children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/index.vue'),
+      },
       {
         path: 'post/',
         name: 'post',

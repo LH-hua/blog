@@ -10,7 +10,6 @@
         height: 40px;
         text-align: center;
         border-radius: 50%;
-        border: 2px solid black;
         background-image: linear-gradient(120deg, rgb(161, 196, 253) 0%, rgb(194, 233, 251) 100%);
       "
     >
@@ -50,6 +49,15 @@ const store = reactive({
       icon: 'mdi-home-outline',
       name: '主 页',
       url: '/',
+      tag: false,
+      children: [],
+    },
+    {
+      id: '0',
+      pid: '0',
+      icon: 'mdi-home-outline',
+      name: '文 章',
+      url: 'post/list',
       tag: false,
       children: [],
     },

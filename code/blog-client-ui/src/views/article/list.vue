@@ -78,11 +78,11 @@
       <side-main>
         <template #right>
           <div style="align-self: flex-start; position: sticky; top: 65px">
-            <v-sheet rounded="lg" class="pa-2" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="1">
               <card-image></card-image>
             </v-sheet>
             <br />
-            <v-sheet rounded="lg" class="pa-2" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="1">
               <v-card flat>
                 <v-card-title>标签</v-card-title>
                 <v-card-text>
@@ -101,7 +101,7 @@
               </v-card>
             </v-sheet>
             <br />
-            <v-sheet rounded="lg" class="pa-2" :elevation="3">
+            <v-sheet rounded="lg" class="pa-2" :elevation="1">
               <v-card flat>
                 <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
                 <v-card-text>
@@ -113,7 +113,7 @@
         </template>
 
         <template #main>
-          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" :elevation="3">
+          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" :elevation="1">
             <v-card
               v-for="item in data.data"
               :key="item._id"
@@ -125,7 +125,9 @@
               <v-card flat>
                 <v-card-item>
                   <v-card-title class="text-h6 font-weight-medium">
-                    {{ item.title }}
+                    <h2>
+                      {{ item.title }}
+                    </h2>
                   </v-card-title>
                   <v-card-subtitle>
                     {{ formartTime(item.date) }}
@@ -137,7 +139,7 @@
                   </v-card-text>
                 </v-card-item>
                 <v-card-actions>
-                  <v-chip v-for="items in item.captchas" :key="item" color="primary">{{ items.captcha }}</v-chip>
+                  <v-chip v-for="items in item.captchas" :key="items" color="primary">{{ items.captcha }}</v-chip>
                 </v-card-actions>
               </v-card>
               <v-img v-if="item.cover" style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover :src="item.cover">

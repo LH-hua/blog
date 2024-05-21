@@ -20,7 +20,15 @@
 
       <template #main>
         <v-sheet class="pa-2" rounded="lg" :elevation="3">
-          <v-card :title="store.data.title" :subtitle="store.data.date" flat min-height="900px">
+          <v-card flat min-height="900px">
+            <v-card-title>
+              <h2 style="font-weight: 1000;">
+                {{ store.data.title }}
+              </h2>
+            </v-card-title>
+            <v-card-subtitle>
+              {{ store.data.date }}
+            </v-card-subtitle>
             <v-card-text>
               <div class="typo">
                 <div v-html="store.data.body"></div>
@@ -47,7 +55,6 @@ import { getArticleDetal } from '@/http/article'
 
 import cardImage from '@/components/cardImage.vue'
 
-
 const store = reactive({
   data: {
     title: '',
@@ -55,6 +62,12 @@ const store = reactive({
     body: '',
   },
   user: {},
+  puc: {
+    name: '产品名称',
+    desc: '产品描述',
+    price: '产品价格',
+    imgUrl: [],
+  },
 })
 
 const md = ref(null)
@@ -109,9 +122,15 @@ function getData() {
 onMounted(() => {
   initMd()
   getData()
+  const dom = document.querySelector('.custom')
+  dom.style.position = 'none'
+  dom.style.color = 'black'
 })
 </script>
 
 <style leng="less" scoped>
 /* @import '../../assets/css/typo.css'; */
+.container {
+  margin-top: 60px;
+}
 </style>

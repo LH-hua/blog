@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-mongoose.set('strictQuery', true)
 mongoose
-  .connect(process.env.mongodb_path)
+  .connect(`mongodb://${process.env.dbUserName}:${process.env.dbPassword}@${process.env.host_path}:${process.env.dbPort}/${process.env.dbName}`)
   .then(() => {
     console.log(`已连接数据库`)
   })
