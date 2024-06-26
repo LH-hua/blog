@@ -43,21 +43,21 @@ import { userInfo } from '../store/userStore'
 
 const store = reactive({
   menu: [
+    // {
+    //   id: '0',
+    //   pid: '0',
+    //   icon: 'mdi-home-outline',
+    //   name: '主 页',
+    //   url: '/',
+    //   tag: false,
+    //   children: [],
+    // },
     {
       id: '0',
       pid: '0',
       icon: 'mdi-home-outline',
-      name: '主 页',
-      url: '/',
-      tag: false,
-      children: [],
-    },
-    {
-      id: '0',
-      pid: '0',
-      icon: 'mdi-home-outline',
-      name: '文 章',
-      url: 'post/list',
+      name: '首 页',
+      url: '/list',
       tag: false,
       children: [],
     },

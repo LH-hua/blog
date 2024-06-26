@@ -1,0 +1,279 @@
+{
+    "msg": "ok",
+    "data": [
+        {
+            "_id": "660bae5090d26d34a3c0f20d",
+            "title": "pm2常用命令介绍",
+            "userId": "",
+            "cover": "/images/6W1Kw6zEYgxuZqCNGEb-XU6j.jpg",
+            "descr": null,
+            "body": "## 前言\n\nPM2是 node 进程管理工具，可以利用它来简化很多node应用管理的繁琐任务\n对于线上项目，如果直接通过 `node app` 来启动，因为 node 是单线程的，所以**如果报错了可能会使项目直接停止，从而导致整个服务崩溃**\n\n## 好处\n\n* 后台运行(关掉cmd窗口依然运行)\n* 0 秒停机重载，维护升级时不需要停机\n* Linux (stable) & MacOSx (stable) & Windows (stable).多平台支持\n* 进程守护 (停止不稳定的进程，避免无限循环)\n* 内建负载均衡\n* 实时控制台检测\n* 提供 HTTP API等\n* 远程控制和实时的接口API ( nodejs 模块,允许和PM2进程管理器交互 )\n* 不仅仅可以启动node程序，对于一般的脚本程序同样可以\n\n\n作者：Junyang\n\n链接：https://juejin.cn/post/6889300755539312653\n来源：稀土掘金\n著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n\n## 安装\n\n执行一下命令安装pm2\n\n> npm install -g pm2\n\n## 使用介绍\n\n启动node项目\n\n> pm2 start app.js\n\n启动成功之后如下：\n\n```\n┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐\n│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │\n├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤\n│ 0  │ app                │ fork     │ 0    │ online    │ 0%       │ 7.1mb    │\n└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘\n```\n\n## 正在运行的所有项目\n\n> pm2 list\n\n内容如下：\n\n```\n[root@localhost blog-server]# pm2 list\n┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐\n│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │\n├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤\n│ 0  │ app                │ fork     │ 0    │ online    │ 0%       │ 69.2mb   │\n└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘\n```\n\n## 停止正在运行的项目\n\n根据 pm2 list 命令打印出来的列表，选择需要停止项目的id\n执行命令\n\\> npm stop id\n如下：\n\n```\n[root@localhost blog-server]# pm2 stop 0\n[PM2] Applying action stopProcessId on app [0](ids: [ '0' ])\n[PM2] [app](0) ✓\n┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐\n│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │\n├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤\n│ 0  │ app                │ fork     │ 0    │ stopped   │ 0%       │ 0b       │\n└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘\n```\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n",
+            "captcha": [
+                null
+            ],
+            "date": "2024-04-02T07:05:52.462Z",
+            "__v": 0,
+            "captchas": []
+        },
+        {
+            "_id": "660a61e8e4b1e79459eb73cd",
+            "title": "node.js爬虫 爬几张图片 妹子哦",
+            "userId": "string",
+            "cover": "/images/B00hTJoEanH79_M9ASszk4Hj.jpg",
+            "descr": null,
+            "body": "## 前言\n\n这篇文章记录node.js爬虫的一个demo\n爬取思路：请求url——>解析HTML数据——>获取HTML里的数据\n这篇文章爬取几张网络图片 https://www.keaitupian.cn/tpk/meizitumeinv5706\\_1.html\n\n[视频](https://www.bilibili.com/video/BV1Z1421S7L1/?vd_source=1ddc34f3671d5ceae40c91f75c1367e4)在这里，有点长忍住\n\n## 工具\n\n爬虫必备工具：cheerio\n\ncheerio简单介绍：cheerio是jquery核心功能的一个快速灵活而又简洁的实现，主要是为了用在服务器端需要对DOM进行操作的地方。 大家可以简单的理解为用来解析html非常方便的工具。\n\n文件下载工具：[download](https://github.com/kevva/download#readme)\n\ndownload简单介绍：指定url地址和保存路径就能下载文件\n\n<br>\n### 请求URL\n\n```\nfunction start() {\n  const url = \"https://www.keaitupian.cn/tpk/meizitumeinv5706_1.html\";\n  http.get(url, (res) => {\n    let htmlString;\n    res.on(\"data\", (html) => {\n      htmlString += html;\n    });\n    res.on(\"end\", () => {\n    });\n  });\n}\n```\n\n\n<br>\n### 解析HTML数据结构\n\n\n```\nconst $ = cheerio.load(htmlString);\n```\n\n\n### 提取需要的数据\n\n\n```\n      const images = []\n      $('ul.related_img li.related_box img').each((index,item) => {\n        const url = item.attribs['src']\n        images.push(url)\n      })\n      console.log($('ul.related_img li.related_box').length)\n\n      Promise.all(images.map(url => download(url,'images')))\n```\n\n\n完整代码：\n\n```\nconst cheerio = require(\"cheerio\");\nconst http = require(\"https\");\nconst download = require('download')\n\n/**\n * node.js 使用cheerio库爬网络图片\n * 这个库只能爬取静态网站图资源\n * 动态网站爬取不到\n * 需要使用其他库 比如：selenium\n * 可以模拟用户的一些操作\n * \n */\nfunction start() {\n  const url = \"https://www.keaitupian.cn/tpk/meizitumeinv5706_1.html\";\n  http.get(url, (res) => {\n    let htmlString;\n    res.on(\"data\", (html) => {\n      htmlString += html;\n    });\n    res.on(\"end\", () => {\n      const $ = cheerio.load(htmlString);\n      const images = []\n      $('ul.related_img li.related_box img').each((index,item) => {\n        const url = item.attribs['src']\n        images.push(url)\n      })\n      console.log($('ul.related_img li.related_box').length)\n\n      Promise.all(images.map(url => download(url,'images')))\n      // end !!!\n    });\n  });\n}\n\nstart();\n```",
+            "captcha": [
+                "Node.js"
+            ],
+            "date": "2024-04-01T19:27:36.000Z",
+            "__v": 0,
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64e4571d316b69a390969e01",
+            "title": "vite + vue3配置eslint + .prettierrc 报错问题",
+            "descr": null,
+            "body": "##### 1.语法校验时如上    \n\n```\nError [ERR_REQUIRE_ESM]: require() of ES Module f:\\LH\\preject\\vue3.0\\vite\\cesium\\.prettierrc.js from f:\\LH\\preject\\vue3.0\\vite\\cesium\\node_modules\\prettier\\internal\\internal.mjs not supported.\n.prettierrc.js is treated as an ES module file as it is a .js file whose nearest parent package.json contains \"type\": \"module\" which declares all .js files in that package scope as ES modules.\nInstead rename .prettierrc.js to end in .cjs, change the requiring code to use dynamic import() which is available in all CommonJS modules, or change \"type\": \"module\" to \"type\": \"commonjs\" in f:\\LH\\preject\\vue3.0\\vite\\cesium\\package.json to treat all .js files as CommonJS (using .mjs for all ES modules instead).\n```\n\n\n##### 2.解决\n\n> 将.prettierrc.js文件改成 .prettierrc.cjs\n\n\n",
+            "date": "2023-08-15T14:57:26.000Z",
+            "__v": 0,
+            "captcha": [
+                "Vue",
+                "JavaScript"
+            ],
+            "cover": "/images/C6YTCb078TUfl6RK15Bel0VU.JPG",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64b5051df3a77d1a6ee18f99",
+            "title": "视频流服务器 rtmp",
+            "descr": null,
+            "body": "#### 1.介绍\n\nRTMP（Real Time Messaging Protocol） 是由 Adobe 公司基于 Flash Player 播放器对应的音视频 flv 封装格式提出的一种，基于TCP 的数据传输协议。本身具有稳定、兼容性强、高穿透的特点。常被应用于流媒体直播、点播等场景。常用于推流方（主播）的稳定传输需求。\n\n本文介绍的rtmp服务 可使用 ffmpeg 工具结合 rtsp 协议将海康摄像头的实时画面推送到服务\n\n#### 2.ffmpeg\n\n在官网根据实际情况下载ffmpeg，windows可下载安装包或者下载配置文件，\n配置文件需要自己配置环境变量\n\n> 官网地址：[ffmpeg](https://ffmpeg.org/)\n\n#### 3.创建demo并引入 node-media-server 依赖\n\n\nrtmp：配置rtmp服务器的基本参数\n\nhttp：这是一个web界面，可查看视频流实时情况和设备的是使用情况\n\nrelay：配置视频流，该示例以海康为列\n\nffmpeg：ffmpeg的安装地址\n\n<br>\n```js\nconst NodeMediaServer  = require('node-media-server');\n\nconst config = {\n  rtmp: {\n    port: 1935,\n    chunk_size: 60000,\n    gop_cache: true,\n    ping: 60,\n    ping_timeout: 30\n  },\n  http: {\n    port: 8000,\n    allow_origin: '*'\n  },\n  relay:{\n  \t  ffmpeg:\"G:/web/apps/ffmpeg-4.3.2-full_build/ffmpeg-4.3.2-2021-02-27-full_build/bin/ffmpeg.exe\",\n  \t  tasks:[\n  \t\t{\n  \t\t\tapp:\"live\",\n  \t\t\tmode:\"pull\",\t//pull动态拉取视频流，static静态拉取视屏流，push动态推送视频流\n  \t\t\tedge:\"rtsp://admin:abcde23456@192.168.1.64:554/h264/D01/main/av_stream\",\t//摄像头地址\n  \t\t\tname:\"shengjiawan1\",\t//访问时：rtmp:ip:port/live/shengjiawan1 http:ip:port/live/shengjiawan1.flv\n  \t\t\trtsp_transport:[\"tcp\",\"http\"]\n  \t\t},\n  \t  ]\n\t}\n}\nvar nms = new NodeMediaServer(config)\nnms.run();\n```\n\n\n\\#\\#\\#\\# 4\\.运行\n\n\\> node demo\\.js\n\n\\#\\#\\#\\# 5\\.播放\n\n运行之后可是使用VLC播放器播放\n\n示例url：rtmp:ip:port/live/shengjiawan1 http:ip:port/live/shengjiawan1.flv\n\n在开发中可使用flv.js插件进行播放\n\n",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "cover": "",
+            "captcha": [
+                "JavaScript",
+                "Node.js"
+            ],
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64b4f95df3a77d1a6ee18f91",
+            "title": "cesium 加载 OSM 建筑",
+            "descr": null,
+            "body": "#### 1.初始化cesium\n\n```\nconst viewer = new Cesium.Viewer(\"cesiumContainer\");\n```\n\ncesiumContainer：id为 cesiumContainer 的 div\n\n\n\n#### 2.创建OSM建组并加载到cesium\n\n```\nconst osmBuildingsTileset = await Cesium.createOsmBuildingsAsync();\nviewer.scene.primitives.add(osmBuildingsTileset);\n```\n\nCesium.createOsmBuildingsAsync() 初始化OSM建筑\n\n#### 3.OSM建组颜色\n\n```\n  osmBuildingsTileset.style = new Cesium.Cesium3DTileStyle({\n    defines: {\n      material: \"${feature['building:material']}\",\n    },\n    color: {\n      conditions: [\n        [\"${material} === null\", \"color('white')\"],\n        [\"${material} === 'glass'\", \"color('skyblue', 0.5)\"],\n        [\"${material} === 'concrete'\", \"color('grey')\"],\n        [\"${material} === 'brick'\", \"color('indianred')\"],\n        [\"${material} === 'stone'\", \"color('lightslategrey')\"],\n        [\"${material} === 'metal'\", \"color('lightgrey')\"],\n        [\"${material} === 'steel'\", \"color('lightsteelblue')\"],\n        [\"true\", \"color('white')\"], // This is the else case\n      ],\n    },\n  });\n```\n\n#### 4.效果\n\n![image.png](/images/uyD3T_phlwTSChVO-C3BmMD8.png)",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "cover": "/images/uyD3T_phlwTSChVO-C3BmMD8.png",
+            "captcha": [
+                "cesium",
+                "Vue",
+                "JavaScript"
+            ],
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64b0ac5ef3a77d1a6ee18f52",
+            "title": "解决nginx文件上传受限",
+            "descr": null,
+            "body": "#### 1.描述\n\n在项目中，开发环境正常上传文件，但是在正式环境中确实异常\n\nvue + 表单 + 富文本编辑器插入图片\n\n正式环境用nginx代理文件项目\n\n开发环境能够正常上传并显示，那么问题就出在nginx\n\n\n#### 2.打开nginx.conf配置文件\n\n> vi ./conf/nginx.conf\n\n#### 3.配置\n\n在http{}里加入client_max_body_size 10m\n\n#### 4.保存退出，重启\n\n",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "captcha": [
+                "nginx"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64b0a7cdf3a77d1a6ee18f43",
+            "title": "cesium实现局部突出，边界带立体感",
+            "descr": null,
+            "body": "#### 1.先看图\n\n![image.png](/images/B13GijNqAIPPneqYM2P8zo-u.png)\n![image.png](/images/Su5JKQ8VzAdOiMfifRfnh6zW.png)\n\n#### 2.思路\n\n去除cesium默认图层，或者不显示，然后更改cesium默认颜色（默认为蓝色）\n下载想要突出城市的影像图层，地形数据，地形数据主要用来实现边界的立体效果\n\n#### 3.cesium初始化地图\n\n代码：\n```js\nwindow.viewer = new Cesium.Viewer(container, {\n    animation: false,\n    geocoder: false,\n    homeButton: false,\n    sceneModePicker: false,\n    timeline: false,\n    navigationHelpButton: false,\n    fullscreenButton: false,\n    orderIndependentTranslucency: false,\n    infoBox: false,\n    selectionIndicator: false,\n    baseLayerPicker: false,\n    imageryProvider: imageryProvider0,\n    terrainProvider: terrain,\n    contextOptions: {\n      webgl: {\n        alpha: true\n      }\n    }\n  })\n```\n\n#### 4.加载图层影像和地形数据\n\n```\nwindow.imageryProvider0 = new Cesium.UrlTemplateImageryProvider({\n    // url: '/imageLayer/xn/{z}/{x}/{y}.png'\n    url: 'http://172.16.8.133:18098/imageLayer1/xn/{z}/{x}/{y}.png'\n  })\n  window.terrain = new Cesium.CesiumTerrainProvider({\n    // url: '/terrain/xn'\n    // url: 'http://10.10.204.165:3310/terrain/xn'\n    url: 'http://172.16.8.133:18098/terrain1/xn'\n  })\n  window.imageryProvider = new Cesium.WebMapServiceImageryProvider({\n    url: 'http://172.16.8.133:8080/geoserver/wms',\n    // url: '/geoserver/wms',\n    layers: 'XiningPoin',\n    parameters: {\n      service: 'WMS',\n      format: 'image/png',\n      transparent: true\n    }\n  })\n```\n\n图层影像和地形数据可以在地球初始化时加载或者在初始化之后加载\n这里是在初始化时加载，先定义并挂到window\n在初始化时加载，\n\n#### 5.配置cesium的一些选项\n\n```\n  viewer.scene.screenSpaceCameraController.enableCollisionDetection = true\n  viewer._cesiumWidget._creditContainer.style.display = 'none'\n  viewer.scene.skyBox.show = false\n  viewer.scene.skyAtmosphere.show = false\n  viewer.scene.sun.show = false\n  viewer.scene.moon.show = false\n  viewer.scene.fxaa = true\n  viewer.scene.postProcessStages.fxaa.enabled = true\n  viewer.scene.globe.depthTestAgainstTerrain = false\n  // viewer.scene.screenSpaceCameraController.enableRotate = false\n  viewer.scene.screenSpaceCameraController.tiltEventTypes = []\n  viewer.scene.backgroundColor = new Cesium.Color(0, 0, 0, 0)\n  const globe = viewer.scene.globe\n  globe.translucency.enabled = true\n  globe.globeAloha = 0\n  globe.undergroundColor = undefined //背景透明时不设置颜色，默认为蓝色\n  globe.translucency.backFaceAlpha = 0 //背景透明\n  globe.baseColor = new Cesium.Color(0, 0, 0, 0)\n  viewer.scene.screenSpaceCameraController.minimumZoomDistance = 1000\n  viewer.scene.screenSpaceCameraController.maximumZoomDistance = 200000\n```\n\ncesium默认是有加载太阳月亮\n以上代码是不展示太阳月亮，log之类的\n并把默认蓝色改为透明，限制缩放等\n\n\n\n\n#### 6.立体效果\n\n在地图上加载地形之后，使用Cesium.sampleTerrainMostDetailed()方法和Cesium.when()方法来获取地形的高度\n\n```\nconst pointList = []\nconst maxHeight = []\n\nconst promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, pointList)\nCesium.when(promise, function (updatedPositions) {\n    for (let i = 0; i < updatedPositions.length; i++) {\n          maxHeight.push(updatedPositions[i].height)\n        }\n      viewer.entities.add({\n          id: 'wall',\n          wall: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            maximumHeights: maxHeight,\n            minimumHeights: minHeight,\n            material: _this.getColorRamp()\n          }\n        })\n})\n```\n\n\n#### 7.影像图层和地形数据的来源及处理\n\n卫星影星可以从bigmap等类似的软件上下载\n如果想要对卫星影像处理可以使用ARCGIS，QGIS 软件等 \n之后用cesiumla工具对卫星影像进行处理\n然后使用nginx代理处理之后的数据\n\n\n地形数据好像也可以在这种软件上下载\n不过本案列用到的地形数据并不是从这上面下载的\n本案例地形数据来源OSM\n下载之后同样需要用到cesiumla工具\n具体怎么使用cesium工具这里就不介绍了\n注册之后大部分功能都能使用\n\n\n#### 8.本案例的立体效果 完整代码（核心）\n\n```\ndrawLine() {\n      // 绘制立体效果\n      // const data = require('../../assets/json/xnBJ.json')\n      console.log('draw')\n      const geoJSON = xnBJ.geometries[0].coordinates[0]\n      const coordinates = this.flatten(geoJSON)\n      const pointList = []\n      const maxHeight = []\n      const minHeight = new Array(coordinates.length / 2).fill(-1000)\n      let _this = this\n      for (let i = 0; i < geoJSON.length; i++) {\n        pointList.push(Cesium.Cartographic.fromDegrees(geoJSON[i][0], geoJSON[i][1]))\n      }\n      const promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, pointList)\n      console.log(viewer.terrainProvider)\n      Cesium.when(promise, function (updatedPositions) {\n        for (let i = 0; i < updatedPositions.length; i++) {\n          maxHeight.push(updatedPositions[i].height)\n        }\n        viewer.entities.add({\n          id: 'line',\n          polyline: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            clampToGround: true,\n            width: 5,\n            loop: true,\n            material: new Cesium.PolylineOutlineMaterialProperty({\n              color: Cesium.Color.fromCssColorString('#74d1d1'),\n              outlineWidth: 5,\n              outlineColor: Cesium.Color.fromCssColorString('#74d1d1')\n            })\n          }\n        })\n        viewer.entities.add({\n          id: 'wall',\n          wall: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            maximumHeights: maxHeight,\n            minimumHeights: minHeight,\n            material: _this.getColorRamp()\n          }\n        })\n        /***\n         *\n         * 使用GeoJsonDataSource或者polygon的方式来时添加行政区，贴地之后边界线不显示\n         * 所以这里就把行政区拆分单个，一个一个添加\n         */\n        // 添加行政边界\n        for (let i = 0; i < xn.features.length; i++) {\n          let bj = xn.features[i].geometry.coordinates[0][0]\n          let name = xn.features[i].properties.name\n          // let pointCenter = xn.features[i].properties.center\n          let bounds = []\n          for (let j = 0; j < bj.length; j++) {\n            bounds.push(bj[j][0])\n            bounds.push(bj[j][1])\n          }\n          // 线\n          viewer.entities.add({\n            id: name + 'polyline',\n            polyline: {\n              positions: Cesium.Cartesian3.fromDegreesArray(bounds),\n              clampToGround: true,\n              width: 2,\n              material: new Cesium.PolylineOutlineMaterialProperty({\n                color: Cesium.Color.CORNFLOWERBLUE,\n                outlineWidth: 1,\n                outlineColor: Cesium.Color.AQUA.withAlpha(0.5)\n              })\n            }\n          })\n          // 面\n          viewer.entities.add({\n            id: name + 'polygon',\n            name: name + 'polygon',\n            polygon: {\n              hierarchy: Cesium.Cartesian3.fromDegreesArray(bounds),\n              clampToGround: true,\n              material: Cesium.Color.PURPLE.withAlpha(0),\n              outline: true,\n              outlineColor: Cesium.Color.BLACK\n            }\n          })\n        }\n        console.log(viewer.entities)\n      })\n    },\n```",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "cover": "/images/Su5JKQ8VzAdOiMfifRfnh6zW.png",
+            "captcha": [
+                "cesium",
+                "Vue",
+                "JavaScript"
+            ],
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64ad295df3a77d1a6ee18ed9",
+            "title": "openlayer实现 遮罩 局部突出，局部高亮",
+            "descr": null,
+            "body": "做过cesium遮罩，那么openlayer肯定也有，不过官网没有，没有具体案列\n在折腾一番之后还是实现了\n看效果：\n\n![image.png](/image/881xMryyyCEQd74Oun1SqWEY.png)\n\n基本思路，在图层上添加边界，然后类似与反选操作，给边界以外的区域写样式\n\n一下是完整代码\n\n```\nimport './style.css';\nimport {Feature, Map, View} from 'ol';\nimport TileLayer from 'ol/layer/Tile';\nimport OSM from 'ol/source/OSM';\nimport VectorLayer from 'ol/layer/Vector';\nimport VectorSource from 'ol/source/Vector';\nimport {Fill, Stroke, Style} from \"ol/style\";\nimport GeoJSON from 'ol/format/GeoJSON'\nimport { createProjection, Projection } from 'ol/proj'\nimport { Geometry, Polygon, LinearRing, LineString, MultiLineString, MultiPolygon } from 'ol/geom'\nimport { fromExtent } from 'ol/geom/Polygon'\nimport { Tile } from 'ol/layer'\nimport XYZ from 'ol/source/XYZ'\n\nconst map = new Map({\n  target: 'map',\n  layers: [\n      new Tile({                           // 使用瓦片渲染方法\n        source: new XYZ({\n          url: 'http://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=f11b79a9c885650002c93f600013e969',\n          crossOrigin: 'anonymous'\n        }),\n        zIndex: 1,\n      })\n  ],\n  view: new View({\n    center: [0, 0],\n    zoom: 2\n  })\n});\n\n\n// 遮罩样式\nconst shadeStyle = new Style({\n  fill: new Fill({\n    color: 'rgba(255, 255, 255, 0.9)'\n  }),\n  stroke: new Stroke({\n    width: 1,\n    color: '#ccc'\n  })\n})\n// 遮罩数据源\nconst vtSource = new VectorSource()\n// 遮罩图层\nconst vtLayer = new VectorLayer({\n  source: vtSource,\n  style: shadeStyle,\n  zIndex:999\n})\n\nmap.addLayer(vtLayer)\n\n/**\n * 添加遮罩\n * @param {LineString | MultiLineString | Polygon | MultiPolygon} geom 必选参数\n * @param { View } view 必选参数\n * @param { String } dataProjection geom的坐标系,只支持epsg:4326 || epsg:3857, 可选参数, 当地图的坐标系与遮罩数据的坐标系不一致时，需求提供数据的坐标系\n * @returns { Feature }\n */\nfunction createShade (geom, view, dataProjection) {\n  if (geom instanceof Geometry) {\n    dataProjection = dataProjection.toUpperCase()\n    const source = geom.clone()\n    if(['EPSG:4326', 'EPSG:3857'].includes(dataProjection) && view instanceof View) {\n      const projection = createProjection(dataProjection)\n      const mapProjection = view.getProjection()\n      const mapProjetionCode = mapProjection.getCode()\n      if (projection.getCode() !== mapProjetionCode && ['EPSG:4326', 'EPSG:3857'].includes(mapProjetionCode)) {\n        source.transform(projection, mapProjection)\n      }\n    }\n\n    var polygon = erase(source, view)\n    var feature = new Feature({\n      geometry: polygon\n    })\n    return {\n      feature,\n      shade: source\n    }\n  }\n}\n\n/**\n * 擦除操作\n * @param {LineString | MultiLineString | Polygon | MultiPolygon} geom 必选参数\n * @param { View } view 必选参数\n * @returns {Polygon}\n */\nfunction erase (geom, view) {\n  var part = getCoordsGroup(geom)\n  if (!part) {\n    return\n  }\n  var extent = view.getProjection().getExtent()\n  var polygonRing = fromExtent(extent);\n  part.forEach((item) => {\n    let linearRing = new LinearRing(item);\n    polygonRing.appendLinearRing(linearRing);\n  })\n  return polygonRing\n}\n\n/**\n * geom转坐标数组\n * @param {LineString | MultiLineString | Polygon | MultiPolygon} geom\n * @returns {Array<Array<import(\"ol/coordinate\").Coordinate>>} 返回geom中的坐标\n */\nfunction getCoordsGroup(geom) {\n  var group = [] //\n  var geomType = geom.getType()\n  if (geomType === 'LineString') {\n    group.push(geom.getCoordinates())\n  } else if (geomType === 'MultiLineString') {\n    group = geom.getCoordinates()\n  } else if (geomType === 'Polygon') {\n    group = geom.getCoordinates()\n  } else if (geomType === 'MultiPolygon') {\n    geom.getPolygons().forEach((poly) => {\n      var coords = poly.getCoordinates()\n      group = group.concat(coords)\n    })\n  } else {\n    console.log('暂时不支持的类型')\n  }\n  return group\n}\n\nfunction testAddShade () {\n  fetch('./data/bound.geojson').then((res) => {\n    return res.json()\n  }).then((data) => {\n    const features = new GeoJSON().readFeatures(data)\n    const ft = features[0]\n    const bound = ft.getGeometry()\n    const result = createShade(bound, map.getView(), 'epsg:4326')\n    if (result) {\n      vtSource.addFeature(result.feature)\n      map.getView().fit(result.shade)\n    }\n  })\n  console.log(map.getLayers())\n}\n\ntestAddShade()\n\n```\n\n",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "cover": "/image/881xMryyyCEQd74Oun1SqWEY.png",
+            "captcha": [
+                "openlayer",
+                "Vue",
+                "JavaScript"
+            ],
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64ab62c3f3a77d1a6ee18eac",
+            "title": "vue3 + vite + vueRouter动态路由打包 开发环境与正式环境的",
+            "descr": null,
+            "body": "\\> Uncaught \\(in promise\\) TypeError: Failed to resolve module specifier '\\(\\)=\\>St\\(\\(\\)=\\>import\\(\"\\./edit\\-91b69d2b\\.js\"\\)\\,\\[\\]\\)\\.then\\(a=\\>a\\.default\\)'\n\n```js\n\n    const modules = import.meta.glob(\"@/views/*/*.vue\",{as:\"url\"})\n    for (const key in modules) {\n        // modules[key]().then((mod) => {\n            // const file = mod.default\n            for (let i = 0; i < menuArr.length; i++) {\n                const item = menuArr[i]\n                const componentPath = `/src/views${item.component}`\n                if (key == componentPath) {\n                    const route = {\n                        path: item.url || item.path,\n                        component: import(modules[key]),\n                    }\n                    if (item.pName) {\n                        router.addRoute(item.pName,route)\n                    }else{\n                        router.addRoute(route)\n                    }\n                }\n            }\n\n        // })\n    }\n```",
+            "date": "2023-07-09T12:45:48.000Z",
+            "__v": 0,
+            "captcha": [
+                "Vue",
+                "JavaScript"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64a78e470806eb1c87130b1a",
+            "title": "echarts 一个div容器多个饼图展示",
+            "descr": null,
+            "body": "##### 先看图\n\n![image.png](/image/T6nt1DR9rFMa2gZlX2LImwCz.png)\n\n1. 该图效果一共有八个饼图，两个饼图一个饼图效果\n2. 两个饼图的位置，大小一致\n\n配置 option\n\n三个变量\n\n```\nconst placeHolderStyle = {\n        normal: {\n          label: {\n            show: false,\n          },\n          labelLine: {\n            show: false,\n          },\n          color: \"rgba(0,0,0,0)\",\n          borderWidth: 0,\n        },\n        emphasis: {\n          color: \"rgba(0,0,0,0)\",\n          borderWidth: 0,\n        },\n      };\n\n      const dataStyle = {\n        formatter: \"{c}%\",\n        position: \"center\",\n        show: true,\n        textStyle: {\n          fontSize: \"15\",\n          fontWeight: \"normal\",\n          color: \"#42e6d5\",\n        },\n      };\n      const pieColor = new echarts.graphic.LinearGradient(0, 0, 0, 1, [\n        {\n          offset: 0,\n          color: \"#01afff\",\n        },\n        // {\n        //   offset: 0.5,\n        //   color: \"#01afff\",\n        // },\n        {\n          offset: 1,\n          color: \"#034aff\",\n        },\n      ])\n```\n\n系列\n\n```\nseries: [\n          {\n            type: \"pie\",\n            hoverAnimation: false, //鼠标经过的特效\n            radius: [\"25%\", \"30%\"],\n            center: [\"30%\", \"30%\"],\n            zlevel: 1,\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: \"#262795\",\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n          //上层环形配置\n          {\n            type: \"pie\",\n            name:'test',\n            hoverAnimation: false, //鼠标经过的特效\n            radius: [\"25%\", \"30%\"],\n            center: [\"30%\", \"30%\"],\n            zlevel:10,\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            label: dataStyle,\n            data: [\n              {\n                value: 10,\n                name:'test',\n                itemStyle: {\n                  normal: {\n                    color: pieColor,\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n\n          //第二个图表\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"70%\", \"30%\"],\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: \"#262795\",\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n\n          //上层环形配置\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"70%\", \"30%\"],\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            label: dataStyle,\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: pieColor,\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n          //第三个图表\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"30%\", \"70%\"],\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: \"#262795\",\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n\n          //上层环形配置\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"30%\", \"70%\"],\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            label: dataStyle,\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: pieColor,\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n\n          //第四个图表\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"70%\", \"70%\"],\n            startAngle: 225,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n            label: {\n              show:false,\n            },\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: \"#262795\",\n                  },\n                },\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n\n          //上层环形配置\n          {\n            type: \"pie\",\n            hoverAnimation: false,\n            radius: [\"25%\", \"30%\"],\n            center: [\"70%\", \"70%\"],\n            startAngle: 225,\n            zlevel:10,\n            labelLine: {\n              normal: {\n                show: false,\n              },\n            },\n\n            data: [\n              {\n                value: 100,\n                itemStyle: {\n                  normal: {\n                    color: pieColor,\n                  },\n                },\n                label: dataStyle,\n              },\n              {\n                value: 35,\n                itemStyle: placeHolderStyle,\n              },\n            ],\n          },\n        ],\n```\n\n\n两个饼图叠在一起关键在于 radius，center，zlevel\n\nradius: [\"25%\", \"30%\"],\ncenter: [\"30%\", \"30%\"],\nzlevel:层级\n\n然后是标题\n\n![image.png](/image/NNYJys5lvM3BF3ox365peV2X.png)\n\n这个只要是个就行，定位到对应饼图即可\n\n```\ntitle: [\n          {\n            text: \"AQI范围准确率\",\n            left: \"30%\",\n            top: \"45%\",\n            textAlign: \"center\",\n            backgroundColor: '#16589a',\n            borderColor: '#2170cd',\n            borderRadius: 5,\n            textStyle: {\n              fontWeight: \"normal\",\n              fontSize: \"10\",\n              color: \"#fff\",\n              textAlign: \"center\",\n            },\n          },\n          {\n            text: \"AQI等级准确率\",\n            left: \"70%\",\n            top: \"45%\",\n            textAlign: \"center\",\n            backgroundColor: '#16589a',\n            borderColor: '#2170cd',\n            borderRadius: 5,\n            textStyle: {\n              color: \"#fff\",\n              fontWeight: \"normal\",\n              fontSize: \"10\",\n              textAlign: \"center\",\n            },\n          },\n          {\n            text: \"首要污染物准确率\",\n            left: \"30%\",\n            top: \"85%\",\n            textAlign: \"center\",\n            backgroundColor: '#16589a',\n            borderColor: '#2170cd',\n            borderRadius: 5,\n            textStyle: {\n              color: \"#fff\",\n              fontWeight: \"normal\",\n              fontSize: \"10\",\n              textAlign: \"center\",\n            },\n          },\n          {\n            text: \"污染天预报准确率\",\n            left: \"70%\",\n            top: \"85%\",\n            textAlign: \"center\",\n            backgroundColor: '#16589a',\n            borderColor: '#2170cd',\n            borderRadius: 5,\n            textStyle: {\n              color: \"#fff\",\n              fontWeight: \"normal\",\n              fontSize: \"10\",\n              textAlign: \"center\",\n            },\n          },\n        ],\n```\n\n",
+            "date": "2023-07-06T16:08:05.000Z",
+            "__v": 0,
+            "cover": "/images/T6nt1DR9rFMa2gZlX2LImwCz.png",
+            "captcha": [
+                "Vue",
+                "Echarts"
+            ],
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "64a6343b48093a4642b95511",
+            "title": "前端开发 node 版本过低的问题 忽略引擎检查,解决版本过低的问题",
+            "descr": null,
+            "body": "#### 解决办法\n\nyarn 命令\n\nyarn config set ignore-engines true\n\n在命令窗口输入：\n\n> yarn config set ignore-engines true",
+            "date": "2023-07-03T14:51:26.000Z",
+            "__v": 0,
+            "captcha": [
+                "Node.js"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "cover": "",
+            "captcha": [],
+            "captchas": [],
+            "_id": "649a6f54ef4df36e1029442a",
+            "title": "docker 界面管理Portainer.io忘记用户名密码，怎么办？",
+            "descr": null,
+            "body": "### 1. 停止 portainer 容器\n\n使用docker命令找到pid或者直需要停止的名称name\n\n>  docker ps -a\n\n```\ndocker ps -a\nCONTAINER ID   IMAGE                 COMMAND                CREATED       STATUS                 PORTS                                                           NAMES\nd7233878c81a   jellyfin/jellyfin     \"/jellyfin/jellyfin\"   7 weeks ago   Up 4 hours (healthy)   0.0.0.0:8096->8096/tcp, :::8096->8096/tcp                       jellyfin\nce415b08e724   portainer/portainer   \"/portainer\"           7 weeks ago   Up 4 hours             8000/tcp, 9443/tcp, 0.0.0.0:9000->9000/tcp, :::9000->9000/tcp   portainer\n```\n\n> docker stop name/pid\n\n\n停止后没有什么提示\n\n### 2.借助仓库 portainer/helper-reset-password 重置密码\n\n使用find命令找到portaienr主机所在路径\n\n> find / -name portainer.key\n\n```\n[root@localhost media]# find / -name portainer.key\n/var/lib/docker/volumes/185af294ad54283ece64893fe9110ca08a0bc029886ced52af20261d8512621b/_data/portainer.key\n```\n\n执行一下命令重置密码\n\n> docker run --rm -v /var/lib/docker/volumes/185af294ad54283ece64893fe9110ca08a0bc029886ced52af20261d8512621b/_data:/data portainer/helper-reset-password\n\n之后有类似以下提示\n\n```\nUnable to find image 'portainer/helper-reset-password:latest' locally\nlatest: Pulling from portainer/helper-reset-password\n79916c70cb9e: Pull complete\n93e26fa95550: Pull complete\nDigest: sha256:735a809b1bfe14b5fae340d4b350bae97c2016371c47fb6e34d71a45e4512f79\nStatus: Downloaded newer image for portainer/helper-reset-password:latest\n2021/03/25 04:00:14 Password succesfully updated for user: admin\n2021/03/25 04:00:14 Use the following password to login: |OP\\L,2e&9+0x378cDTh#Q56bi*xxx\n```\n\n以上提示最后两行是默认用户名和默认密码\n\n### 4.启动portainer容器\n\n> docker start portianer\n\n之后在浏览器里打开portainer 使用以上默认用户名和密码登录\n\n成功登录之后再修改用户和密码",
+            "date": "2023-06-26T16:00:51.000Z",
+            "__v": 0
+        },
+        {
+            "userId": "",
+            "captchas": [],
+            "_id": "64990cdc7eda18393f5a22c2",
+            "title": "解决nginx文件上传受限",
+            "descr": null,
+            "body": "在项目中，开发环境正常上传文件，但是在正式环境中确实异常\n\n**后端**\nnode.js + express + multiparty 接收并保存在硬盘，然后再返回给前端一个地址\n\n**前端**\n\nvue + 表单 + 富文本编辑器插入图片\n\n正式环境用nginx代理文件项目\n\n开发环境能够正常上传并显示，那么问题就出在nginx\n\n进到nginx目录使用vi命令打开nginx.conf文件\n\n```\nvi ./conf/nginx.conf\n```\n\n在http{}里加入client_max_body_size 10m；\n\n如图：\n\n![image.png](/images/9U9sY2nfV24ePxsBmqxpTlj0.png)\n\n保存退出\n\n重启nginx\n\n```\nsystemctl restart nginx\n```\n\n问题解决！！！",
+            "date": "2023-06-25T08:14:10.000Z",
+            "__v": 0,
+            "captcha": [
+                "nginx"
+            ],
+            "cover": ""
+        },
+        {
+            "userId": "",
+            "captchas": [],
+            "_id": "649909cc7eda18393f5a22bc",
+            "title": "vue+cesium实现某个城市突出展示，3D效果最终方案",
+            "descr": null,
+            "body": "### 最终结果奉上\n\n如图：\n![image.png](/images/L16QeQ7qR4JdMZVrXczPOdtS.png)\n![image.png](/images/nVz7VGXI6yIwcmuqrF5IBIAf.png)\n![image.png](/images/aG7A019MDTB0NkC01HxQfb7I.png)\n\n#### 折腾的过程\n\n实际场景是项目有这个需求，公司找了多家公司都没有做出效果，或者效果不满意，\n\n其他公司做的思路是 将某一地区的地形图做成glb格式的模型图，然后再通过自己封装的js库，或者使用其他可以加载glb模型的库，他们使用自己封装的js库，大致的做到效果，但实际加载太慢太慢，需要2分钟左右或更长时间，后续有优化，但也不理想，所以没有采用。\n\n#### 解决方案\n\nvue + cesiem + cesiumLab + geoserver + nginx 完美解决\n\n**说明**\n\n1. vue+ceisum 主要技术实现\n2. cesiumLab用来切片，将完成的tif图层切成小块，不切好像也行，具体还没试过\n3. geoserver用来发布地名相关的一些图层\n4. nginx代理cesiumLab切好的影像图层和地形\n\n**主要记录一下vue+cesium 代码实现的过程**\n\n初始化地图\n\n```\nwindow.viewer = new Cesium.Viewer(container, {\n    animation: false,\n    geocoder: false,\n    homeButton: false,\n    sceneModePicker: false,\n    timeline: false,\n    navigationHelpButton: false,\n    fullscreenButton: false,\n    orderIndependentTranslucency: false,\n    infoBox: false,\n    selectionIndicator: false,\n    baseLayerPicker: false,\n    imageryProvider: imageryProvider0,\n    terrainProvider: terrain,\n    contextOptions: {\n      webgl: {\n        alpha: true\n      }\n    }\n  })\n```\n\n> container:地图容器id\n> imageryProvider0:定义的影像\n> terrain:定义的地形\n\n代码如下：\n\n```\nwindow.imageryProvider0 = new Cesium.UrlTemplateImageryProvider({\n    // url: '/imageLayer/xn/{z}/{x}/{y}.png'\n    url: 'http://172.16.8.133:18098/imageLayer1/xn/{z}/{x}/{y}.png'\n  })\n  window.terrain = new Cesium.CesiumTerrainProvider({\n    // url: '/terrain/xn'\n    // url: 'http://10.10.204.165:3310/terrain/xn'\n    url: 'http://172.16.8.133:18098/terrain1/xn'\n  })\n  window.imageryProvider = new Cesium.WebMapServiceImageryProvider({\n    url: 'http://172.16.8.133:8080/geoserver/wms',\n    // url: '/geoserver/wms',\n    layers: 'XiningPoin',\n    parameters: {\n      service: 'WMS',\n      format: 'image/png',\n      transparent: true\n    }\n  })\n```\n\n其他配置\n\n```\n// 禁用相机视角进入地下\n  viewer.scene.screenSpaceCameraController.enableCollisionDetection = true\n  viewer._cesiumWidget._creditContainer.style.display = 'none'\n  viewer.scene.skyBox.show = false\n  viewer.scene.skyAtmosphere.show = false\n  viewer.scene.sun.show = false\n  viewer.scene.moon.show = false\n  viewer.scene.fxaa = true\n  viewer.scene.postProcessStages.fxaa.enabled = true\n  viewer.scene.globe.depthTestAgainstTerrain = false\n  // viewer.scene.screenSpaceCameraController.enableRotate = false\n  // 锁定禁用翻转\n  viewer.scene.screenSpaceCameraController.tiltEventTypes = []\n  viewer.scene.backgroundColor = new Cesium.Color(0, 0, 0, 0)\n  const globe = viewer.scene.globe\n  globe.translucency.enabled = true\n  globe.globeAloha = 0\n  globe.undergroundColor = undefined //背景透明时不设置颜色，默认为蓝色\n  globe.translucency.backFaceAlpha = 0 //背景透明\n  globe.baseColor = new Cesium.Color(0, 0, 0, 0)\n  viewer.scene.screenSpaceCameraController.minimumZoomDistance = 1000\n  viewer.scene.screenSpaceCameraController.maximumZoomDistance = 200000\n```\n\n**主要代码**\n这里是实现效果的核心\n\n立体效果\n\n思路：\n在地图上加载地形之后，使用Cesium.sampleTerrainMostDetailed()方法和Cesium.when()方法来获取地形的高度，之后添加实体如下：\n\n```\nconst pointList = []\nconst maxHeight = []\n\nconst promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, pointList)\nCesium.when(promise, function (updatedPositions) {\n    for (let i = 0; i < updatedPositions.length; i++) {\n          maxHeight.push(updatedPositions[i].height)\n        }\n      viewer.entities.add({\n          id: 'wall',\n          wall: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            maximumHeights: maxHeight,\n            minimumHeights: minHeight,\n            material: _this.getColorRamp()\n          }\n        })\n})\n```\n\n到这里立体效果就有了\n\n完整函数代码\n\n```\ndrawLine() {\n      // 绘制立体效果\n      // const data = require('../../assets/json/xnBJ.json')\n      console.log('draw')\n      const geoJSON = xnBJ.geometries[0].coordinates[0]\n      const coordinates = this.flatten(geoJSON)\n      const pointList = []\n      const maxHeight = []\n      const minHeight = new Array(coordinates.length / 2).fill(-1000)\n      let _this = this\n      for (let i = 0; i < geoJSON.length; i++) {\n        pointList.push(Cesium.Cartographic.fromDegrees(geoJSON[i][0], geoJSON[i][1]))\n      }\n      const promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, pointList)\n      console.log(viewer.terrainProvider)\n      Cesium.when(promise, function (updatedPositions) {\n        for (let i = 0; i < updatedPositions.length; i++) {\n          maxHeight.push(updatedPositions[i].height)\n        }\n        viewer.entities.add({\n          id: 'line',\n          polyline: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            clampToGround: true,\n            width: 5,\n            loop: true,\n            material: new Cesium.PolylineOutlineMaterialProperty({\n              color: Cesium.Color.fromCssColorString('#74d1d1'),\n              outlineWidth: 5,\n              outlineColor: Cesium.Color.fromCssColorString('#74d1d1')\n            })\n          }\n        })\n        viewer.entities.add({\n          id: 'wall',\n          wall: {\n            positions: Cesium.Cartesian3.fromDegreesArray(coordinates),\n            maximumHeights: maxHeight,\n            minimumHeights: minHeight,\n            material: _this.getColorRamp()\n          }\n        })\n        /***\n         *\n         * 使用GeoJsonDataSource或者polygon的方式来时添加行政区，贴地之后边界线不显示\n         * 所以这里就把行政区拆分单个，一个一个添加\n         */\n        // 添加行政边界\n        for (let i = 0; i < xn.features.length; i++) {\n          let bj = xn.features[i].geometry.coordinates[0][0]\n          let name = xn.features[i].properties.name\n          // let pointCenter = xn.features[i].properties.center\n          let bounds = []\n          for (let j = 0; j < bj.length; j++) {\n            bounds.push(bj[j][0])\n            bounds.push(bj[j][1])\n          }\n          // 线\n          viewer.entities.add({\n            id: name + 'polyline',\n            polyline: {\n              positions: Cesium.Cartesian3.fromDegreesArray(bounds),\n              clampToGround: true,\n              width: 2,\n              material: new Cesium.PolylineOutlineMaterialProperty({\n                color: Cesium.Color.CORNFLOWERBLUE,\n                outlineWidth: 1,\n                outlineColor: Cesium.Color.AQUA.withAlpha(0.5)\n              })\n            }\n          })\n          // 面\n          viewer.entities.add({\n            id: name + 'polygon',\n            name: name + 'polygon',\n            polygon: {\n              hierarchy: Cesium.Cartesian3.fromDegreesArray(bounds),\n              clampToGround: true,\n              material: Cesium.Color.PURPLE.withAlpha(0),\n              outline: true,\n              outlineColor: Cesium.Color.BLACK\n            }\n          })\n        }\n        console.log(viewer.entities)\n      })\n    },\n```\n\n",
+            "date": "2023-06-25T08:14:10.000Z",
+            "__v": 0,
+            "captcha": [],
+            "cover": ""
+        },
+        {
+            "userId": "",
+            "_id": "6498f9927eda18393f5a22b4",
+            "title": "vite + vue3 + cesium 初始化",
+            "descr": null,
+            "body": "#### 先看结果\n如图：\n\n![image.png](/images/FCZYHRn9X-qrq0FKe3vHndPp.png)\n\n**安装cesium**\n```\nyarn add cesium\n```\n\n**在 vite.config.js 里配置 ceisum**\n\n```\noptimizeDeps: {\n    include: ['cesium'],``\n  },\n  define: {\n    CESIUM_BASE_URL: JSON.stringify('/cesium/'),\n  },\n```\n\n**引入然后实列化**\n\n引入\n\n```\nimport 'cesium/Build/Cesium/Widgets/widgets.css'\nimport * as Cesium from 'cesium'\n```\n\n**实例化函数封装**\n\n```\nexport function map(id) {\n  Cesium.Ion.defaultAccessToken = CESIUM_TOKEN\n  Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(90, -20, 110, 90);\n  const viewer = new Cesium.Viewer(id, {\n    geocoder: false,   // 位置查找工具\n    homeButton: false,  // 视角返回初始位置\n    sceneModePicker: false,   // 选择视角的模式（球体、平铺、斜视平铺）\n    baseLayerPicker: false,    // 图层选择器（地形影像服务）\n    navigationHelpButton: false,   // 导航帮助(手势，鼠标)\n    animation: false,   // 左下角仪表盘（动画器件）\n    timeline: false,   // 底部时间线\n    fullscreenButton: false,   // 全屏\n    vrButton: false,  // VR\n    terrainProvider: Cesium.createWorldTerrain()\n  })\n  window.Cesium = Cesium\n  viewer._cesiumWidget._creditContainer.style.display = \"none\"\n  // 修改homeButton的默认返回位置\n\n  return viewer\n}\n```\n\n**引用**\n\n```\nimport { onMounted, reactive } from \"vue\";\nimport { map, provider, SceneMode } from \"@/utils/ceisum.map\";\n\nonMounted(() => {\n  store.viewer = map(\"container\");\n});\n\n```",
+            "date": "2023-06-25T08:14:10.000Z",
+            "__v": 0,
+            "captcha": [
+                "Vue",
+                "JavaScript"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "649800ef7eda18393f5a22a0",
+            "title": "CentOS系统后台运行node项目",
+            "descr": null,
+            "body": "## 在windows系统里，怎么开控制台都可以，但是在linux系统里，只有一个黑黑的控制台，想要运行多个项目就有点困难\n\n如图在windows系统里：\n![image.png](/images/Ajr_fD5hSxZnhiMybXVHI6YJ.png)\n\n一个控制台窗口一个项目\n\n\n在linux系统只有这样一个窗口：\n\n![image.png](/images/bhdjo_i3uGesBnR046kL1F-s.png)\n\n并且在这个窗口里跑一个项目，只要这个控制台窗口关闭，正在运行的项目也就随之关闭\n\n## nohup 命令\n\n最简单的一个命令 \n\n格式：\n\n> nohup 项目命令  &\n\n列如：\n\n> nohup node ./app.js 2>&1 &\n\n这条命令运行一个node项目 并且将输出信息和错误信息计入默认日志文件 output.log\n\n![image.png](/images/SoLtWk7sQU2bRCfF7xao4gz_.png)",
+            "date": "2023-06-25T08:14:10.000Z",
+            "__v": 0,
+            "captcha": [
+                "linux"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "cover": "",
+            "captcha": [],
+            "captchas": [],
+            "_id": "6492aa4cf6683ee0727533f7",
+            "title": "开发中 nrm 切换镜像源异常解决办法1.2.5",
+            "descr": null,
+            "body": "> 提示切换成功，nrm ls打印无星号，npm/yarn 安装报错\n\n> 如下:\n\n> nrm use npm\n\n```bash\nC:\\Users\\Administrator>nrm use npm\n\n\n   Registry has been set to: https://registry.npmjs.org/\n\n\n```\n\n> nrm ls\n\n```bash\nC:\\Users\\Administrator>nrm ls\n\n  npm ------------- https://registry.npmjs.org/\n  yarn ------------ https://registry.yarnpkg.com/\n  tencent --------- https://mirrors.cloud.tencent.com/npm/\n  cnpm ------------ https://r.cnpmjs.org/\n  taobao ---------- https://registry.npmmirror.com/\n  npmMirror ------- https://skimdb.npmjs.com/registry/\n\n```\n\n切换成功，打印并没有星号\n\n\n## 解决办法\n\n修改 cli.js 文件 211行\n\n路径：npm安装路径\\node_modules\\nrm\\cli.js\n\n> 修改前\n\n```javascript\nif (hasOwnProperty(customRegistries, name) && (name in registries || customRegistries[name].registry === registry.registry)) {\n                    registry[FIELD_IS_CURRENT] = true;\n                    customRegistries[name] = registry;\n                }\n```\n\n> 修改后\n\n```javascript\nif (hasOwnProperty(customRegistries, name) || (name in registries || customRegistries[name].registry === registry.registry)) {\n                    registry[FIELD_IS_CURRENT] = true;\n                    customRegistries[name] = registry;\n                }\n```\n\n修改保存后，重新切换镜像源就能正常安装依赖\n\n> 注：该方法来源网络，避免忘记，故此记录",
+            "date": "2023-06-21T19:41:25.000Z",
+            "__v": 0
+        },
+        {
+            "userId": "",
+            "_id": "6492aa14f6683ee0727533f2",
+            "title": "echarts实现图片和行政边界大致匹配以及三维效果",
+            "descr": null,
+            "body": "### 思路：\n主要是纹理（行政边界背景）和立体效果 分两层来实现：第一层做立体投影效果，第二层做纹理\n\n### 视图控制\n\ncenter数组里的值对应 x y z\n```javascript\nviewControl: {\n              distance: 130,\n              panMouseButton: 'left',\n              rotateMouseButton: 'right',\n              alpha: 50,\n              center: [1, 0, 30],\n            },\n```\n\n### 第一层：这一层主要是做立体效果，\n\n```javascript\n// 投影\n          {\n            map: 'xn',\n            zlevel: 9,\n            top: 0,\n            buttom: '20%',\n            // boxDepth:100,\n            // silent: true,\n            environment: new echarts.graphic.LinearGradient(\n              0,\n              0,\n              0,\n              1,\n              [\n                {\n                  offset: 0,\n                  color: '#00aaff', // 天空颜色\n                },\n                {\n                  offset: 0.7,\n                  color: '#998866', // 地面颜色\n                },\n                {\n                  offset: 1,\n                  color: '#998866', // 地面颜色\n                },\n              ],\n              false\n            ),\n            light: {\n              main: {\n                intensity: 1,\n                shadow: true,\n                alpha: 150,\n                beta: 20,\n              },\n              ambient: {\n                intensity: 0.2,\n              },\n              ambientCubemap: {\n                texture: '/Basketball_Court/BasketballCourt_Env.hdr',\n                // 解析 hdr 时使用的曝光值\n                exposure: 1.0,\n              },\n            },\n            groundPlane: {\n              // color: 'transparent',\n              show: true,\n            },\n            postEffect: {\n              enable: false,\n            },\n            // itemStyle: {\n            //   color: 'black',\n            // },\n            viewControl: {\n              distance: 130, //默认视角距离主体的距离\n              panMouseButton: 'left', //平移操作使用的鼠标按键\n              rotateMouseButton: 'right', //旋转操作使用的鼠标按键\n              alpha: 50,\n              center: [1, 0, 30],\n            },\n          },\n```\n\n### 第二层：这一层主要是做纹理\n#### 纹理设置\n官方文档给的实在是操蛋\n原文： geo3D.lambertMaterial. textureOffset number\n材质细节纹理的位移。\n\n\n偏移那肯定有 x轴和y轴\n所以 我给了一个数组\n数组第一个值表示x轴，第二个值表示y轴\n```\ntextureOffset: [0.22, 0],\n```\n```javascript\nrealisticMaterial: {\n              detailTexture: 'http://localhost:81/json/image/map/888.png',\n              textureTiling: 1,\n              textureOffset: [0.22, 0],\n            }\n```\n\n```javascript\n// 纹理\n          {\n            map: 'xn',\n            regionHeight: 4,\n            zlevel: 9,\n            viewControl: {\n              distance: 130,\n              panMouseButton: 'left',\n              rotateMouseButton: 'right',\n              alpha: 50,\n              // damping:1\n              center: [1, 0, 30],\n            },\n            shading: 'realistic',\n            realisticMaterial: {\n              detailTexture: 'http://localhost:81/json/image/map/888.png',\n              textureTiling: 1,\n              textureOffset: [0.22, 0],\n            },\n          },\n```\n",
+            "date": "2023-06-21T19:41:25.000Z",
+            "__v": 0,
+            "captcha": [
+                "Echarts",
+                "Vue"
+            ],
+            "cover": "",
+            "captchas": []
+        },
+        {
+            "userId": "",
+            "_id": "6492a8e1d9d8367fb7a1d6a7",
+            "title": "echarts部分内容不渲染",
+            "descr": null,
+            "body": "### 首先阐述一下可能导致echart不渲染或者渲染不完整的原因（保证配置不出错的情况下）\n当使用 ECharts 绘制大量数据时，可能会出现部分不渲染的情况。这通常是因为浏览器在处理大量数据时会出现性能问题，导致某些图表数据无法正常显示。\n\n### 以下是一些可能导致不渲染的原因和解决方法：\n\n1. 数据过多：当数据量过大时，会导致浏览器计算、渲染速度变慢，甚至崩溃。可以通过对数据进行分段处理，或者采用动态加载等方式来避免这个问题。\n\n2. 图表设置不合理：如果图表的配置项设置不合理，也可能导致不渲染。例如，设置了错误的坐标轴范围、图表类型不匹配等。需要仔细检查图表的配置项是否正确设置。\n\n3. 容器尺寸不合适：如果容器的尺寸不足以容纳图表，也会导致部分数据不渲染。需要确保容器的尺寸足够大，并且不被其他元素覆盖。\n\n4. 图表组件设置不正确：ECharts 提供了很多组件，如 tooltip、legend 等，如果设置不正确，也可能会导致不渲染。需要仔细检查组件的配置是否正确。\n\n5. 浏览器兼容性：不同浏览器对于大数据量的渲染性能不同，也可能导致不渲染。可以尝试在不同浏览器中测试，并选择性能更好的浏览器。\n\n> 综上所述，解决 ECharts 数据量大、部分不渲染的问题需要综合考虑多个因素，并根据实际情况进行调整和优化。\n\n#### 以实际情况来看，在选择少量数据的情况下，echarts是能够正常渲染的，如图：\n![image.png](/images/mt1kPnlxn-akCCaCoeLpTFzQ.png)\n\n#### 但是当选择比较多数据是风向箭头就显示不出来。如图：\n\n![image.png](/images/sZa5I3HYDawVA7NdlQET3hUi.png)\n\n#### 经过一段时间，两份代码对比，发现并没有什么不同，唯一不同的是两个模块的数据量是不同，其次就是echarts样式（格子的大小），如图：\n\n![image.png](/images/UafoyOYvuJnphVNQSm9o0BEW.png)\n\n#### 回到之前的模块，调整数据量之后，发现是可以正常显示的，那就只能是一步步排查了\n\n1. 数据量问题：这里才几十条数据，这对于echarts来说应该说应该不是问题，之前用echarts来做过几百上千条数据都没问题，所以排除\n2. 图表和组件设置不合理：经过测试，少量数据是能够正常显示的，所以这里就存在图表和组件设置不合理，故排除\n3. 浏览器问题：这个也排除，几大浏览器巨头（chrome，火狐，edge）性能都不行的话，估计也没什么浏览器可以用了\n\n\n\n#### 经过以上的排除，那么就只剩下CSS样式的问题了，大致猜测是echarts的父容器的高度给的不够\n\n如图：红色标记处，源代码是\n```css\nheight: calc(100vh - 100px)\n```\n\n```css\nheight: calc(100vh)\n```\n\n> 去掉100px或者改小一点\n\n\n\n去掉100px后，重新查询渲染一遍，正常渲染。\n\n![image.png](/images/SzHzNFbiBs3dp95CBAFrvL69.png)",
+            "date": "2023-06-21T19:21:35.000Z",
+            "__v": 0,
+            "cover": "/images/SzHzNFbiBs3dp95CBAFrvL69.png",
+            "captcha": [
+                "Echarts",
+                "Vue",
+                "JavaScript"
+            ],
+            "captchas": []
+        }
+    ]
+}

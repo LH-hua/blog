@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar fixed="false" class="custom" density="compact" flat>
+  <v-app-bar class="custom" density="compact">
     <top-menu></top-menu>
   </v-app-bar>
 
@@ -32,9 +32,9 @@ onMounted(() => {
   /* backdrop-filter: blur(10px); */
   /* border-bottom: 1px solid #e0e0e0; */
 }
-.v-app-bar.v-toolbar {
+/* .v-app-bar.v-toolbar {
   background: transparent;
   backdrop-filter: blur(10px);
   color: white;
-}
+} */
 </style>

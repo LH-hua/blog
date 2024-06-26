@@ -78,13 +78,12 @@
       <side-main>
         <template #right>
           <div style="align-self: flex-start; position: sticky; top: 65px">
-            <v-sheet rounded="lg" class="pa-2" :elevation="1">
+            <v-sheet rounded="lg" class="pa-2" :elevation="0" border>
               <card-image></card-image>
-            </v-sheet>
-            <br />
-            <v-sheet rounded="lg" class="pa-2" :elevation="1">
               <v-card flat>
                 <v-card-title>标签</v-card-title>
+                <v-divider></v-divider>
+
                 <v-card-text>
                   <v-chip
                     class="ma-2"
@@ -99,54 +98,52 @@
                   </v-chip>
                 </v-card-text>
               </v-card>
-            </v-sheet>
-            <br />
-            <v-sheet rounded="lg" class="pa-2" :elevation="1">
               <v-card flat>
-                <v-card-title><v-icon icon="mdi-bullhorn"></v-icon>公告</v-card-title>
-                <v-card-text>
-                  {{ data.announcement }}
-                </v-card-text>
+                <v-card-title>其他</v-card-title>
+                <v-divider></v-divider>
+
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>
+                      <v-btn prepend-icon="mdi-postage-stamp" href="http://8.137.113.237:8002" flat>大事件</v-btn>
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>
+                      <v-btn prepend-icon="mdi-earth" href="http://8.134.217.110:4060" flat>功能合集</v-btn>
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
               </v-card>
             </v-sheet>
           </div>
         </template>
 
         <template #main>
-          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" :elevation="1">
-            <v-card
-              v-for="item in data.data"
-              :key="item._id"
-              @click="onDetal(item)"
-              class="ma-2 d-flex flex-no-wrap align-center justify-space-between"
-              flat
-              hover
-            >
-              <v-card flat>
-                <v-card-item>
-                  <v-card-title class="text-h6 font-weight-medium">
-                    <h2>
-                      {{ item.title }}
-                    </h2>
-                  </v-card-title>
-                  <v-card-subtitle>
-                    {{ formartTime(item.date) }}
-                  </v-card-subtitle>
-                  <v-card-text>
-                    <div style="height: 100px; overflow: hidden">
-                      {{ item.body }}
-                    </div>
-                  </v-card-text>
-                </v-card-item>
-                <v-card-actions>
-                  <v-chip v-for="items in item.captchas" :key="items" color="primary">{{ items.captcha }}</v-chip>
-                </v-card-actions>
-              </v-card>
+          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" flat border>
+            <v-card v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
               <v-img v-if="item.cover" style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover :src="item.cover">
                 <template v-slot:error>
-                  <v-img style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover src="/image/err.jpg"></v-img>
+                  <v-img style="border-radius: 4px" :width="300" :height="200" class="ma-2" aspect-ratio="4/3" cover src="/image/err.jpg"> </v-img>
                 </template>
               </v-img>
+              <v-card flat>
+                <v-card-title class="text-black" @click="onDetal(item)">
+                  <h3 class="cursor-pointer" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                    <a>
+                      {{ item.title }}
+                    </a>
+                  </h3>
+                </v-card-title>
+                <v-card-text>
+                  <div style="height: 100px; overflow: hidden">
+                    {{ item.body }}
+                  </div>
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn color="medium-emphasis" prepend-icon="mdi-clock-time-nine-outline" size="small">{{ formartTime(item.date) }} </v-btn>
+                </v-card-actions>
+              </v-card>
             </v-card>
           </v-sheet>
         </template>
@@ -156,7 +153,7 @@
 </template>
 
 <script setup>
-import { reactive, onBeforeMount } from 'vue'
+import { reactive, onBeforeMount, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import markdown from 'markdown-it'
 import moment from 'moment'
@@ -165,6 +162,7 @@ import { getArticleList, getCaptcha } from '@/http/article'
 import { announcement } from '@/http/sys'
 
 import cardImage from '@/components/cardImage.vue'
+import { Scroll } from '@/utils/tool'
 
 const router = useRouter()
 const data = reactive({
@@ -254,6 +252,10 @@ onBeforeMount(() => {
   })
   data.serachItems = getStroage()
 })
+
+onUnmounted(() => {
+  new Scroll().remove()
+})
 </script>
 
 <style scoped lang="scss">
@@ -268,6 +270,7 @@ onBeforeMount(() => {
   align-items: center;
   align-items: center;
   background: url('/image/nav.jpg');
+  background-position-y: center;
   background-size: cover;
   /* overflow: hidden; */
   /* 使用 clip-path 属性创建贝塞尔曲线效果 */

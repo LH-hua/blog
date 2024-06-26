@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted,onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import anchor from 'markdown-it-anchor'
@@ -122,9 +122,13 @@ function getData() {
 onMounted(() => {
   initMd()
   getData()
-  const dom = document.querySelector('.custom')
-  dom.style.position = 'none'
-  dom.style.color = 'black'
+  // const dom = document.querySelector('.custom')
+  // dom.style.color = 'black'
+})
+
+onUnmounted(() => {
+  // const dom = document.querySelector('.custom')
+  // dom.style.color = 'white'
 })
 </script>
 
@@ -132,5 +136,8 @@ onMounted(() => {
 /* @import '../../assets/css/typo.css'; */
 .container {
   margin-top: 60px;
+}
+.v-app-bar{
+  color: black;
 }
 </style>

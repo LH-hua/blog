@@ -1,22 +1,22 @@
 const routes = [
-  { path: '/', redirect: '/index' },
+  { path: '/', redirect: '/list' },
   {
     path: '/',
     name: 'index',
     component: () => import('@/views/home.vue'),
     children: [
+      // {
+      //   path: 'index',
+      //   name: 'index',
+      //   component: () => import('@/views/index.vue'),
+      // },
       {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/views/index.vue'),
-      },
-      {
-        path: 'post/',
+        path: '',
         name: 'post',
         component: () => import('@/views/article/index.vue'),
         children: [
           {
-            path: 'list',
+            path: '/list',
             name: '列表',
             component: () => import('@/views/article/list.vue'),
           },
@@ -37,13 +37,18 @@ const routes = [
         name: '项目展示',
         component: () => import('@/views/preject/index.vue'),
       },
+      {
+        path: '/:catchAll(.*)',
+        name: '404',
+        component: () => import('@/views/404.vue'),
+      },
     ],
   },
-  {
-    path: '/:catchAll(.*)',
-    name: '404',
-    component: () => import('@/views/404.vue'),
-  },
+  // {
+  //   path: '/:catchAll(.*)',
+  //   name: '404',
+  //   component: () => import('@/views/404.vue'),
+  // },
 ]
 
 export default routes
