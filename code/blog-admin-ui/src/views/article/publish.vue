@@ -5,8 +5,8 @@
         <v-card-title>
           <v-responsive max-width="500">
             <div class="d-flex">
-              <v-text-field v-model="data.title" hide-details variant="outlined" density="compact"></v-text-field>
-              <v-dialog max-width="500">
+              <v-text-field v-model="data.title" hide-details label="标 题" variant="outlined" density="compact"></v-text-field>
+              <v-dialog max-width="500" v-model="isActive">
                 <template v-slot:activator="{ props: activatorProps }">
                   <v-btn v-bind="activatorProps" color="blue" text="发 布" variant="flat" style="margin-left: 10px"></v-btn>
                 </template>
@@ -45,7 +45,6 @@
                   </v-card>
                 </template>
               </v-dialog>
-              <v-btn color="blue" text="返 回" variant="flat" @click="handlerReturn" style="margin-left: 10px"></v-btn>
             </div>
           </v-responsive>
         </v-card-title>
@@ -58,26 +57,24 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, toRaw } from 'vue'
-import { useRoute } from 'vue-router'
+import { reactive, onMounted, ref } from 'vue'
 import upload from '@/components/uploadImage.vue'
 
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
-import { addArticle, getPostDetal } from '@/http/article'
+import { addArticle } from '@/http/article'
+import l from '@/util'
 
-const route = useRoute()
 let editor
-const data = ref({
+const data = reactive({
   title: '',
   cover: '',
   desc: '',
   body: '',
 })
-const handlerReturn = () => {
-  window.history.back()
-}
+
+let isActive = ref(false)
 
 const handlerUploadImage = (file) => {}
 
@@ -86,6 +83,8 @@ const clearImage = (file) => {}
 const submit = () => {
   data.body = editor.getMarkdown()
   addArticle(data).then((res) => {
+    l.showNotification('操作成功！', 'success')
+    isActive.value = false
   })
 }
 const initEditor = () => {
@@ -94,19 +93,11 @@ const initEditor = () => {
     height: '83vh',
     initialEditType: 'markdown',
     previewStyle: 'vertical',
-    language: 'zh-CN',
   })
-  editor.setMarkdown(data.value.body)
 }
 
 onMounted(() => {
-  const p = toRaw(route)
-  getPostDetal({
-    _id: p.query.id,
-  }).then((res) => {
-    data.value = res.data.data
-    initEditor()
-  })
+  initEditor()
 })
 </script>
 

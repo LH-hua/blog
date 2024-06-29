@@ -149,6 +149,33 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
       })
   }
 })
+/**
+ * @swagger
+ * /api/post/delete:
+ *  post:
+ *      summary: 删除文章
+ *      tags: [Post]
+ *      requestBody:
+ *        description: "Update post object"
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                _id:
+ *                  type: string
+ *                  description: '文章id'
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.post('/delete', async (req, res, next) => {
+  const result = await postDB.deleteOne({ ...req.body })
+  console.log(result)
+  sendData('', result, res)
+})
 
 /**
  * @swagger

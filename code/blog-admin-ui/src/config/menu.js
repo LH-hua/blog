@@ -2,11 +2,30 @@ export const menu = [
   {
     parent: null,
     id: 0,
-    text: '文章管理',
+    text: '文章',
     icon: 'mdi-notebook-edit-outline',
     path: 'article',
     scr: 'article',
-    chilren: [],
+    chilren: [
+      {
+        parent: null,
+        id: 0,
+        text: '文章列表',
+        icon: 'mdi-notebook-edit-outline',
+        path: 'list',
+        scr: 'list',
+        chilren: [],
+      },
+      {
+        parent: null,
+        id: 0,
+        text: '文章发布',
+        icon: 'mdi-notebook-edit-outline',
+        path: 'publish',
+        scr: 'publish',
+        chilren: [],
+      },
+    ],
   },
   {
     parent: null,

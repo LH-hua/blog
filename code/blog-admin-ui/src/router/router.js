@@ -3,16 +3,20 @@ import * as VueRouter from 'vue-router'
 const routes = [
   { path: '/', redirect: '/login' },
   {
-    path: '/admin/',
+    path: '',
     name: 'admin',
     component: () => import('@/views/index.vue'),
     children: [
       {
-        path: 'article',
-        component: () => import('@/views/article/article.vue'),
+        path: 'list',
+        component: () => import('@/views/article/list.vue'),
       },
       {
-        path: 'editArticle',
+        path: 'publish',
+        component: () => import('@/views/article/publish.vue'),
+      },
+      {
+        path: 'editpost/:id',
         component: () => import('@/views/article/editArticle.vue'),
       },
       {

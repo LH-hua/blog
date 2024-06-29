@@ -9,7 +9,8 @@
     </template>
     <template #side>
       <v-card class="mx-auto" flat color="transparent">
-        <v-list density="compact">
+        <Menu :data="menu"></Menu>
+        <!-- <v-list density="compact">
           <div v-for="(item, index) in menu" :key="item + index">
             <v-list-group v-if="item.chilren.length > 0" :value="item.text">
               <template v-slot:activator="{ props }">
@@ -27,7 +28,7 @@
             <v-list-item v-else :value="item.text" active-color="primary" :title="item.text" :prepend-icon="item.icon" @click="toRouter(item)">
             </v-list-item>
           </div>
-        </v-list>
+        </v-list> -->
       </v-card>
     </template>
     <template #main>
@@ -45,6 +46,7 @@
 <script setup>
 import layout from './layout.vue'
 import user from '@/components/user'
+import Menu from '@/components/Menu.vue'
 
 import { reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
@@ -56,8 +58,6 @@ const router = useRouter()
 const _this = ctx
 
 const toRouter = (val) => {
-  console.log(_this)
-  console.log(proxy)
   router.push(val.path)
 }
 </script>

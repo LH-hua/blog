@@ -80,41 +80,8 @@
           <div style="align-self: flex-start; position: sticky; top: 65px">
             <v-sheet rounded="lg" class="pa-2" :elevation="0" border>
               <card-image></card-image>
-              <v-card flat>
-                <v-card-title>标签</v-card-title>
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  <v-chip
-                    class="ma-2"
-                    color="cyan"
-                    label
-                    size="small"
-                    v-for="item in data.captcha"
-                    :key="item.captcha"
-                    @click="handlerCaptch(item.captcha)"
-                  >
-                    <v-icon icon="mdi-label" start></v-icon>{{ item.captcha }}
-                  </v-chip>
-                </v-card-text>
-              </v-card>
-              <v-card flat>
-                <v-card-title>其他</v-card-title>
-                <v-divider></v-divider>
-
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title>
-                      <v-btn prepend-icon="mdi-postage-stamp" href="http://8.137.113.237:8002" flat>大事件</v-btn>
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-title>
-                      <v-btn prepend-icon="mdi-earth" href="http://8.134.217.110:4060" flat>功能合集</v-btn>
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-card>
+              <tag></tag>
+              <other></other>
             </v-sheet>
           </div>
         </template>
@@ -158,16 +125,17 @@ import { useRouter } from 'vue-router'
 import markdown from 'markdown-it'
 import moment from 'moment'
 
-import { getArticleList, getCaptcha } from '@/http/article'
+import { getArticleList } from '@/http/article'
 import { announcement } from '@/http/sys'
 
 import cardImage from '@/components/cardImage.vue'
+import tag from '@/components/tag.vue'
+import other from '@/components/other.vue'
 import { Scroll } from '@/utils/tool'
 
 const router = useRouter()
 const data = reactive({
   data: [],
-  captcha: [],
   serachItems: [],
   serachValue: '',
   announcement: '',
@@ -176,13 +144,6 @@ const md = new markdown()
 
 function formartTime(val) {
   return moment(val).format('YYYY-MM-DD HH:mm')
-}
-
-function handlerCaptch(item) {
-  getArticleList({ captcha: item }).then((res) => {
-    mdTotext(res.data)
-    data.data = res.data
-  })
 }
 
 function handlerChip(item) {
@@ -243,9 +204,6 @@ onBeforeMount(() => {
   getArticleList().then((res) => {
     mdTotext(res.data)
     data.data = res.data
-  })
-  getCaptcha().then((res) => {
-    data.captcha = res.data
   })
   announcement().then((res) => {
     data.announcement = res.data.announcement
