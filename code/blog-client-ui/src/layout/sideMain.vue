@@ -2,7 +2,6 @@
   <v-container>
     <!-- <div style="position: relative;"> -->
     <v-row>
-
       <v-col cols="9">
         <slot name="main"></slot>
       </v-col>
@@ -15,9 +14,9 @@
 </template>
 
 <style scoped>
-@media (min-width: 1920px) {
+/* @media (min-width: 1920px) {
   .v-container {
     max-width: 1200px !important;
   }
-}
+} */
 </style>
