@@ -1,41 +1,37 @@
 const routes = [
-  { path: '/', redirect: '/list' },
+  // {
+  //   path: '/',
+  //   redirect: '/list',
+  // },
   {
     path: '/',
     name: 'index',
     component: () => import('@/views/home.vue'),
     children: [
-      // {
-      //   path: 'index',
-      //   name: 'index',
-      //   component: () => import('@/views/index.vue'),
-      // },
       {
         path: '',
-        name: 'post',
-        component: () => import('@/views/article/index.vue'),
-        children: [
-          {
-            path: '/list',
-            name: '列表',
-            component: () => import('@/views/article/list.vue'),
-          },
-          {
-            path: 'detal/:id',
-            name: '详情',
-            component: () => import('@/views/article/detal.vue'),
-          },
-          {
-            path: 'book',
-            name: '分类',
-            component: () => import('@/views/book/index.vue'),
-          },
-        ],
+        name: 'list',
+        component: () => import('@/views/article/list.vue'),
       },
       {
-        path: 'preject',
-        name: '项目展示',
-        component: () => import('@/views/preject/index.vue'),
+        path: 'about',
+        name: 'about',
+        component: () => import('@/views/about/index.vue'),
+      },
+      {
+        path: 'detail/:id',
+        name: 'detail',
+        component: () => import('@/views/article/detail.vue'), // 'detal' 应该是 'detail'
+      },
+      {
+        path: 'book',
+        name: 'book',
+        component: () => import('@/views/book/index.vue'),
+      },
+      {
+        path: 'project',
+        name: 'project',
+        component: () => import('@/views/project/index.vue'),
       },
       {
         path: '/:catchAll(.*)',
@@ -44,11 +40,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: '/:catchAll(.*)',
-  //   name: '404',
-  //   component: () => import('@/views/404.vue'),
-  // },
 ]
 
 export default routes

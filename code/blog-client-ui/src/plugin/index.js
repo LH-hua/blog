@@ -4,8 +4,6 @@ import '@mdi/font/css/materialdesignicons.css'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-import bilibili from '@/components/icon/bilibili.vue'
-
 const myCustomLightTheme = {
   dark: false,
   colors: {
@@ -49,15 +47,7 @@ export const vuetify = createVuetify({
   directives,
   icons: {
     defaultSet: 'mdi',
-    sets: {
-      custom: {
-        icons: {
-          bilibili: {
-            component: bilibili,
-          },
-        },
-      },
-    },
+    sets: {},
   },
   //   theme: {
   //     defaultTheme: 'myCustomLightTheme',

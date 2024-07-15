@@ -10,29 +10,22 @@
       @change="onFileChange"
       @click:clear="clearImage"
     ></v-file-input>
-    <v-img
-      v-if="imageUrl"
-      :src="imageUrl"
-      alt="Image Preview"
-      max-width="100%"
-      max-height="100px"
-      class="mt-4"
-    ></v-img>
+    <v-img v-if="imageUrl" :src="imageUrl" alt="Image Preview" max-width="100%" max-height="100px" class="mt-4"></v-img>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, watch, defineEmits } from 'vue'
+import { ref, onMounted, defineProps, watch, defineEmits, toRaw } from 'vue'
 
 const props = defineProps({
   initialImageUrl: {
     type: String,
-    default: ''
+    default: '',
   },
   uploadUrl: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 const emits = defineEmits(['uploadImage', 'clearImage'])
 const imageFile = ref(null)
@@ -56,9 +49,9 @@ const onFileChange = () => {
     const reader = new FileReader()
     reader.onload = (e) => {
       imageUrl.value = e.target.result
+      reader.readAsDataURL(imageFile.value)
     }
-    reader.readAsDataURL(imageFile.value)
-    emits('uploadImage', imageFile.value)
+    emits('uploadImage', toRaw(imageFile.value))
   }
 }
 

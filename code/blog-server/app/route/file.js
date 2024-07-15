@@ -29,13 +29,13 @@ const multiparty = require('multiparty')
  *       '200':
  *         description: 成功上传图片
  */
-
+const filePath = process.platform == 'win32' ? 'F:/DCIM/preject' : '/var/local/media/nodeAssets/images'
 router.post('/upload-image', (req, res, next) => {
   try {
     const form = new multiparty.Form({
       autoFiles: true,
       // uploadDir: process.platform == 'win32' ? `${__dirname.repeat('app\route', '')}assets/image` : '/var/local/media/nodeAssets/image',
-      uploadDir: process.platform == 'win32' ? 'F:/DCIM/preject' : '/var/local/media/nodeAssets/images',
+      uploadDir: filePath,
     })
     form.parse(req, (err, fields, files) => {
       if (err) {

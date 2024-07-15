@@ -64,6 +64,7 @@ import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { addArticle } from '@/http/article'
+import axios from '@/http/axios'
 import l from '@/util'
 
 let editor
@@ -76,7 +77,13 @@ const data = reactive({
 
 let isActive = ref(false)
 
-const handlerUploadImage = (file) => {}
+const handlerUploadImage = (file) => {
+  const formData = new FormData()
+  formData.append('image', file[0])
+  axios.post('/api/file/upload-image', formData).then((res) => {
+    data.cover = res.data.src
+  })
+}
 
 const clearImage = (file) => {}
 
@@ -93,6 +100,15 @@ const initEditor = () => {
     height: '83vh',
     initialEditType: 'markdown',
     previewStyle: 'vertical',
+    hooks: {
+      addImageBlobHook: (blob, callback) => {
+        const formData = new FormData()
+        formData.append('image', blob)
+        axios.post('/api/file/upload-image', formData).then((res) => {
+          callback(res.data.src, '')
+        })
+      },
+    },
   })
 }
 

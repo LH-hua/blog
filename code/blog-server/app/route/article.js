@@ -4,7 +4,8 @@ const router = Router()
 const { postDB, captchaDB } = require('../models/post')
 const moment = require('moment')
 const sendData = require('../utils/dataFun')
-const mongoose = require('mongoose')
+const { ObjectId } = require('mongodb')
+const {} = require('mongoose')
 
 // 65feac185b722ffab4dc8d5f
 /**
@@ -132,9 +133,9 @@ router.get('/detail', async (req, res, next) => {
  *
  */
 router.post('/findOneAndUpdate', async (req, res, next) => {
-  const { title, body, id, cover, captcha } = req.body
-  if (!id) {
-    postDB.create({ title: title, body: body, cover, captcha }, (err, data) => {
+  const { title, body, _id, cover, captcha, descr } = req.body
+  if (!_id) {
+    postDB.create({ title: title, body: body, cover, captcha, descr }, (err, data) => {
       sendData(err, data, res)
     })
   } else {
@@ -142,7 +143,7 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
     const data = await captchaDB.find({ captcha: { $in: captcha } })
     const captchas = data.map((item) => item._id)
     postDB
-      .findOneAndUpdate({ _id: id }, { title: title, body: body, cover, captchas: captchas }, { upsert: true, new: true })
+      .findOneAndUpdate({ _id: ObjectId(_id) }, { title: title, body: body, cover, descr, captchas: captchas }, { upsert: true, new: true })
       .populate('captchas')
       .exec((err, data) => {
         sendData(err, data, res)
