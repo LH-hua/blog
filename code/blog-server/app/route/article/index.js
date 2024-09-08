@@ -98,7 +98,22 @@ router.get('/detail', async (req, res, next) => {
     next(error)
   }
 })
+/**
+ * @swagger
+ * /api/post/new:
+ *  get:
+ *      summary: 前十条数据
+ *      tags: [Post]
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
 
+router.get('/new', async (req, res, next) => {
+  const data = await postDB.find({}, { body: 0, captchas: 0, captcha: 0, descr: 0 }).sort({ date: -1 }).limit(10)
+  sendData('', data, res)
+})
 /**
  * @swagger
  * /api/post/findOneAndUpdate:
