@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="top-nav">
+    <!-- <div class="top-nav">
       <svg width="100%" height="200" class="wave" viewBox="0 0 1000 200" preserveAspectRatio="none">
         <path d="M0 130 Q250 180 500 130 T1000 130 V200 H0 Z" fill="rgba(255, 255, 255, 0.5)">
           <animate
@@ -39,11 +39,28 @@
           />
         </path>
       </svg>
-    </div>
+    </div> -->
     <div class="main">
       <side-main>
         <template #main>
-          <v-sheet class="pa-1 bg" min-height="70vh" rounded="lg" flat>
+          <v-card flat border>
+            <v-card-title>
+              <v-tabs v-model="tab">
+                <v-tab value="one">标签</v-tab>
+                <v-spacer></v-spacer>
+                <search></search>
+              </v-tabs>
+            </v-card-title>
+
+            <v-card-text>
+              <v-tabs-window v-model="tab">
+                <v-tabs-window-item value="one"> 
+                  <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.captcha }} </v-chip>
+                </v-tabs-window-item>
+              </v-tabs-window>
+            </v-card-text>
+          </v-card>
+          <v-sheet class="pa-1" style="margin-top: 10px;" min-height="85vh" rounded="lg" border color="white" flat>
             <div v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
               <div style="flex: 2" v-if="item.cover">
                 <v-img style="border-radius: 4px" width="300" height="200" class="ma-2" cover :src="item.cover">
@@ -66,6 +83,8 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-btn color="medium-emphasis" prepend-icon="mdi-clock-time-nine-outline" size="small">{{ formartTime(item.date) }} </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-chip variant="outlined" v-for="tab in item.captcha" :key="tab"> {{ tab }} </v-chip>
                   </v-card-actions>
                 </v-card>
               </div>
@@ -78,25 +97,28 @@
 </template>
 
 <script setup>
-import { reactive, onBeforeMount, onUnmounted, computed, watch } from 'vue'
+import { reactive, ref, onBeforeMount, onUnmounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import moment from 'moment'
 
-import { getArticleList } from '@/http/article'
+import { getArticleList,getCaptcha } from '@/http/article'
 // import { announcement } from '@/http/sys'
 
 import { userSearchFilters } from '@/store/dataStore'
 
+import search from '@/components/input/search.vue'
 // import cardImage from '@/components/cardImage.vue'
 // import tag from '@/components/tag.vue'
 // import other from '@/components/other.vue'
 // import { Scroll } from '@/utils/tool'
-
+const tab = ref('one')
 const router = useRouter()
 const { state } = userSearchFilters()
 
+// let tab = ref(null)
 const data = reactive({
   data: [],
+  captcha:[]
   // announcement: '',
 })
 
@@ -105,7 +127,7 @@ function formartTime(val) {
 }
 
 function onDetal(obj) {
-  router.push('detail/' + obj._id)
+  router.push('post/' + obj._id)
 }
 watch(
   () => state.num,
@@ -117,6 +139,9 @@ onBeforeMount(() => {
   getArticleList().then((res) => {
     data.data = res.data
   })
+  getCaptcha().then(res => {
+    data.captcha = res.data
+  })
   // announcement().then((res) => {
   //   data.announcement = res.data.announcement
   // })
@@ -127,6 +152,11 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+.container{
+  background: rgb(245, 245, 245);
+  background-image: url('/public/image/circuit.png');
+  background-repeat: repeat-x;
+}
 .bg {
   backdrop-filter: blur(10px);
 }
@@ -137,9 +167,8 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   align-items: center;
-  background: url('/image/nav.jpg');
-  background-position-y: center;
-  background-size: cover;
+  background-image: linear-gradient(to top, #5e95b7, white);
+
   /* overflow: hidden; */
   /* 使用 clip-path 属性创建贝塞尔曲线效果 */
   /* clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%); */

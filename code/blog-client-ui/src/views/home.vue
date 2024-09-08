@@ -1,10 +1,10 @@
 <template>
-  <v-app-bar class="custom" density="compact">
+  <v-app-bar class="custom" density="compact" flat style="position:static">
     <top-menu></top-menu>
   </v-app-bar>
 
   <v-main>
-    <div>
+    <div class="main">
       <router-view></router-view>
     </div>
   </v-main>
@@ -29,7 +29,10 @@ onMounted(() => {
 .v-app-bar,
 .v-toolbar {
   /* backdrop-filter: blur(10px); */
-  /* border-bottom: 1px solid #e0e0e0; */
+  border-bottom: 1px solid #e0e0e0;
+}
+.main{
+  /* background: white; */
 }
 /* .v-app-bar.v-toolbar {
   background: transparent;

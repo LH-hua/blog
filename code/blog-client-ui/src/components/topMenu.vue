@@ -9,55 +9,15 @@
         width: 40px;
         height: 40px;
         text-align: center;
-        border-radius: 50%;
-        background-image: linear-gradient(120deg, rgb(161, 196, 253) 0%, rgb(194, 233, 251) 100%);
+        cursor: pointer;
       "
+      @click="handlerToHome"
     >
-      LH
+      lhgo
     </div>
     <v-spacer></v-spacer>
-    <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-text-field
-          v-bind="props"
-          class="mx-auto"
-          density="compact"
-          variant="outlined"
-          placeholder="输入搜索内容"
-          prepend-inner-icon="mdi-magnify"
-          clearable
-          hide-details
-          flat
-          rounded
-          item-props
-          v-model="data.serachValue"
-          @click:clear="handlerClear"
-          @keyup.enter="handlerEnter"
-          @update:focused="focused"
-        ></v-text-field>
-      </template>
-      <v-card v-if="data.historyItems">
-        <v-toolbar density="compact" extended :extension-height="10" color="white">
-          <v-toolbar-title>
-            <div style="color: rgba(0, 0, 0, 0.5)">搜索历史</div>
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn style="color: rgba(0, 0, 0, 0.5)" @click="clearHandler">
-            清除
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text>
-          <v-list-item v-for="item in data.historyItems" :key="item" @click="handlerChip(item)">{{ item }}</v-list-item>
-          <!-- <v-chip-group selected-class="text-primary">
-            <v-chip v-for="item in data.historyItems" :key="item" @click="handlerChip(item)">{{ item }}</v-chip>
-          </v-chip-group> -->
-        </v-card-text>
-      </v-card>
-    </v-menu>
-    <v-spacer></v-spacer>
 
-    <v-btn v-for="item in store.menu" :key="item.url" variant="text" @click="onTorouter(item)">
+    <v-btn v-for="item in store.menu" :key="item.url" variant="text" ripple @click="onTorouter(item)">
       <v-icon :icon="item.icon" />
       {{ item.name }}
     </v-btn>
@@ -88,43 +48,55 @@ const data = reactive({
 })
 const store = reactive({
   menu: [
-    {
-      id: '0',
-      pid: '0',
-      icon: 'mdi-home-outline',
-      name: '首 页',
-      url: '/',
-      tag: false,
-      children: [],
-    },
     // {
-    //   id: '1',
+    //   id: '0',
     //   pid: '0',
-    //   icon: 'mdi-compass-rose',
-    //   name: '案列展示',
-    //   url: '/project',
+    //   icon: 'mdi-home-outline',
+    //   name: '首 页',
+    //   url: '/',
     //   tag: false,
     //   children: [],
     // },
     {
       id: '1',
       pid: '0',
-      icon: 'mdi-earth',
-      name: 'webGIS',
-      url: 'http://8.134.217.110:4060',
-      thirdParty: true,
+      icon: 'mdi-card-text',
+      name: '文章',
+      url: '/post',
+      thirdParty: false,
       tag: false,
       children: [],
     },
     {
       id: '1',
       pid: '0',
-      icon: 'mdi-account',
-      name: '关于',
-      url: '/about',
+      icon: 'mdi-menu',
+      name: '功能',
+      url: 'http://8.134.217.110',
+      thirdParty: true,
       tag: false,
       children: [],
     },
+    // {
+    //   id: '1',
+    //   pid: '0',
+    //   icon: '',
+    //   name: '项目',
+    //   url: 'http://8.134.217.110/w',
+    //   thirdParty: true,
+    //   tag: false,
+    //   children: [],
+    // },
+
+    // {
+    //   id: '1',
+    //   pid: '0',
+    //   icon: 'mdi-account',
+    //   name: '关于',
+    //   url: '/about',
+    //   tag: false,
+    //   children: [],
+    // },
   ],
   login: true,
   dialog: false,
@@ -150,6 +122,10 @@ const clearHandler = () => {
 function handlerChip(item) {
   data.serachValue = item
   handlerEnter()
+}
+
+function handlerToHome(){
+  router.push('/')
 }
 async function handlerEnter() {
   // 键盘enter事件

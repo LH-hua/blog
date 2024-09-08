@@ -1,7 +1,7 @@
 const { Router, query } = require('express')
 const router = Router()
-const { sysDb } = require('../models/sys')
-const sendData = require('../utils/dataFun')
+const { sysDb } = require('../../models/sys')
+const sendData = require('../../utils/dataFun')
 /**
  * @swagger
  * tags:

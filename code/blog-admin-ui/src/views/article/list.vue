@@ -3,25 +3,28 @@
     <v-data-table :headers="table.headers" :items="table.items">
       <template v-slot:top>
         <v-toolbar flat>
-          <v-row>
-            <v-col cols="1">
-              <v-list-subheader>文章标题</v-list-subheader>
-            </v-col>
-            <v-col cols="2">
-              <v-text-field density="compact" variant="outlined" hide-details></v-text-field>
-            </v-col>
-            <v-col cols="1">
-              <v-list-subheader>分类标签</v-list-subheader>
-            </v-col>
-            <v-col cols="2">
-              <v-text-field density="compact" variant="outlined" hide-details></v-text-field>
-            </v-col>
-            <v-col cols="2">
-              <v-list-subheader>
-                <btn>查 询</btn>
-              </v-list-subheader>
-            </v-col>
-          </v-row>
+          <v-toolbar-title>
+            <v-row>
+              <v-col cols="1">
+                <v-list-subheader>标题</v-list-subheader>
+              </v-col>
+              <v-col cols="2">
+                <v-text-field density="compact" variant="outlined" hide-details></v-text-field>
+              </v-col>
+              <v-col cols="1">
+                <v-list-subheader>分类</v-list-subheader>
+              </v-col>
+              <v-col cols="2">
+                <v-text-field density="compact" variant="outlined" hide-details></v-text-field>
+              </v-col>
+              <v-col cols="2">
+                <v-list-subheader>
+                  <v-btn prepend-icon="mdi-magnify" variant="flat" color="blue-lighten-2">查 询</v-btn>
+                </v-list-subheader>
+              </v-col>
+            </v-row></v-toolbar-title
+          >
+
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
@@ -29,7 +32,7 @@
         <v-chip v-for="i in item.item.captcha" :key="i">{{ i }}</v-chip>
       </template>
       <template v-slot:item.cover="item">
-        <v-img width="100px" height="100px" :src="item.item.cover"></v-img>
+        <v-img width="50px" height="50px" :src="item.item.cover"></v-img>
       </template>
       <template v-slot:item.actions="item">
         <v-icon class="me-2" size="small" @click="editItem(item)"> mdi-pencil </v-icon>

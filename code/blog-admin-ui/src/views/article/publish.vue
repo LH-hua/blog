@@ -16,21 +16,30 @@
                     <v-card-text>
                       <v-container>
                         <v-row>
-                          <v-col cols="2">标题：</v-col>
+                          <v-col cols="2">封面：</v-col>
                           <v-col cols="10">
-                            <v-text-field v-model="data.title" hide-details variant="outlined" density="compact"></v-text-field>
+                            <upload :initialImageUrl="data.cover" @uploadImage="handlerUploadImage" @clearImage="clearImage"></upload>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col cols="2">分类：</v-col>
+                          <v-col cols="10">
+                            <v-select
+                              label="分类"
+                              v-model="data.captcha"
+                              :items="captchas"
+                              item-title="captcha"
+                              item-value="captcha"
+                              variant="outlined"
+                              density="compact"
+                              multiple
+                            ></v-select>
                           </v-col>
                         </v-row>
                         <v-row>
                           <v-col cols="2">描述：</v-col>
                           <v-col cols="10">
                             <v-textarea placeholder="总结一下这篇文章。。。" variant="outlined"></v-textarea>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-col cols="2">封面：</v-col>
-                          <v-col cols="10">
-                            <upload :initialImageUrl="data.cover" @uploadImage="handlerUploadImage" @clearImage="clearImage"></upload>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -63,11 +72,13 @@ import upload from '@/components/uploadImage.vue'
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
-import { addArticle } from '@/http/article'
+import { addArticle,getCaptcha } from '@/http/article'
 import axios from '@/http/axios'
 import l from '@/util'
 
 let editor
+
+const captchas = ref()
 const data = reactive({
   title: '',
   cover: '',
@@ -114,6 +125,9 @@ const initEditor = () => {
 
 onMounted(() => {
   initEditor()
+  getCaptcha().then((res) => {
+    captchas.value = res.data.data
+  })
 })
 </script>
 

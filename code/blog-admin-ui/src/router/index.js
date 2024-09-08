@@ -27,6 +27,10 @@ const routes = [
         path: 'catptchs',
         component: () => import('@/views/catptchs/index.vue'),
       },
+      {
+        path: 'menus',
+        component: () => import('@/views/menus/index.vue'),
+      },
     ],
   },
   {

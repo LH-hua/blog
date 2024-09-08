@@ -19,10 +19,12 @@
       </template>
 
       <template #main>
-        <v-sheet class="pa-2" rounded="lg" :elevation="3">
+        <v-sheet rounded="lg" :elevation="1">
           <v-card flat min-height="900px">
+            <v-img :src="store.data.cover ? store.data.cover : '/image/err.jpg'" cover height="300" width="100%"></v-img>
+
             <v-card-title>
-              <h2 style="font-weight: 1000;">
+              <h2 style="font-weight: 1000">
                 {{ store.data.title }}
               </h2>
             </v-card-title>
@@ -42,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted,onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import anchor from 'markdown-it-anchor'
@@ -116,6 +118,7 @@ function getData() {
   getArticleDetal({ _id: postId }).then((res) => {
     res.data.body = md.value.render(res.data.body)
     store.data = res.data
+    document.title = res.data.title
   })
 }
 
@@ -134,10 +137,7 @@ onUnmounted(() => {
 
 <style leng="less" scoped>
 /* @import '../../assets/css/typo.css'; */
-.container {
-  margin-top: 60px;
-}
-.v-app-bar{
+.v-app-bar {
   color: black;
 }
 </style>

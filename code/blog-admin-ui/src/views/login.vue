@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-    <v-sheet class="bg" width="400px" rounded :elevation="9">
-      <v-card height="100%" class="pa-2">
+    <v-sheet class="bg" width="400px">
+      <v-card height="100%" class="pa-2" flat>
         <v-card-title>
           <h2>欢迎登录</h2>
         </v-card-title>
         <v-card-text>
           <v-form>
             <v-text-field
-              v-model="state.form.username"
+              v-model="state.form.name"
+              :error-messages="state.tip.name"
               label="用户名"
               flat
               single-line
@@ -22,6 +23,7 @@
               label="密码"
               single-line
               type="password"
+              :error-messages="state.tip.password"
               append-inner-icon="mdi-lock"
               variant="outlined"
               density="compact"
@@ -42,29 +44,47 @@ import { reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/http/user'
 import { usrMassegeStore } from '../store/massege'
+import { useMenuItems } from '../store/index'
+import {menu} from '@/config/menu'
+
+const menuItems = useMenuItems()
 
 const state = reactive({
   form: {
-    username: '',
+    name: '',
     password: '',
   },
+  tip:{
+    name:'',
+    password:''
+  }
 })
 const { ctx, proxy } = getCurrentInstance()
-const _this = ctx
 const router = useRouter()
 const btn_login = () => {
   const msg = usrMassegeStore()
-  if (!state.form.password || !state.form.username) {
-    msg.openMsg({
-      type: 'info',
-      text: '请检查用户或密码是否完整',
-    })
+  if (!state.form.name) {
+    // msg.openMsg({
+    //   type: 'info',
+    //   text: '请检查用户或密码是否完整',
+    // })
+    state.tip.name = '用户名不能为空'
     return
   }
+  if (!state.form.password || !state.form.name) {
+    // msg.openMsg({
+    //   type: 'info',
+    //   text: '请检查用户或密码是否完整',
+    // })
+    state.tip.password = '密码不能为空'
+    return
+  }
+
   login(state.form).then((res) => {
     if (res.data.token) {
+      menuItems.setMenuItems()
       localStorage.setItem('token', res.data.token)
-      localStorage.setItem('user-info', JSON.stringify(res.data.data))
+      localStorage.setItem('user-info', JSON.stringify(res.data))
       router.push({
         path: '/admin/list',
       })
@@ -84,16 +104,13 @@ const btn_login = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/image/logo-bg.jpg');
-  background-size: cover;
+  background: #f5f5f5;
+
 }
 .bg{
   backdrop-filter: blur(5px);
-  background-color: transparent
+  background-color: white
 }
 .v-card{
-  background-color: transparent;
-  color: white;
-
 }
 </style>

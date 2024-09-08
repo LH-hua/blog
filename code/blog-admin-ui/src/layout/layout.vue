@@ -1,17 +1,25 @@
 <template>
-  <div>
-    <v-app-bar  color="light-blue"  flat>
-      <slot name="header"></slot>
-    </v-app-bar>
-    <v-navigation-drawer color="light-blue" expand-on-hover :rail="data.show">
+  <!-- <div> -->
+  <v-layout class="rounded rounded-md">
+    <v-navigation-drawer>
       <slot name="side"></slot>
     </v-navigation-drawer>
-    <v-main>
+
+    <v-app-bar flat>
+      <template v-slot:prepend>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      </template>
+      <slot name="header"></slot>
+    </v-app-bar>
+
+    <v-main style="background-color: #f5f5f5">
       <v-container class="h-100">
         <slot name="main"></slot>
       </v-container>
     </v-main>
-  </div>
+  </v-layout>
+
+  <!-- </div> -->
 </template>
 
 <script setup>

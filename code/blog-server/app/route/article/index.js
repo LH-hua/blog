@@ -1,9 +1,9 @@
 const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
-const { postDB, captchaDB } = require('../models/post')
+const { postDB, captchaDB } = require('../../models/post')
 const moment = require('moment')
-const sendData = require('../utils/dataFun')
+const sendData = require('../../utils/dataFun')
 const { ObjectId } = require('mongodb')
 const {} = require('mongoose')
 
@@ -140,10 +140,10 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
     })
   } else {
     console.log(captcha)
-    const data = await captchaDB.find({ captcha: { $in: captcha } })
-    const captchas = data.map((item) => item._id)
+    // const data = await captchaDB.find({ captcha: { $in: captcha } })
+    // const captchas = data.map((item) => item._id)
     postDB
-      .findOneAndUpdate({ _id: ObjectId(_id) }, { title: title, body: body, cover, descr, captchas: captchas }, { upsert: true, new: true })
+      .findOneAndUpdate({ _id: ObjectId(_id) }, { title: title, body: body, cover, descr, captcha: captcha }, { upsert: true, new: true })
       .populate('captchas')
       .exec((err, data) => {
         sendData(err, data, res)
