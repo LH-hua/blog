@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <side-main>
-      <template #right>
+      <template #side>
         <div style="align-self: flex-start; position: sticky; top: 65px">
           <v-sheet rounded="lg" class="pa-2" :elevation="1">
             <card-image></card-image>
@@ -32,7 +32,7 @@
               {{ store.data.date }}
             </v-card-subtitle>
             <v-card-text>
-              <div class="typo">
+              <div>
                 <div v-html="store.data.body"></div>
               </div>
             </v-card-text>
@@ -51,7 +51,6 @@ import anchor from 'markdown-it-anchor'
 import toc from 'markdown-it-toc-done-right'
 import hljs from 'highlight.js'
 // import "highlight.js/styles/github.css";
-import '@/assets/css/typo.css'
 
 import { getArticleDetal } from '@/http/article'
 
@@ -136,7 +135,8 @@ onUnmounted(() => {
 </script>
 
 <style leng="less" scoped>
-/* @import '../../assets/css/typo.css'; */
+@import '../../assets/css/typo.css';
+/* import '@/assets/css/typo.css' */
 .v-app-bar {
   color: black;
 }

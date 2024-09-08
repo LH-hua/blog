@@ -54,13 +54,13 @@
 
             <v-card-text>
               <v-tabs-window v-model="tab">
-                <v-tabs-window-item value="one"> 
+                <v-tabs-window-item value="one">
                   <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.captcha }} </v-chip>
                 </v-tabs-window-item>
               </v-tabs-window>
             </v-card-text>
           </v-card>
-          <v-sheet class="pa-1" style="margin-top: 10px;" min-height="85vh" rounded="lg" border color="white" flat>
+          <v-sheet class="pa-1" style="margin-top: 10px" min-height="85vh" rounded="lg" border color="white" flat>
             <div v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
               <div style="flex: 2" v-if="item.cover">
                 <v-img style="border-radius: 4px" width="300" height="200" class="ma-2" cover :src="item.cover">
@@ -91,6 +91,16 @@
             </div>
           </v-sheet>
         </template>
+        <template #side>
+          <v-sheet class="pa-2" rounded="lg" color="white" border>
+            <v-list-subheader> 最新文章 </v-list-subheader>
+            <v-list-item v-for="item in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
+              <v-list-item-title >
+                <a>{{ item.title }}</a>
+              </v-list-item-title>
+            </v-list-item>
+          </v-sheet>
+        </template>
       </side-main>
     </div>
   </div>
@@ -101,7 +111,7 @@ import { reactive, ref, onBeforeMount, onUnmounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import moment from 'moment'
 
-import { getArticleList,getCaptcha } from '@/http/article'
+import { getArticleList, getCaptcha, getNewPost } from '@/http/article'
 // import { announcement } from '@/http/sys'
 
 import { userSearchFilters } from '@/store/dataStore'
@@ -116,9 +126,10 @@ const router = useRouter()
 const { state } = userSearchFilters()
 
 // let tab = ref(null)
+const newPost = ref()
 const data = reactive({
   data: [],
-  captcha:[]
+  captcha: [],
   // announcement: '',
 })
 
@@ -139,7 +150,10 @@ onBeforeMount(() => {
   getArticleList().then((res) => {
     data.data = res.data
   })
-  getCaptcha().then(res => {
+  getNewPost().then((res) => {
+    newPost.value = res.data
+  })
+  getCaptcha().then((res) => {
     data.captcha = res.data
   })
   // announcement().then((res) => {
@@ -152,7 +166,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-.container{
+.container {
   background: rgb(245, 245, 245);
   background-image: url('/public/image/circuit.png');
   background-repeat: repeat-x;

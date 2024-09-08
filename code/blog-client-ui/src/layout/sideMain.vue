@@ -6,7 +6,7 @@
         <slot name="main"></slot>
       </v-col>
       <v-col cols="3">
-        <slot name="right"></slot>
+        <slot name="side"></slot>
       </v-col>
     </v-row>
     <!-- </div> -->
