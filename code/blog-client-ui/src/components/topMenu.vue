@@ -2,15 +2,7 @@
   <v-container class="d-flex align-center">
     <div
       class="font-weight-bold"
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        text-align: center;
-        cursor: pointer;
-      "
+      style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
       @click="handlerToHome"
     >
       lhgo
@@ -22,11 +14,10 @@
       {{ item.name }}
     </v-btn>
     <!-- <userMenu v-if="user.userStatus"></userMenu>
-    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登 录</div> -->
+    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登录 / 注册</div>
     <v-dialog v-model="store.dialog" width="1024">
-      <login v-if="store.login" @close="close"></login>
-      <!-- <regsite v-else></regsite> -->
-    </v-dialog>
+    </v-dialog> -->
+    <login></login>
   </v-container>
 </template>
 
@@ -36,7 +27,7 @@ import { useRouter, useRoute } from 'vue-router'
 // components
 import login from '@/components/user/login.vue'
 import userMenu from './user/userMenu.vue'
-// import regsite from "@/components/user/regsite.vue";
+// import regsiter from "@/components/user/regsite.vue";
 
 // pinia
 import { userInfo } from '../store/userStore'
@@ -124,7 +115,7 @@ function handlerChip(item) {
   handlerEnter()
 }
 
-function handlerToHome(){
+function handlerToHome() {
   router.push('/')
 }
 async function handlerEnter() {
@@ -136,11 +127,7 @@ async function handlerEnter() {
   }
 }
 
-onMounted(() => {
-  if (localStorage.getItem('token')) {
-    user.changeStatus()
-  }
-})
+onMounted(() => {})
 
 function onDialogShow() {
   store.dialog = !store.dialog

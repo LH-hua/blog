@@ -1,33 +1,35 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import { useLogin } from '@/http/user'
 import { asyncRoute } from '@/router/dynamicRoute'
 
-export const userInfo = defineStore('info', {
-  state: () => ({
-    info: {},
-    isLogin: false,
-  }),
-  getters: {
-    userStatus: (state) => state.isLogin,
-  },
-  actions: {
-    async useLogin(data) {
-      try {
-        const res = await useLogin(data)
+export const userInfo = defineStore(
+  'info',
+  () => {
+    let user = ref()
+    let isLogin = ref(false)
+    const login = (data) => {
+      useLogin(data).then((res) => {
         if (res.data.status == 200) {
-          this.isLogin = true
-          this.info = res.data.data
+          isLogin.value = true
+          user.value = res.data.data
           localStorage.setItem('token', res.data.token)
-          localStorage.setItem('user', JSON.stringify(res.data.data))
-          asyncRoute(res.data.token)
-          return { info: this.info, satus: true }
+          return res.data
         }
-      } catch (error) {
-        return { info: error, satus: false }
-      }
-    },
-    changeStatus() {
-      this.isLogin = true
-    },
+      })
+    }
+    const loginOut = () => {
+      user.value = null
+      isLogin.value = false
+      localStorage.clear()
+    }
+    return { user, isLogin, login, loginOut }
   },
-})
+  {
+    persist: {
+      storage: sessionStorage,
+      paths: ['user'],
+      key: 'piniaStore',
+    },
+  }
+)

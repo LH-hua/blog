@@ -56,9 +56,9 @@ export const vuetify = createVuetify({
   //     },
   //   },
   defaults: {
-    VSheet: {
-      style: 'background: transparent',
-    },
+    // VSheet: {
+    //   style: 'background: transparent',
+    // },
     VMain: {
       style: '--v-layout-top: 0;',
     },

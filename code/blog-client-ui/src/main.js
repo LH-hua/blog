@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
-import pinia from './store'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 
 import router from './router/index.js'
@@ -11,12 +12,14 @@ import '@/style/global.css'
 // 布局组件
 import sideMain from '@/layout/sideMain.vue'
 
-import { asyncRoute } from '@/router/dynamicRoute'
-if (localStorage.getItem('token')) {
-  asyncRoute(localStorage.getItem('token'))
-}
+// import { asyncRoute } from '@/router/dynamicRoute'
+// if (localStorage.getItem('token')) {
+//   asyncRoute(localStorage.getItem('token'))
+// }
 
 const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 app.component('sideMain', sideMain)
 

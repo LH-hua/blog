@@ -94,6 +94,7 @@
         <template #side>
           <v-sheet class="pa-2" rounded="lg" color="white" border>
             <v-list-subheader> 最新文章 </v-list-subheader>
+            <v-divider></v-divider>
             <v-list-item v-for="item in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
               <v-list-item-title >
                 <a>{{ item.title }}</a>
