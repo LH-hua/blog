@@ -9,7 +9,7 @@ export function getArticleDetal(params) {
 }
 
 export function addArticle(data) {
-  return post('/api/post/add', data)
+  return post('/api/post/findOneAndUpdate', data)
 }
 
 export function getCaptcha(data) {

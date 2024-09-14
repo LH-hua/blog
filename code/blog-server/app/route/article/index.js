@@ -56,9 +56,12 @@ router.get('/list', async (req, res, next) => {
   const regexTile = new RegExp(title, 'i')
   const regexCaptch = new RegExp(captcha, 'i')
   postDB
-    .find({
-      title: regexTile,
-    })
+    .find(
+      {
+        title: regexTile,
+      },
+      { body: 0 }
+    )
     .populate({
       path: 'captchas',
       select: 'captcha',
@@ -154,7 +157,6 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
       sendData(err, data, res)
     })
   } else {
-    console.log(captcha)
     // const data = await captchaDB.find({ captcha: { $in: captcha } })
     // const captchas = data.map((item) => item._id)
     postDB

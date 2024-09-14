@@ -14,7 +14,7 @@
           </v-card-actions>
         </v-card>
       </v-menu>
-      <v-btn variant="text" color="indigo-darken-3"> 发布 </v-btn>
+      <v-btn variant="text" color="blue" @click="handlerPublish"> 发布 </v-btn>
     </div>
     <v-dialog v-else max-width="800" v-model="isActive" persistent>
       <template v-slot:activator="{ props: activatorProps }">
@@ -110,7 +110,9 @@
 import { reactive, ref, onMounted } from 'vue'
 
 import { userInfo } from '@/store/userStore'
+import { useRouter } from 'vue-router';
 const user = userInfo()
+const router = useRouter()
 
 const rules = ref({
   nameRequired: (value) => !!value || '用户名不能为空',
@@ -131,6 +133,9 @@ const data = reactive({
 
 const quit = () => {
   user.loginOut()
+}
+const handlerPublish = () => {
+  router.push("/publish")
 }
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })

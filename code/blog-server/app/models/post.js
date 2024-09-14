@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId } = require('mongodb')
 
 const captchaSchema = new mongoose.Schema({
   captcha: {
@@ -17,8 +18,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  id: String,
-  userId: Number,
+  u_id: ObjectId,
   cover: {
     type: String,
     default: '',
@@ -35,11 +35,7 @@ const postSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  captchas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'captcha' }],
-  userId: {
-    type: String,
-    default: '',
-  },
+  captchas: [ObjectId],
   date: {
     type: Date,
     default: Date.now,

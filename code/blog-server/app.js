@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const fs = require('fs')
+const { authenticateToken } = require('./app/middleware')
 dotenv.config()
 
 // 使用swagger API 文档
@@ -20,9 +21,7 @@ app.use(express.json())
 
 app.use(cors())
 
-app.get('/', (req, res, next) => {
-  res.send('你好，世界')
-})
+app.post('/api/*', authenticateToken)
 
 require('./app/mongodb/conect')
 swaggerInstall(app)
@@ -36,20 +35,9 @@ app.use(function (err, req, res, next) {
   })
 })
 
-if (process.env.NODE_ENV === 'development') {
-  // ...
-  console.log('development')
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // ...
-  console.log('production')
-}
-console.log(process.env.NODE_ENV)
-
-app.listen(process.env.port, () => {
+app.listen(3333, () => {
   console.log('---------------------------------------------------------------------')
-  console.log(`app run at ${process.env.host_path}`)
-  console.log(`API 文档 在 http://${process.env.host_path}/api-docs`)
+  console.log(`app run at http://127.0.0.1:3333`)
+  console.log(`API 文档 在 http://127.0.0.1:3333/api-docs`)
   console.log('---------------------------------------------------------------------')
 })

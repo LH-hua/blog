@@ -6,6 +6,8 @@ const router = Router()
 // const user = require('../controller/user')
 const User = require('../../models/user')
 
+const { generateToken } = require('../../tool')
+
 const salt = bcrypt.genSaltSync(10)
 
 /**
@@ -45,8 +47,6 @@ const salt = bcrypt.genSaltSync(10)
  */
 
 router.post('/login', async (req, res, next) => {
-  console.log(req.body)
-  console.log(User)
   try {
     let result = await User.findOne({ username: req.body.username })
     if (!result) {
@@ -64,8 +64,7 @@ router.post('/login', async (req, res, next) => {
       })
       return
     }
-    console.log(result)
-    const token = jwt.sign({ id: result._id, username: result.username, password: result.password }, process.env.secret)
+    const token = generateToken({ id: result._id })
     res.send({
       type: 'success',
       msg: '登录成功',

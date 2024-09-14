@@ -1,24 +1,24 @@
 const jwt = require('jsonwebtoken')
+const { resloveToken } = require('../tool')
 
-class Middleware {
-  authorization(req, res, next) {
-    if (req.headers.authorization) {
-      const result = jwt.verify(req.headers.authorization, process.env.secret)
-      // console.log(result)
-      req.body.userId = result.id
-      next()
-    } else {
-      res.send({
-        msg: 'authorization 未定义,无权发布数据',
-        status: 200,
-      })
-      return
-    }
+// 验证token
+const authenticateToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    res.send({
+      msg: 'authorization 未定义',
+      status: 200,
+    })
   }
-  authorizationTureAndFalse(req, res, next) {
-    try {
-    } catch (error) {}
+  const result = resloveToken(req.headers.authorization)
+  if (!result) {
+    res.send({
+      msg: 'authorization 无效',
+      status: 200,
+    })
   }
+  req.body.u_id = result.id
+  next()
 }
-
-module.exports = Middleware
+module.exports = {
+  authenticateToken,
+}
