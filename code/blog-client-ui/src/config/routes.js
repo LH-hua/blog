@@ -32,7 +32,7 @@ const routes = [
       {
         path: 'post/:id',
         name: 'post',
-        component: () => import('@/views/article/post.vue'), // 'detal' 应该是 'detail'
+        component: () => import('@/views/article/post.vue'),
         meta: {
           title: '详情',
         },
@@ -63,10 +63,15 @@ const routes = [
       },
     ],
   },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   component: () => import('@/views/user/login.vue'),
+  // },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/user/login.vue'),
+    path: '/regsiter',
+    name: 'regsiter',
+    component: () => import('@/views/user/regsiter.vue'),
   },
   {
     path: '/publish',

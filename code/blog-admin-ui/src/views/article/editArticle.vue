@@ -26,10 +26,10 @@
                           <v-col cols="10">
                             <v-select
                               label="分类"
-                              v-model="data.captcha"
+                              v-model="data.captcha_id"
                               :items="captchas"
-                              item-title="captcha"
-                              item-value="captcha"
+                              item-title="name"
+                              item-value="_id"
                               variant="outlined"
                               density="compact"
                               multiple
@@ -87,7 +87,7 @@ const data = ref({
   cover: '',
   descr: '',
   body: '',
-  captcha: '',
+  captcha_id: '',
 })
 
 const dialog = ref(false)

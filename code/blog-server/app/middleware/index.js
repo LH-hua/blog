@@ -3,21 +3,28 @@ const { resloveToken } = require('../tool')
 
 // 验证token
 const authenticateToken = (req, res, next) => {
-  if (!req.headers.authorization) {
-    res.send({
-      msg: 'authorization 未定义',
-      status: 200,
-    })
+  try {
+    if (!req.headers.authorization) {
+      res.send({
+        msg: 'authorization 未定义',
+        status: 200,
+      })
+      return
+    }
+    const result = resloveToken(req.headers.authorization)
+    if (!result) {
+      res.send({
+        msg: 'authorization 无效',
+        status: 200,
+      })
+      return
+    }
+    req.body.u_id = result.id
+    req.query.u_id = result.id
+    next()
+  } catch (error) {
+    next(error)
   }
-  const result = resloveToken(req.headers.authorization)
-  if (!result) {
-    res.send({
-      msg: 'authorization 无效',
-      status: 200,
-    })
-  }
-  req.body.u_id = result.id
-  next()
 }
 module.exports = {
   authenticateToken,

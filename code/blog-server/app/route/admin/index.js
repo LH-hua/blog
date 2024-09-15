@@ -9,7 +9,7 @@ const { Router } = require('express')
 const router = Router()
 
 const { secretKey } = require('../../config')
-const { resloveToken } = require('../../tool')
+const { resloveToken, generateToken } = require('../../tool')
 
 /**
  * @swagger
@@ -44,9 +44,7 @@ router.post('/login', async (req, res, next) => {
   try {
     const flag = await bcrypt.compare(password, user.password)
     if (flag) {
-      const token = jwt.sign({ id: user._id, username: user.name }, secretKey, {
-        expiresIn: '1h',
-      })
+      const token = generateToken({ id: user._id })
       res.json({ code: 200, token: token, msg: '登录成功' })
     } else {
       res.json({

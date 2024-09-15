@@ -55,38 +55,48 @@
             <v-card-text>
               <v-tabs-window v-model="tab">
                 <v-tabs-window-item value="one">
-                  <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.captcha }} </v-chip>
+                  <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.name }} </v-chip>
                 </v-tabs-window-item>
               </v-tabs-window>
             </v-card-text>
           </v-card>
           <v-sheet class="pa-1" style="margin-top: 10px" min-height="85vh" rounded="lg" border color="white" flat>
             <div v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
-              <div style="flex: 2" v-if="item.cover">
-                <v-img style="border-radius: 4px" width="300" height="200" class="ma-2" cover :src="item.cover">
-                  <template v-slot:error>
-                    <v-img style="border-radius: 4px" width="300" height="200" class="ma-2" cover src="/image/err.jpg"> </v-img>
-                  </template>
-                </v-img>
-              </div>
               <div style="flex: 6">
                 <v-card flat>
                   <v-card-title class="text-black" @click="onDetal(item)">
-                    <div class="cursor-pointer text-h5" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer">
+                    <div class="cursor-pointer" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer">
                       {{ item.title }}
                     </div>
                   </v-card-title>
+                  <v-card-subtitle>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                      <v-avatar size="30">
+                        <v-img :src="item.auther.avatar" :alt="item.auther.username"></v-img>
+                      </v-avatar>
+                      <span>{{ item.auther.username }}</span>
+                      <span style="color: rgba(0, 0, 0, 0.5); font-size: 12px">
+                        {{ formartTime(item.date) }}
+                      </span>
+                    </div>
+                  </v-card-subtitle>
                   <v-card-text>
-                    <div style="height: 100px; overflow: hidden">
+                    <div class="content-container">
                       {{ item.descr }}
                     </div>
                   </v-card-text>
                   <v-card-actions>
-                    <v-btn color="medium-emphasis" prepend-icon="mdi-clock-time-nine-outline" size="small">{{ formartTime(item.date) }} </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-chip variant="outlined" v-for="tab in item.captcha" :key="tab"> {{ tab }} </v-chip>
+                    <!-- <v-btn color="medium-emphasis" prepend-icon="mdi-clock-time-nine-outline" size="small"> </v-btn> -->
+                    <v-chip variant="text" color="#8a919f" size="small" v-for="tab in item.captchas_info" :key="tab"> {{ tab.name }} </v-chip>
                   </v-card-actions>
                 </v-card>
+              </div>
+              <div style="flex: 2" v-if="item.cover">
+                <v-img style="border-radius: 4px; height: 100%" cover :src="item.cover">
+                  <template v-slot:error>
+                    <v-img style="border-radius: 4px" width="300" height="200" class="ma-2" cover src="/image/err.jpg"> </v-img>
+                  </template>
+                </v-img>
               </div>
             </div>
           </v-sheet>
@@ -95,9 +105,9 @@
           <v-sheet class="pa-2" rounded="lg" color="white" border>
             <v-list-subheader> 最新文章 </v-list-subheader>
             <v-divider></v-divider>
-            <v-list-item v-for="item in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
-              <v-list-item-title >
-                <a>{{ item.title }}</a>
+            <v-list-item v-for="(item, index) in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
+              <v-list-item-title>
+                <a>{{ index + 1 }}. {{ item.title }}</a>
               </v-list-item-title>
             </v-list-item>
           </v-sheet>
@@ -201,5 +211,19 @@ onUnmounted(() => {
   left: 0;
   background: linear-gradient(to top, #fff, transparent);
 }
-/* 定义导航栏下边框样式 */
+.content-container {
+  position: relative; /* 使伪元素相对于自身定位 */
+  max-height: 200px; /* 最大高度 */
+  overflow: hidden; /* 隐藏超出部分 */
+  color: #8a919f;
+}
+
+// .content-container::after {
+//   content: '…'; /* 省略号 */
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   background: white; /* 背景颜色 */
+//   padding: 0 5px; /* 内边距 */
+// }
 </style>

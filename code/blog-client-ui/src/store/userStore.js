@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useLogin } from '@/http/user'
+import { get } from '@/http/request'
 import { asyncRoute } from '@/router/dynamicRoute'
 
 export const userInfo = defineStore(
@@ -12,8 +13,8 @@ export const userInfo = defineStore(
       useLogin(data).then((res) => {
         if (res.data.status == 200) {
           isLogin.value = true
-          user.value = res.data.data
           localStorage.setItem('token', res.data.token)
+          queryUserInfo()
           return res.data
         }
       })
@@ -23,7 +24,13 @@ export const userInfo = defineStore(
       isLogin.value = false
       localStorage.clear()
     }
-    return { user, isLogin, login, loginOut }
+    const queryUserInfo = () => {
+      get('/api/user/info').then((res) => {
+        console.log(res.data)
+        user.value = res.data
+      })
+    }
+    return { user, isLogin, login, queryUserInfo, loginOut }
   },
   {
     persist: {

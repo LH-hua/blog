@@ -7,7 +7,7 @@ const captchaSchema = new mongoose.Schema({
     default: '',
   },
   text: { type: String },
-  time: {
+  date: {
     type: Date,
     default: Date.now,
   },
@@ -31,11 +31,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  captcha: {
-    type: Array,
-    default: [],
-  },
-  captchas: [ObjectId],
+  captcha_id: [ObjectId],
   date: {
     type: Date,
     default: Date.now,

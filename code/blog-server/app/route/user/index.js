@@ -2,11 +2,14 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const multiparty = require('multiparty')
 const { Router } = require('express')
+const { ObjectId } = require('mongodb')
+
 const router = Router()
 // const user = require('../controller/user')
-const User = require('../../models/user')
+const { User, userPost } = require('../../models/user')
 
 const { generateToken } = require('../../tool')
+const { postDB } = require('../../models/post')
 
 const salt = bcrypt.genSaltSync(10)
 
@@ -70,7 +73,6 @@ router.post('/login', async (req, res, next) => {
       msg: '登录成功',
       token: token,
       status: 200,
-      data: result,
     })
   } catch (error) {
     next(error)
@@ -104,7 +106,9 @@ router.post('/regsiter', async (req, res, next) => {
       password: bcrypt.hashSync(req.body.password, salt),
     })
     if (result) {
-      res.status(200).send(result)
+      res.status(200).send({
+        msg: '注册成功！',
+      })
     }
   } catch (error) {
     console.log(error)
@@ -146,9 +150,71 @@ router.post('/upload-image', async (req, res, next) => {
     next(err)
   }
 })
-router.get('/user-info', async (req, res) => {
-  const { id } = req.query
-  console.log(id)
+
+/**
+ * @swagger
+ * /api/user/info:
+ *  get:
+ *      summary: 查询用户信息
+ *      tags: [User]
+ *      parameters:
+ *        - name: u_id
+ *          in: query
+ *          description: 用户id
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/info', async (req, res) => {
+  const { u_id } = req.query
+  // const data = await userPost.findByIdAndUpdate({ _id: ObjectId(u_id) }, { u_id: ObjectId(u_id) }, { upsert: true, new: true })
+  // const data = await User.aggregate([
+  //   {
+  //     $match: { _id: ObjectId(u_id) },
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: 'userposts',
+  //       localField: '_id',
+  //       foreignField: 'u_id',
+  //       as: 'postTotal',
+  //     },
+  //   },
+  //   {
+  //     $unwind: '$postTotal',
+  //   },
+  //   {
+  //     $project: {
+  //       password: 0,
+  //       email: 0,
+  //       phone: 0,
+  //       admin: 0,
+  //       name: 0,
+  //       _id: 0,
+  //       'postTotal._id': 0,
+  //     },
+  //   },
+  //   {
+  //     $group: { _id: '$username', totalQuantity: { $sum: '$postTotal.p_id' } },
+  //   },
+  // ])
+  const data = await User.findOne(
+    { _id: ObjectId(u_id) },
+    {
+      password: 0,
+      email: 0,
+      phone: 0,
+      admin: 0,
+      name: 0,
+      _id: 0,
+    }
+  )
+  const postSum = await userPost.findOne({ u_id: ObjectId(u_id) })
+  res.send({
+    data,
+    post_total: postSum.p_id.length,
+  })
 })
 
 module.exports = router

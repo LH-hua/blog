@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const { ObjectId } = require('mongodb')
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: null,
+    default: '',
   },
   username: {
     type: String,
@@ -18,15 +19,22 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: null,
+    default: '/images/default.png',
   },
   email: {
     type: String,
-    default: null,
+    default: '',
   },
   phone: {
     type: Number,
-    default: null,
+    default: '',
   },
 })
-module.exports = mongoose.model('users', userSchema)
+const userPostSchema = new mongoose.Schema({
+  u_id: ObjectId,
+  p_id: [ObjectId],
+})
+module.exports = {
+  User: mongoose.model('users', userSchema),
+  userPost: mongoose.model('userPost', userPostSchema),
+}

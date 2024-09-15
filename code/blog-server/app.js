@@ -21,7 +21,8 @@ app.use(express.json())
 
 app.use(cors())
 
-app.post('/api/*', authenticateToken)
+app.post('/api/post/*', authenticateToken)
+// app.get('/api/user/*', authenticateToken)
 
 require('./app/mongodb/conect')
 swaggerInstall(app)

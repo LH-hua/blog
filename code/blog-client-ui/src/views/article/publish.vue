@@ -41,10 +41,10 @@
               <v-col cols="10">
                 <v-select
                   label="分类"
-                  v-model="data.captcha"
+                  v-model="data.captcha_id"
                   :items="captchas"
-                  item-title="captcha"
-                  item-value="captcha"
+                  item-title="name"
+                  item-value="_id"
                   variant="outlined"
                   density="compact"
                   multiple
@@ -108,7 +108,7 @@ const submit = async () => {
 
   data.body = editor.getMarkdown()
   addArticle(data).then(() => {
-    l.showNotification('操作成功！', 'success')
+    // l.showNotification('操作成功！', 'success')
     isActive.value = false
   })
 }

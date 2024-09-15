@@ -2,6 +2,7 @@ const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
 const { postDB, captchaDB } = require('../../models/post')
+const { User } = require('../../models/user')
 const moment = require('moment')
 const sendData = require('../../utils/dataFun')
 const { ObjectId } = require('mongodb')
@@ -55,22 +56,35 @@ router.get('/list', async (req, res, next) => {
   const { title, captcha } = _.assign(req.body, req.query, req.params)
   const regexTile = new RegExp(title, 'i')
   const regexCaptch = new RegExp(captcha, 'i')
-  postDB
-    .find(
-      {
-        title: regexTile,
+  const data = await postDB.aggregate([
+    {
+      $match: { title: regexTile },
+    },
+    {
+      $lookup: { from: 'captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },
+    },
+    {
+      $lookup: { from: 'users', localField: 'u_id', foreignField: '_id', as: 'auther' },
+    },
+    {
+      $unwind: '$auther',
+    },
+    {
+      $project: {
+        captcha_id: 0,
+        body: 0,
+        'auther.password': 0,
+        'auther.email': 0,
+        'auther.phone': 0,
+        'auther.admin': 0,
+        'auther.name': 0,
       },
-      { body: 0 }
-    )
-    .populate({
-      path: 'captchas',
-      select: 'captcha',
-      match: { 'captcha.captcha': { $in: [regexCaptch] } },
-    })
-    .sort({ date: -1 })
-    .exec((err, data) => {
-      sendData(err, data, res)
-    })
+    },
+    {
+      $sort: { date: -1 },
+    },
+  ])
+  sendData('', data, res)
 })
 /**
  * @swagger
@@ -88,13 +102,41 @@ router.get('/list', async (req, res, next) => {
  *
  */
 router.get('/detail', async (req, res, next) => {
-  console.log(req.params)
-  console.log(req.query)
   let { _id } = _.assign(req.body, req.query, req.params)
   try {
-    let result = await postDB.findOne({ _id: _id }).populate('captchas')
+    // let result = await postDB.findOne({ _id: _id })
+    // res.send({
+    //   data: result,
+    //   status: 200,
+    // })
+    const result = await postDB.aggregate([
+      {
+        $match: { _id: ObjectId(_id) },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'u_id',
+          foreignField: '_id',
+          as: 'auther',
+        },
+      },
+      {
+        $unwind: '$auther',
+      },
+      {
+        $project: {
+          'auther.password': 0,
+          'auther.email': 0,
+          'auther.phone': 0,
+          'auther.admin': 0,
+          'auther.name': 0,
+          'auther._id': 0,
+        },
+      },
+    ])
     res.send({
-      data: result,
+      data: result[0],
       status: 200,
     })
   } catch (error) {
@@ -151,17 +193,22 @@ router.get('/new', async (req, res, next) => {
  *
  */
 router.post('/findOneAndUpdate', async (req, res, next) => {
-  const { title, body, _id, cover, captcha, descr } = req.body
+  const { u_id, title, body, _id, cover, captcha_id, descr } = req.body
   if (!_id) {
-    postDB.create({ title: title, body: body, cover, captcha, descr }, (err, data) => {
+    postDB.create({ u_id: ObjectId(u_id), title: title, body: body, cover, captcha_id, descr }, (err, data) => {
       sendData(err, data, res)
     })
   } else {
     // const data = await captchaDB.find({ captcha: { $in: captcha } })
     // const captchas = data.map((item) => item._id)
+    const captcha_id_arr = captcha_id.map((item) => ObjectId(item))
+    console.log(req.body)
     postDB
-      .findOneAndUpdate({ _id: ObjectId(_id) }, { title: title, body: body, cover, descr, captcha: captcha }, { upsert: true, new: true })
-      .populate('captchas')
+      .findOneAndUpdate(
+        { _id: ObjectId(_id) },
+        { u_id: ObjectId(u_id), title: title, body: body, cover, descr, captcha_id: captcha_id_arr },
+        { upsert: true, new: true }
+      )
       .exec((err, data) => {
         sendData(err, data, res)
       })
@@ -190,8 +237,7 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
  *
  */
 router.post('/delete', async (req, res, next) => {
-  const result = await postDB.deleteOne({ ...req.body })
-  console.log(result)
+  const result = await postDB.deleteOne({ _id: ObjectId(req.body._id) })
   sendData('', result, res)
 })
 
