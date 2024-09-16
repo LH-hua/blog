@@ -3,12 +3,13 @@ const jwt = require('jsonwebtoken')
 const multiparty = require('multiparty')
 const { Router } = require('express')
 const { ObjectId } = require('mongodb')
-
+const svgCaptcha = require('svg-captcha')
+const redis = require('redis')
 const router = Router()
 // const user = require('../controller/user')
 const { User, userPost } = require('../../models/user')
 
-const { generateToken } = require('../../tool')
+const { generateToken, emailVerify } = require('../../tool')
 const { postDB } = require('../../models/post')
 
 const salt = bcrypt.genSaltSync(10)
@@ -92,24 +93,54 @@ router.post('/login', async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *              type: object
+ *              properties:
+ *                username:
+ *                  type: string
+ *                  description: '用户名'
+ *                password:
+ *                  type: string
+ *                  description: '密码'
+ *                email:
+ *                  type: string
+ *                  description: '邮箱'
+ *                code:
+ *                  type: string
+ *                  description: '验证码'
  *     responses:
  *       '200':
  *         description: 成功
  */
 
 router.post('/regsiter', async (req, res, next) => {
-  console.log(req.body)
   try {
-    const result = await User.create({
-      username: req.body.username,
-      password: bcrypt.hashSync(req.body.password, salt),
+    const { username, userpassword, email, code } = req.body
+    const client = redis.createClient(6379, '127.0.0.1')
+    client.on('error', function (err) {
+      console.log('Error ' + err)
     })
-    if (result) {
-      res.status(200).send({
-        msg: '注册成功！',
-      })
-    }
+    client.get(email, async function (err, value) {
+      if (err) throw err
+      console.log(value)
+      if (value == code) {
+        client.quit()
+        const result = await User.create({
+          username: username,
+          password: bcrypt.hashSync(userpassword, salt),
+          email: email,
+        })
+        if (result) {
+          res.status(200).send({
+            msg: '注册成功！',
+            status: 200,
+          })
+        }
+      } else {
+        res.status(200).send({
+          msg: '验证码不正确',
+        })
+      }
+    })
   } catch (error) {
     console.log(error)
     res.send({
@@ -199,6 +230,7 @@ router.get('/info', async (req, res) => {
   //     $group: { _id: '$username', totalQuantity: { $sum: '$postTotal.p_id' } },
   //   },
   // ])
+  console.log(u_id)
   const data = await User.findOne(
     { _id: ObjectId(u_id) },
     {
@@ -210,11 +242,42 @@ router.get('/info', async (req, res) => {
       _id: 0,
     }
   )
-  const postSum = await userPost.findOne({ u_id: ObjectId(u_id) })
+  // const postSum = await userPost.findOne({ u_id: ObjectId(u_id) })
   res.send({
     data,
-    post_total: postSum.p_id.length,
+    // post_total: postSum.p_id.length,
   })
 })
-
+/**
+ * @swagger
+ * /api/user/emailVerify:
+ *  get:
+ *      summary: 发送邮箱验证码
+ *      tags: [User]
+ *      parameters:
+ *        - name: email
+ *          in: query
+ *          description: 邮箱
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/emailVerify', async (req, res, next) => {
+  const { email } = req.query
+  let code = svgCaptcha.create({ size: 6 }).text
+  const result = await emailVerify(email, code, 'EX', 900)
+  if (result.response) {
+    const client = redis.createClient(6379, '127.0.0.1')
+    client.on('error', function (err) {
+      console.log('Error ' + err)
+    })
+    client.set(email, code)
+    client.quit()
+    res.send({
+      msg: '验证码已发送，注意查收！',
+      status: '200',
+    })
+  }
+})
 module.exports = router

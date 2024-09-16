@@ -52,7 +52,7 @@ const store = reactive({
       id: '1',
       pid: '0',
       icon: 'mdi-card-text',
-      name: '文章',
+      name: '技术',
       url: '/post',
       thirdParty: false,
       tag: false,

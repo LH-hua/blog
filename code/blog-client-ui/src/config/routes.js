@@ -63,11 +63,11 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   component: () => import('@/views/user/login.vue'),
-  // },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import('@/views/user/userInfo.vue'),
+  },
   {
     path: '/regsiter',
     name: 'regsiter',

@@ -22,7 +22,7 @@
           <v-card-text>
             <v-list>
               <v-list-item>
-                <v-list-item-title> 个人信息</v-list-item-title>
+                <v-list-item-title> <router-link to="/user">个人信息</router-link></v-list-item-title>
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -35,57 +35,7 @@
       <v-btn variant="text" color="blue" @click="handlerPublish"> 发布 </v-btn>
     </div>
     <div v-else>
-      <v-dialog max-width="800" v-model="isActive" persistent>
-        <template v-slot:activator="{ props: activatorProps }">
-          <v-btn v-bind="activatorProps" color="primary" text="登 录" variant="text"></v-btn>
-        </template>
-
-        <template v-slot:default="{ isActive }">
-          <v-sheet class="pa-5">
-            <div style="display: flex; gap: 10px">
-              <div style="flex: 1; height: 100%">
-                <v-img style="height: 100%" cover src="/image/cut-password-manager-information-security.png"></v-img>
-              </div>
-              <div style="flex: 1">
-                <v-card flat>
-                  <v-card-title class="d-flex justify-space-between align-center">
-                    <span class="text-h4 font-weight-bold">登 录</span>
-
-                    <v-btn icon="mdi-close" variant="text" @click="isActive.value = false"></v-btn>
-                  </v-card-title>
-                  <v-divider></v-divider>
-                  <div class="pa-2">
-                    <v-text-field
-                      v-model="data.userName"
-                      type="text"
-                      label="用户名"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-account"
-                      density="compact"
-                      required
-                      :rules="[rules.nameRequired]"
-                    ></v-text-field>
-                    <br />
-                    <v-text-field
-                      v-model="data.userPassword"
-                      type="password"
-                      label="密码"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-shield-key"
-                      density="compact"
-                      required
-                      :rules="[rules.passwordRequired]"
-                    ></v-text-field>
-                    <v-btn block variant="tonal" color="primary" text="登 录" @click="handleLogin"></v-btn>
-                  </div>
-                </v-card>
-              </div>
-            </div>
-          </v-sheet>
-        </template>
-      </v-dialog>
-      <v-btn color="primary" text="注 册" variant="text" @click="regsiter">
-      </v-btn>
+      <v-btn color="primary" text="注 册" variant="text" @click="regsiter">登 录 | 注 册</v-btn>
     </div>
   </div>
 </template>

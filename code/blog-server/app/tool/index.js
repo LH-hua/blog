@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
 const { secretKey } = require('../config')
 
 function getRandomString(len) {
@@ -41,9 +42,32 @@ function resloveToken(token) {
 function getRandomNum() {
   return Math.floor(100000 + Math.random() * 900000)
 }
+async function emailVerify(email, code) {
+  // 发送邮件
+  let transporter = await nodemailer.createTransport({
+    host: 'smtp.qq.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: '1589715612@qq.com', // generated ethereal user
+      pass: 'mjydxfuqzacehidb', // generated ethereal password
+    },
+  })
+  transporter.setMaxListeners(2)
+  const data = await transporter.sendMail({
+    from: '<1589715612@qq.com>', // 发送者邮箱
+    to: email, // 发送多个，以逗号分隔开
+    subject: '邮箱验证', // 邮件标题
+    text: 'lhgo邮箱验证', // plain text body
+    html: `<b>[lhgo]</b><br><p>您的验证码：${code}<br/>不要告诉别人哦！</p><br/><p>验证码15分钟内有效</p>`, // html body
+  })
+  return data
+}
+
 module.exports = {
   getRandomString,
   generateToken,
   resloveToken,
   getRandomNum,
+  emailVerify,
 }
