@@ -4,12 +4,20 @@
       <v-sheet rounded class="pa-4">
         <v-text-field
           label="你的需求"
+          placeholder="输入你的想法"
           v-model="input"
-          append-icon="mdi-map-marker"
-          @click:append="test"
           variant="outlined"
           density="compact"
-        ></v-text-field>
+          append-icon="mdi-send"
+          :rules="rules"
+          @click:append="handlerSend"
+        >
+          <template #prepend>
+            <v-avatar v-if="user.isLogin">
+              <v-img :src="user.user.avatar"></v-img>
+            </v-avatar>
+          </template>
+        </v-text-field>
       </v-sheet>
     </div>
     <v-container>
@@ -38,13 +46,21 @@
 
 <script setup lang="js">
 import { onMounted, ref, h } from 'vue'; // 确保 h 已导入
+import { userInfo } from '../../store/userStore';
 import { get,post } from '@/http/request';
 
 const box = ref({
   w: 300,
 });
+const messages = ref()
+const user = userInfo()
 const input = ref()
 const data = ref()
+const rules = ref([
+        value => user.isLogin || '需要登录后才能描述你的需求哦',
+        value => !!value || '没有任何输入哦',
+        value => (value && value.length >= 3) || 'Min 3 characters',
+      ])
 function getRandomArgbColor() {
   const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
   const randomFloat = (min, max) => Math.random() * (max - min) + min;
@@ -75,19 +91,25 @@ function random(data,nodeClass){
     node.append(dom)
 }
 
-function test(){
+function handlerSend(){
+    messages.value = ''
+    if(!user.isLogin){
+        messages.value = '需要登录后才能描述你的需求哦'
+        return
+    }
     post('/api/demand/create',{u_id:'66e675b4b7366d27c5a61292',text:input.value}).then(res => {
-        console.log(res)
-        query()
+        if(res.data.status == 200){
+            query()
+            input.value = ''
+        }
     })
 }
 async function query() {
   const res = await get('/api/demand/list');
   if(res.status == 200){
-        // res.data.forEach(item => {
-        //     random(item,'.container')
-        // })
         data.value = res.data
+        setTimeout(col,500)
+
     }
 }
 
@@ -122,7 +144,6 @@ function col(){
 
 onMounted(() => {
 query()
-setTimeout(col,500)
 
 });
 </script>
@@ -144,8 +165,8 @@ setTimeout(col,500)
 .lh-main > div {
   float: left;
   padding: 5px;
-//   border: 1px solid #e0e0e0;
-//   border-radius: 5px;
+  //   border: 1px solid #e0e0e0;
+  //   border-radius: 5px;
 }
 .lh-main > div > div {
   width: 310px;
