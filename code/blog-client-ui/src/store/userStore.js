@@ -35,7 +35,10 @@ export const userInfo = defineStore(
     const emailVerify = (data) => {
       return get('/api/user/emailVerify', data)
     }
-    return { user, isLogin, login, resgsiter, queryUserInfo, loginOut, emailVerify }
+    const verifyInfo = (data) => {
+      return get('/api/user/verifyInfo', data)
+    }
+    return { user, isLogin, login, resgsiter, queryUserInfo, loginOut, emailVerify, verifyInfo }
   },
   {
     persist: {

@@ -26,7 +26,7 @@
               :rules="[rules.passwordRequired]"
             ></v-text-field>
           </label>
-          <p class="forgot-pass">忘记密码？</p>
+          <p class="forgot-pass" @click="handlerForget">忘记密码？</p>
           <button type="button" class="submit" @click="handleLogin">登 录</button>
         </div>
         <div class="sub-cont">
@@ -94,8 +94,10 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router';
 import { userInfo } from '@/store/userStore'
 const user = userInfo()
+const router = useRouter()
 
 const data = reactive({
   msg: '',
@@ -121,6 +123,10 @@ const rules = ref({
     return pattern.test(value) || '邮箱不能为空'
   },
 })
+
+const handlerForget = () => {
+  router.push('/user/forget')
+}
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })
   if (res.data.status == 200) {
@@ -410,7 +416,8 @@ input {
   margin-top: 15px;
   text-align: center;
   font-size: 12px;
-  color: #cfcfcf;
+  color: #3742df;
+  cursor: pointer;
 }
 
 .submit {

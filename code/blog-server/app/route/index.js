@@ -6,6 +6,9 @@ const sys = require('./sys')
 const file = require('./file')
 const preject = require('./preject')
 const admin = require('./admin')
+const demand = require('./demand')
+const easyHouse = require('./easyHouse')
+const pastBooks = require('./pastBooks')
 
 module.exports = (app) => {
   app.use('/api/post', article)
@@ -16,4 +19,7 @@ module.exports = (app) => {
   app.use('/api/file', file)
   app.use('/api/preject', preject)
   app.use('/api/admin', admin)
+  app.use('/api/demand', demand)
+  app.use('/api/easyHouse', easyHouse)
+  app.use('/api/pastBooks', pastBooks)
 }

@@ -6,7 +6,11 @@
   "scripts": {
     "start": "set NODE_ENV=dev && nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/esbuild main.js --bundle --minify --outfile=dist.js --platform=node"
+    "build": "./node_modules/.bin/esbuild main.js --bundle --minify --outfile=dist.js --platform=node",
+    "builds": "node app.js"
+  },
+  "bin": {
+    "blog-server": "./app.js"
   },
   "author": "",
   "license": "ISC",

@@ -17,7 +17,7 @@ const routes = [
       //   },
       // },
       {
-        path: '',
+        path: 'post',
         name: '技术社区',
         component: () => import('@/views/article/list.vue'),
         meta: {
@@ -25,9 +25,19 @@ const routes = [
         },
       },
       {
-        path: 'about',
-        name: 'about',
-        component: () => import('@/views/about/index.vue'),
+        path: 'show',
+        name: 'show',
+        component: () => import('@/views/show/index.vue'),
+      },
+      {
+        path: 'pastBooks',
+        name: 'pastBooks',
+        component: () => import('@/views/pastBooks/index.vue'),
+      },
+      {
+        path: 'easyHouse',
+        name: 'easyHouse',
+        component: () => import('@/views/easyHouse/index.vue'),
       },
       {
         path: 'post/:id',
@@ -54,6 +64,11 @@ const routes = [
         },
       },
       {
+        path: '/demand',
+        name: 'demand',
+        component: () => import('@/views/demand/index.vue'),
+      },
+      {
         path: '/:catchAll(.*)',
         name: '404',
         component: () => import('@/views/404.vue'),
@@ -63,15 +78,21 @@ const routes = [
       },
     ],
   },
+
   {
     path: '/user',
     name: 'user',
     component: () => import('@/views/user/userInfo.vue'),
   },
   {
-    path: '/regsiter',
+    path: '/user/login',
     name: 'regsiter',
     component: () => import('@/views/user/regsiter.vue'),
+  },
+  {
+    path: '/user/forget',
+    name: 'forget',
+    component: () => import('@/views/user/forget.vue'),
   },
   {
     path: '/publish',

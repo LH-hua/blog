@@ -20,12 +20,15 @@
       </v-container>
     </div>
     <v-container>
-      <v-card>
-        <v-toolbar :title="tab"> </v-toolbar>
+      <v-card flat>
 
         <div class="d-flex flex-row">
           <v-tabs v-model="tab" color="primary" direction="vertical" slider-color="#eeeeee">
-            <v-tab prepend-icon="mdi-account" text="资料" value="option-1"></v-tab>
+            <v-tab prepend-icon="mdi-account" text="头像" value="option-1"></v-tab>
+            <v-tab prepend-icon="mdi-account" text="昵称" value="option-2"></v-tab>
+            <v-tab prepend-icon="mdi-account" text="签名" value="option-3"></v-tab>
+            <v-tab prepend-icon="mdi-account" text="邮箱" value="option-4"></v-tab>
+            <v-tab prepend-icon="mdi-account" text="密码" value="option-5"></v-tab>
           </v-tabs>
 
           <v-tabs-window v-model="tab" style="width: 100%">

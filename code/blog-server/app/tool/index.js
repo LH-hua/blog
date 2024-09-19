@@ -42,7 +42,7 @@ function resloveToken(token) {
 function getRandomNum() {
   return Math.floor(100000 + Math.random() * 900000)
 }
-async function emailVerify(email, code) {
+async function emailVerify(email, text) {
   // 发送邮件
   let transporter = await nodemailer.createTransport({
     host: 'smtp.qq.com',
@@ -59,9 +59,31 @@ async function emailVerify(email, code) {
     to: email, // 发送多个，以逗号分隔开
     subject: '邮箱验证', // 邮件标题
     text: 'lhgo邮箱验证', // plain text body
-    html: `<b>[lhgo]</b><br><p>您的验证码：${code}<br/>不要告诉别人哦！</p><br/><p>验证码15分钟内有效</p>`, // html body
+    html: text, // html body
   })
   return data
+}
+function maskEmailLocalPart(email, maskLength) {
+  // 检查输入字符串是否为空
+  if (!email) return ''
+
+  // 分割本地部分和域名部分
+  const parts = email.split('@')
+  const localPart = parts[0]
+  const domainPart = parts[1]
+
+  // 计算中间部分的位置
+  const startIdx = Math.floor((localPart.length - maskLength) / 2)
+  const endIdx = startIdx + maskLength
+
+  // 替换中间部分为星号
+  const asterisks = '*'.repeat(maskLength)
+
+  // 组合成新的字符串
+  const maskedLocalPart = localPart.slice(0, startIdx) + asterisks + localPart.slice(endIdx)
+
+  // 返回新的邮件地址
+  return `${maskedLocalPart}@${domainPart}`
 }
 
 module.exports = {
@@ -70,4 +92,5 @@ module.exports = {
   resloveToken,
   getRandomNum,
   emailVerify,
+  maskEmailLocalPart,
 }

@@ -8,7 +8,7 @@
       <router-view></router-view>
     </div>
   </v-main>
-  <my-footer></my-footer>
+  <!-- <my-footer></my-footer> -->
 </template>
 
 <script setup>

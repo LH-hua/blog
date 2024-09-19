@@ -71,7 +71,7 @@ const handlerPublish = () => {
   router.push('/publish')
 }
 const regsiter = () => {
-  router.push('/regsiter')
+  router.push('/user/login')
 }
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })

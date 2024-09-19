@@ -4,15 +4,18 @@ const multiparty = require('multiparty')
 const { Router } = require('express')
 const { ObjectId } = require('mongodb')
 const svgCaptcha = require('svg-captcha')
-const redis = require('redis')
+// const redis = require('redis')
 const router = Router()
 // const user = require('../controller/user')
 const { User, userPost } = require('../../models/user')
+// const { redis } = require('../../../app.js')
+const createRedisClient = require('../../redis')
 
-const { generateToken, emailVerify } = require('../../tool')
+const { generateToken, emailVerify, maskEmailLocalPart } = require('../../tool')
 const { postDB } = require('../../models/post')
 
 const salt = bcrypt.genSaltSync(10)
+const redis = createRedisClient()
 
 /**
  * @swagger
@@ -115,15 +118,10 @@ router.post('/login', async (req, res, next) => {
 router.post('/regsiter', async (req, res, next) => {
   try {
     const { username, userpassword, email, code } = req.body
-    const client = redis.createClient(6379, '127.0.0.1')
-    client.on('error', function (err) {
-      console.log('Error ' + err)
-    })
-    client.get(email, async function (err, value) {
+    redis.get(email, async function (err, value) {
       if (err) throw err
       console.log(value)
       if (value == code) {
-        client.quit()
         const result = await User.create({
           username: username,
           password: bcrypt.hashSync(userpassword, salt),
@@ -266,18 +264,65 @@ router.get('/info', async (req, res) => {
 router.get('/emailVerify', async (req, res, next) => {
   const { email } = req.query
   let code = svgCaptcha.create({ size: 6 }).text
-  const result = await emailVerify(email, code, 'EX', 900)
+  const text = `<b>[lhgo]</b><br><p>您正在注册lhgo<br/></p><p>您的验证码：${code}<br/>不要告诉别人哦！</p><br/><p>验证码15分钟内有效</p>`
+  const result = await emailVerify(email, text)
   if (result.response) {
-    const client = redis.createClient(6379, '127.0.0.1')
-    client.on('error', function (err) {
-      console.log('Error ' + err)
-    })
-    client.set(email, code)
-    client.quit()
+    redis.set(email, code, 'EX', 900)
     res.send({
       msg: '验证码已发送，注意查收！',
       status: '200',
     })
   }
+})
+/**
+ * @swagger
+ * /api/user/verifyInfo:
+ *  get:
+ *      summary: 验证用户信息
+ *      tags: [User]
+ *      parameters:
+ *        - name: email
+ *          in: query
+ *          description: 邮箱
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/verifyInfo', async (req, res, next) => {
+  const { email } = req.query
+  const pattern =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  let userInfo
+  if (pattern.test(email)) {
+    userInfo = await User.findOne({ email: email })
+  } else {
+    userInfo = await User.findOne({ username: email })
+  }
+  if (userInfo) {
+    let code = svgCaptcha.create({ size: 6 }).text
+    const text = `<b>[lhgo]</b><br><p>您正在进行重置密码操作<br/><p>您的验证码：${code}<br/>不要告诉别人哦！</p><br/><p>验证码15分钟内有效</p>`
+    const result = await emailVerify(email, text)
+    if (result.response) {
+      // const client = redis.createClient(6379, '127.0.0.1')
+      // client.on('error', function (err) {
+      //   console.log('Error ' + err)
+      // })
+      redis.set(email, code, 'EX', 900)
+      // client.quit()
+      return res.send({
+        msg: `验证码已发送至${maskEmailLocalPart(userInfo.email, 5)}，注意查收！`,
+        status: '200',
+      })
+    }
+  }
+  res.send({
+    msg: '不存在该用户',
+  })
+})
+
+router.get('/verifyCode', async (req, res, next) => {
+  const { code } = req.query
+  const value = redis.get('')
 })
 module.exports = router

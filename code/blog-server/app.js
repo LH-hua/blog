@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const fs = require('fs')
+const createRedisClient = require('./app/redis')
+
 const { authenticateToken } = require('./app/middleware')
 dotenv.config()
 
@@ -25,6 +27,7 @@ app.post('/api/post/*', authenticateToken)
 app.get('/api/user/info', authenticateToken)
 
 require('./app/mongodb/conect')
+createRedisClient()
 swaggerInstall(app)
 router(app)
 
