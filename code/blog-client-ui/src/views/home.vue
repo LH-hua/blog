@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar class="custom" density="compact" flat style="position:static">
-    <top-menu></top-menu>
+  <v-app-bar class="custom" density="compact" flat style="position: static">
+    <navigation></navigation>
   </v-app-bar>
 
   <v-main>
@@ -13,7 +13,7 @@
 
 <script setup>
 // import cardImage from "@/components/cardImage.vue";
-import topMenu from '@/components/topMenu.vue'
+import navigation from '@/components/navigation.vue'
 import myFooter from '@/components/footer.vue'
 import { Scroll } from '@/utils/tool'
 
@@ -31,7 +31,7 @@ onMounted(() => {
   /* backdrop-filter: blur(10px); */
   border-bottom: 1px solid #e0e0e0;
 }
-.main{
+.main {
   /* background: white; */
 }
 /* .v-app-bar.v-toolbar {

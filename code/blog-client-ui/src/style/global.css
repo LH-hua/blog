@@ -3,6 +3,22 @@
     max-width: 1460px !important;
   }
 }
+
 body {
   /* background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%); */
+}
+html {
+  font-family: system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji"
 }

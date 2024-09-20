@@ -5,18 +5,14 @@
       style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
       @click="handlerToHome"
     >
-      lhgo
+      昔日
     </div>
     <v-spacer></v-spacer>
-
-    <v-btn v-for="item in store.menu" :key="item.url" variant="text" ripple @click="onTorouter(item)">
-      <v-icon :icon="item.icon" />
-      {{ item.name }}
-    </v-btn>
-    <!-- <userMenu v-if="user.userStatus"></userMenu>
-    <div v-else style="cursor: pointer" color="grey-darken-1" @click="onDialogShow">登录 / 注册</div>
-    <v-dialog v-model="store.dialog" width="1024">
-    </v-dialog> -->
+    <ul class="navigation">
+      <li v-for="item in store.menu" :key="item.url">
+        <a :href="item.url">{{ item.name }}</a>
+      </li>
+    </ul>
     <login></login>
   </v-container>
 </template>
@@ -164,5 +160,57 @@ function onTorouter(obj) {
 .logo {
   cursor: pointer;
   font-weight: 800;
+}
+
+.navigation {
+  list-style: none;
+  margin: 0;
+
+  /* background: deepskyblue; */
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-end;
+}
+
+.navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  color: black;
+}
+
+.navigation a:hover {
+  color: deepskyblue;
+}
+
+@media all and (max-width: 800px) {
+  .navigation {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .navigation {
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+  }
+
+  .navigation a {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .navigation li:last-of-type a {
+    border-bottom: none;
+  }
 }
 </style>

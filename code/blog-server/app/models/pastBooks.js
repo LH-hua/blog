@@ -11,6 +11,7 @@ const pastBooksSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  cover: String,
   captcha_id: [ObjectId],
   date: {
     type: Date,

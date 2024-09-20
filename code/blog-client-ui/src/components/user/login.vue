@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-if="user.isLogin">
-      <v-menu transition="slide-y-transition">
+      <v-menu transition="slide-y-transition" open-on-hover>
         <template v-slot:activator="{ props }">
-          <v-avatar v-bind="props">
+          <v-avatar v-bind="props" @click="handlerUserSpace">
             <v-img :src="user.user.avatar" :alt="user.user.username"></v-img>
           </v-avatar>
         </template>
@@ -22,7 +22,7 @@
           <v-card-text>
             <v-list>
               <v-list-item>
-                <v-list-item-title> <router-link to="/user">个人信息</router-link></v-list-item-title>
+                <v-list-item-title> <router-link :to="'/user/' + user.user._id">个人信息</router-link></v-list-item-title>
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -72,6 +72,10 @@ const handlerPublish = () => {
 }
 const regsiter = () => {
   router.push('/user/login')
+}
+const handlerUserSpace = () => {
+  router.push(`/userSpace/${user.user._id}`)
+
 }
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })

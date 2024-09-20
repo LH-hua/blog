@@ -27,7 +27,7 @@ const { pastBookDB } = require('../../models/pastBooks')
 router.get('/list', async (req, res, next) => {
   try {
     const { title } = req.query
-    const reg = new RegExp(title, 'gi')
+    const reg = new RegExp(title, 'i')
     const data = await pastBookDB.aggregate([
       {
         $match: {
@@ -86,6 +86,9 @@ router.get('/list', async (req, res, next) => {
  *                body:
  *                  type: string
  *                  description: '内容'
+ *                u_id:
+ *                  type: string
+ *                  description: '用户id'
  *                cover:
  *                  type: string
  *                  description: '封面'
@@ -96,9 +99,9 @@ router.get('/list', async (req, res, next) => {
  */
 router.post('/create', async (req, res, next) => {
   try {
-    const { title, body, cover } = req.body
+    const { title, body, cover, u_id } = req.body
     if (!title || !body) return res.json({ msg: '数据不完整！' })
-    const data = await pastBookDB.create({ title, body, cover })
+    const data = await pastBookDB.create({ title, text: body, cover, u_id: Object(u_id) })
     res.json({
       msg: 'ok',
       status: 200,

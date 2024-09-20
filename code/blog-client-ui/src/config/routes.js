@@ -78,9 +78,13 @@ const routes = [
       },
     ],
   },
-
   {
-    path: '/user',
+    path: '/userSpace/:id',
+    name: 'userSpace',
+    component: () => import('@/views/user/userSpace.vue'),
+  },
+  {
+    path: '/user/:id',
     name: 'user',
     component: () => import('@/views/user/userInfo.vue'),
   },

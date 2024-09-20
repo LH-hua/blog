@@ -198,52 +198,39 @@ router.post('/upload-image', async (req, res, next) => {
 router.get('/info', async (req, res) => {
   const { u_id } = req.query
   // const data = await userPost.findByIdAndUpdate({ _id: ObjectId(u_id) }, { u_id: ObjectId(u_id) }, { upsert: true, new: true })
-  // const data = await User.aggregate([
-  //   {
-  //     $match: { _id: ObjectId(u_id) },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: 'userposts',
-  //       localField: '_id',
-  //       foreignField: 'u_id',
-  //       as: 'postTotal',
-  //     },
-  //   },
-  //   {
-  //     $unwind: '$postTotal',
-  //   },
-  //   {
-  //     $project: {
-  //       password: 0,
-  //       email: 0,
-  //       phone: 0,
-  //       admin: 0,
-  //       name: 0,
-  //       _id: 0,
-  //       'postTotal._id': 0,
-  //     },
-  //   },
-  //   {
-  //     $group: { _id: '$username', totalQuantity: { $sum: '$postTotal.p_id' } },
-  //   },
-  // ])
-  console.log(u_id)
-  const data = await User.findOne(
-    { _id: ObjectId(u_id) },
+  const data = await User.aggregate([
     {
-      password: 0,
-      email: 0,
-      phone: 0,
-      admin: 0,
-      name: 0,
-      _id: 0,
-    }
-  )
-  // const postSum = await userPost.findOne({ u_id: ObjectId(u_id) })
+      $match: { _id: ObjectId(u_id) },
+    },
+    {
+      $lookup: {
+        from: 'pastbooks',
+        localField: '_id',
+        foreignField: 'u_id',
+        as: 'pastbooks',
+      },
+    },
+    {
+      $lookup: {
+        from: 'demands',
+        localField: '_id',
+        foreignField: 'u_id',
+        as: 'demands',
+      },
+    },
+    {
+      $project: {
+        password: 0,
+        email: 0,
+        phone: 0,
+        admin: 0,
+        name: 0,
+        _id: 0,
+      },
+    },
+  ])
   res.send({
     data,
-    // post_total: postSum.p_id.length,
   })
 })
 /**

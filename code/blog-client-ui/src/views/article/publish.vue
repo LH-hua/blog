@@ -20,8 +20,18 @@
     </div>
     <v-dialog max-width="700" v-model="isActive">
       <template v-slot:default="{ isActive }">
-        <v-card title="发布设置">
+        <v-card>
+          <v-card-title> 发布到: {{ target }} </v-card-title>
           <v-card-text>
+            <v-row>
+              <v-col cols="2">模块选择：</v-col>
+              <v-col cols="10">
+                <v-radio-group v-model="radio" inline hide-details>
+                  <v-radio label="技术区" value="post"></v-radio>
+                  <v-radio label="往昔册" value="pastBooks"></v-radio>
+                </v-radio-group>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="2">封面：</v-col>
               <v-col cols="10">
@@ -29,6 +39,7 @@
                   v-model="files"
                   accept="image/png, image/jpeg, image/bmp"
                   prepend-icon=""
+                  hide-details
                   prepend-inner-icon="mdi-file-image"
                   placeholder="选择一张图片做封面吧"
                   variant="outlined"
@@ -36,7 +47,7 @@
                 ></v-file-input>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="radio == 'post'">
               <v-col cols="2">分类：</v-col>
               <v-col cols="10">
                 <v-select
@@ -48,13 +59,14 @@
                   variant="outlined"
                   density="compact"
                   multiple
+                  hide-details
                 ></v-select>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="2">描述：</v-col>
               <v-col cols="10">
-                <v-textarea v-model="data.descr" placeholder="用简短的几句话总结一下这篇文章吧" variant="outlined"></v-textarea>
+                <v-textarea v-model="data.descr" placeholder="用简短的几句话总结一下这篇文章吧" hide-details variant="outlined"></v-textarea>
               </v-col>
             </v-row>
             <v-img :width="300" aspect-ratio="16/9" cover :src="files"></v-img>
@@ -63,7 +75,8 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn text="确 定" @click="submit"></v-btn>
+            <v-btn text="取 消" color="#F5F5F5" class="text-none mb-4" variant="flat" @click="isActive.value = false"></v-btn>
+            <v-btn text="确 定" color="indigo-darken-3" class="text-none mb-4" variant="flat" @click="submit"></v-btn>
           </v-card-actions>
         </v-card>
       </template>
@@ -72,14 +85,15 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref } from 'vue'
+import { reactive, onMounted, ref, computed } from 'vue'
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { addArticle, getCaptcha } from '@/http/article'
-import { formdata } from '@/http/request'
+import { formdata, post } from '@/http/request'
 
 let editor
+const radio = ref('post')
 const captchas = ref()
 const isActive = ref(false)
 
@@ -91,6 +105,9 @@ const data = reactive({
   body: '',
 })
 
+const target = computed(() => {
+  return radio.value == 'post' ? '技术区' : '往昔册'
+})
 const changeFile = (file) => {
   console.log(file)
 }
@@ -105,12 +122,19 @@ const submit = async () => {
     const res = await formdata('/api/file/upload-image', formData)
     data.cover = res.data.src
   }
-
-  data.body = editor.getMarkdown()
-  addArticle(data).then(() => {
-    // l.showNotification('操作成功！', 'success')
-    isActive.value = false
-  })
+  const markdownText = editor.getMarkdown()
+  data.body = markdownText
+  if (radio.value == 'pastBooks') {
+    data.descr = data.text
+    const res = await post('/api/pastBooks/create', data)
+    if (res.status == 200) {
+      isActive.value = false
+    }
+  } else {
+    addArticle(data).then(() => {
+      isActive.value = false
+    })
+  }
 }
 const initEditor = () => {
   editor = new Editor({
