@@ -44,21 +44,27 @@ const {} = require('mongoose')
  *        - name: title
  *          in: query
  *          description: 文章标题
- *        - name: captcha
+ *        - name: captcha_id
  *          in: query
- *          description: 文章分类
+ *          description: 分类id
  *      responses:
  *          200:
  *             description: 成功
  *
  */
 router.get('/list', async (req, res, next) => {
-  const { title, captcha } = _.assign(req.body, req.query, req.params)
+  const { title, captcha, captcha_id } = _.assign(req.body, req.query, req.params)
   const regexTile = new RegExp(title, 'i')
-  const regexCaptch = new RegExp(captcha, 'i')
+  // const regexCaptch = new RegExp(captcha, 'i')
+  const query = {
+    title: regexTile,
+  }
+  if (captcha_id) {
+    query.captcha_id = ObjectId(captcha_id)
+  }
   const data = await postDB.aggregate([
     {
-      $match: { title: regexTile },
+      $match: query,
     },
     {
       $lookup: { from: 'captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },

@@ -44,11 +44,32 @@
       <side-main>
         <template #main>
           <v-card flat border>
-            <v-card-title>
+            <!-- <v-card-title>
+              <v-select
+                density="compact"
+                clearable
+                label="Select"
+                :items="['最新']"
+                variant="outlined"
+              ></v-select>
+            </v-card-title> -->
+            <v-card-text>
+              <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+                <div style="flex: 1">
+                  分类标签：
+                  <v-chip-group>
+                    <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab" @click="handlerChip(tab)"> {{ tab.name }} </v-chip>
+                  </v-chip-group>
+                </div>
+                <div style="flex: 1">
+                  <search></search>
+                </div>
+              </div>
+            </v-card-text>
+
+            <!-- <v-card-title>
               <v-tabs v-model="tab">
                 <v-tab value="one">标签</v-tab>
-                <v-spacer></v-spacer>
-                <search></search>
               </v-tabs>
             </v-card-title>
 
@@ -58,7 +79,7 @@
                   <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.name }} </v-chip>
                 </v-tabs-window-item>
               </v-tabs-window>
-            </v-card-text>
+            </v-card-text> -->
           </v-card>
           <v-sheet class="pa-1" style="margin-top: 10px" min-height="85vh" rounded="lg" border color="white" flat>
             <div v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
@@ -102,7 +123,12 @@
           </v-sheet>
         </template>
         <template #side>
-          <v-sheet class="pa-2" rounded="lg" color="white" border>
+          <v-sheet border rounded="lg" class="pa-2">
+            <v-btn color="#f5f5f5" variant="flat" block> 添 加 话 题 </v-btn>
+            <br />
+            <v-btn color="#f5f5f5" variant="flat" block> 发 布 文 章 </v-btn>
+          </v-sheet>
+          <v-sheet style="margin-top: 10px" class="pa-2" rounded="lg" color="white" border>
             <v-list-subheader> 最新文章 </v-list-subheader>
             <v-divider></v-divider>
             <v-list-item v-for="(item, index) in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
@@ -144,12 +170,21 @@ const data = reactive({
   // announcement: '',
 })
 
+function handlerChip(val) {
+  query({ captcha_id: val._id })
+}
 function formartTime(val) {
   return moment(val).format('YYYY-MM-DD HH:mm')
 }
 
 function onDetal(obj) {
   router.push('post/' + obj._id)
+}
+
+function query(params) {
+  getArticleList(params).then((res) => {
+    data.data = res.data
+  })
 }
 watch(
   () => state.num,
@@ -158,9 +193,7 @@ watch(
   }
 )
 onBeforeMount(() => {
-  getArticleList().then((res) => {
-    data.data = res.data
-  })
+  query()
   getNewPost().then((res) => {
     newPost.value = res.data
   })

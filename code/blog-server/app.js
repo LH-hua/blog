@@ -25,7 +25,8 @@ app.use(cors())
 
 app.post('/api/post/*', authenticateToken)
 app.post('/api/pastBooks/*', authenticateToken)
-// app.get('/api/user/info', authenticateToken)
+app.post('/api/demand/*', authenticateToken)
+app.get('/api/user/info', authenticateToken)
 
 require('./app/mongodb/conect')
 createRedisClient()

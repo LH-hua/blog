@@ -97,7 +97,7 @@ function handlerSend(){
         messages.value = '需要登录后才能描述你的需求哦'
         return
     }
-    post('/api/demand/create',{u_id:'66e675b4b7366d27c5a61292',text:input.value}).then(res => {
+    post('/api/demand/create',{text:input.value}).then(res => {
         if(res.data.status == 200){
             query()
             input.value = ''

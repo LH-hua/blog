@@ -229,8 +229,9 @@ router.get('/info', async (req, res) => {
       },
     },
   ])
+  console.log(data)
   res.send({
-    data,
+    data: data[0],
   })
 })
 /**

@@ -1,36 +1,49 @@
 <template>
   <div class="containner">
-    <v-container>
-      <div class="banner">
-        <v-sheet :height="100" rounded>
-          <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between">
-            <div>
-              <search></search>
+    <side-main>
+      <template #main>
+        <div class="banner">
+          <v-sheet :height="100" rounded>
+            <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between">
+              <div>
+                <search></search>
+              </div>
+              <div>
+                <v-btn-toggle divided>
+                  <v-btn>总结篇</v-btn>
+                  <v-btn>那些年</v-btn>
+                  <v-btn>美好回忆</v-btn>
+                  <v-btn>遗憾</v-btn>
+                </v-btn-toggle>
+              </div>
             </div>
-            <div>
-              <v-btn-toggle divided>
-                <v-btn>总结篇</v-btn>
-                <v-btn>那些年</v-btn>
-                <v-btn>美好回忆</v-btn>
-                <v-btn>遗憾</v-btn>
-              </v-btn-toggle>
-            </div>
-          </div>
-        </v-sheet>
-      </div>
-      <div class="content">
-        <div v-for="item in data" :key="item" class="box">
-          <div class="title">{{ item.title }}</div>
-          <div class="subtitle">
-            <v-avatar size="25">
-              <v-img :src="item.auther.avatar"></v-img>
-            </v-avatar>
-            {{ dateFormat(item.date) }}
-          </div>
-          <div class="text">{{ item.text }}</div>
+          </v-sheet>
         </div>
-      </div>
-    </v-container>
+        <div class="content">
+          <div v-for="item in data" :key="item" class="box">
+            <div class="title">{{ item.title }}</div>
+            <div class="subtitle">
+              <v-avatar size="25">
+                <v-img :src="item.auther.avatar"></v-img>
+              </v-avatar>
+              <span>{{ item.auther.username }}</span>
+              ·
+              {{ dateFormat(item.date) }}
+            </div>
+            <div class="text">{{ item.text }}</div>
+          </div>
+        </div>
+      </template>
+      <template #side>
+        <v-sheet border rounded="lg" class="pa-2">
+          <v-btn color="#f5f5f5" variant="flat" block> 添 加 话 题 </v-btn>
+          <br />
+          <v-btn color="#f5f5f5" variant="flat" block> 发 布 文 章 </v-btn>
+        </v-sheet>
+        <v-sheet style="margin-top: 10px" class="pa-2" rounded="lg" color="white" border>
+        </v-sheet>
+      </template>
+    </side-main>
   </div>
 </template>
 
@@ -90,7 +103,6 @@ onBeforeMount(() => {
       font-size: 14px;
     }
     .text {
-      height: 100px;
       font-size: 16px;
       display: -webkit-box; /* 使用弹性盒子布局 */
       -webkit-line-clamp: 3; /* 最多显示三行 */

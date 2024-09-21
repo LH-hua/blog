@@ -17,7 +17,7 @@ const routes = [
       //   },
       // },
       {
-        path: 'post',
+        path: '',
         name: '技术社区',
         component: () => import('@/views/article/list.vue'),
         meta: {
