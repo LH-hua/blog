@@ -15,7 +15,7 @@
             </v-btn>
           </v-toolbar>
           <v-card-title>
-            {{ item.captcha }}
+            {{ item.name }}
           </v-card-title>
           <v-card-subtitle>{{ item.time }}</v-card-subtitle>
           <v-card-text>{{ item.text }}</v-card-text>

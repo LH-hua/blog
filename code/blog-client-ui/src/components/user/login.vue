@@ -32,7 +32,6 @@
           </v-card-actions>
         </v-card>
       </v-menu>
-      <v-btn variant="text" color="blue" @click="handlerPublish"> 发布 </v-btn>
     </div>
     <div v-else>
       <v-btn color="primary" text="注 册" variant="text" @click="regsiter">登 录 | 注 册</v-btn>
@@ -67,13 +66,11 @@ const data = reactive({
 const quit = () => {
   user.loginOut()
 }
-const handlerPublish = () => {
-  router.push('/publish')
-}
 const regsiter = () => {
   router.push('/user/login')
 }
 const handlerUserSpace = () => {
+  console.log(user.user)
   router.push(`/userSpace/${user.user._id}`)
 
 }

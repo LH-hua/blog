@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
 
 const captchaSchema = new mongoose.Schema({
-  captcha: {
+  name: {
     type: String,
     default: '',
   },
@@ -39,5 +39,5 @@ const postSchema = new mongoose.Schema({
 })
 module.exports = {
   postDB: mongoose.model('posts', postSchema),
-  captchaDB: mongoose.model('captcha', captchaSchema),
+  captchaDB: mongoose.model('posts_captcha', captchaSchema),
 }

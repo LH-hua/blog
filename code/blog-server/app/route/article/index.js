@@ -279,7 +279,7 @@ router.post('/create-captcha', async (req, res, next) => {
   const { text, captcha, _id } = req.body
   try {
     if (!_id) {
-      const newCaptcha = await captchaDB.create({ text, captcha })
+      const newCaptcha = await captchaDB.create({ text, name: captcha })
       sendData(null, newCaptcha, res)
     }
     if (!captcha) {

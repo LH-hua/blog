@@ -1,3 +1,4 @@
+import infoPage from '@/views/user/userInfo.vue'
 const routes = [
   // {
   //   path: '/',
@@ -8,16 +9,35 @@ const routes = [
     name: 'index',
     component: () => import('@/views/home.vue'),
     children: [
-      // {
-      //   path: '',
-      //   name: '首页',
-      //   component: () => import('@/views/index.vue'),
-      //   meta: {
-      //     title: '首页',
-      //   },
-      // },
       {
-        path: '',
+        path: '/',
+        component: () => import('@/views/post/index.vue'),
+        children: [
+          {
+            path: '/',
+            component: () => import('@/views/post/list.vue'),
+          },
+          {
+            path: '/categories/:id',
+            name: 'categories',
+            component: () => import('@/views/post/list.vue'),
+          },
+        ],
+      },
+      {
+        path: '/posts/:id',
+        component: () => import('@/views/post/detail.vue'),
+      },
+      {
+        path: '/posts/new',
+        component: () => import('@/views/post/new.vue'),
+      },
+      {
+        path: '/categories/new',
+        component: () => import('@/views/post/categories-new.vue'),
+      },
+      {
+        path: '/post',
         name: '技术社区',
         component: () => import('@/views/article/list.vue'),
         meta: {
@@ -85,8 +105,23 @@ const routes = [
   },
   {
     path: '/user/:id',
-    name: 'user',
-    component: () => import('@/views/user/userInfo.vue'),
+    component: infoPage,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/user/info.vue'),
+      },
+      {
+        path: 'info',
+        name: 'info',
+        component: () => import('@/views/user/info.vue'),
+      },
+      {
+        path: 'dynamic',
+        name: 'dynamic',
+        component: () => import('@/views/user/dynamic.vue'),
+      },
+    ],
   },
   {
     path: '/user/login',

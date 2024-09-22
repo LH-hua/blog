@@ -5,8 +5,9 @@
       style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
       @click="handlerToHome"
     >
-      昔日
+      昔日 
     </div>
+    回忆不曾丢失，只是存在这里
     <v-spacer></v-spacer>
     <ul class="navigation">
       <li v-for="item in store.menu" :key="item.url">
@@ -44,16 +45,16 @@ const store = reactive({
     //   tag: false,
     //   children: [],
     // },
-    {
-      id: '1',
-      pid: '0',
-      icon: 'mdi-card-text',
-      name: '技术',
-      url: '/',
-      thirdParty: false,
-      tag: false,
-      children: [],
-    },
+    // {
+    //   id: '1',
+    //   pid: '0',
+    //   icon: 'mdi-card-text',
+    //   name: '技术',
+    //   url: '/',
+    //   thirdParty: false,
+    //   tag: false,
+    //   children: [],
+    // },
     // {
     //   id: '1',
     //   pid: '0',
@@ -69,7 +70,7 @@ const store = reactive({
       pid: '0',
       icon: '',
       name: '往昔册',
-      url: 'pastBooks',
+      url: '/',
       thirdParty: false,
       tag: false,
       children: [],

@@ -1,53 +1,47 @@
 <template>
   <div class="container">
-    <div class="top">
-      <v-container style="height: 100%; display: flex; align-items: end">
-        <div class="user-info">
-          <v-avatar size="x-large" class="user-avatar">
-            <v-img :alt="user.user.username" :src="user.user.avatar"></v-img>
-            <span class="up-avatar">
-              <input type="file" id="file-input" @change="handlerChanger" />
-              <label for="file-input" class="file-label">
-                <v-icon icon="mdi-cloud-upload-outline"></v-icon>
-              </label>
-            </span>
-          </v-avatar>
-          <div>
-            <div class="font-weight-bold">{{ user.user.username }}</div>
-            <div class="text">{{ user.user.text || '这个人有点懒，什么都没写！' }}</div>
-            <div style="font-size: 10px;">uid： {{ user.user._id }}</div>
-          </div>
-        </div>
-      </v-container>
-    </div>
     <v-container>
-      <v-card flat>
+      <div class="top">
+        <v-div style="height: 100%; display: flex; align-items: end">
+          <div class="user-info">
+            <v-avatar size="x-large" class="user-avatar">
+              <v-img :alt="user.user.username" :src="user.user.avatar"></v-img>
+              <span class="up-avatar">
+                <input type="file" id="file-input" @change="handlerChanger" />
+                <label for="file-input" class="file-label">
+                  <v-icon icon="mdi-cloud-upload-outline"></v-icon>
+                </label>
+              </span>
+            </v-avatar>
+            <div>
+              <div class="font-weight-bold">{{ user.user.username }}</div>
+              <div class="text">{{ user.user.text || '这个人有点懒，什么都没写！' }}</div>
+              <div style="font-size: 10px">uid： {{ user.user._id }}</div>
+            </div>
+          </div>
+        </v-div>
+      </div>
+    </v-container>
 
-        <div class="d-flex flex-row">
-          <v-tabs v-model="tab" color="primary" direction="vertical" slider-color="#eeeeee">
-            <v-tab prepend-icon="mdi-account" text="头像" value="option-1"></v-tab>
-            <v-tab prepend-icon="mdi-account" text="昵称" value="option-2"></v-tab>
-            <v-tab prepend-icon="mdi-account" text="签名" value="option-3"></v-tab>
-            <v-tab prepend-icon="mdi-account" text="邮箱" value="option-4"></v-tab>
-            <v-tab prepend-icon="mdi-account" text="密码" value="option-5"></v-tab>
-          </v-tabs>
-
-          <v-tabs-window v-model="tab" style="width: 100%">
-            <v-tabs-window-item value="option-1">
-              <v-card flat>
-                <v-card-text>
-                  <v-text-field v-model="userFrom.username" density="compact" label="昵称" variant="outlined"></v-text-field>
-                  <v-text-field v-model="userFrom.email" density="compact" label="邮箱" variant="outlined"></v-text-field>
-                  <v-textarea v-model="userFrom.text" label="签名" variant="outlined"></v-textarea>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn variant="tonal"> 保 存 </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-tabs-window-item>
-          </v-tabs-window>
-        </div>
-      </v-card>
+    <v-container>
+      <side-main>
+        <template #main>
+          <v-btn-toggle v-model="toggle">
+            <v-btn prepend-icon="mdi-book-information-variant" value="info">个人资料</v-btn>
+            <v-btn prepend-icon="mdi-book-edit" value="editInfo">资料编辑</v-btn>
+          </v-btn-toggle>
+          <v-sheet class="pa-5" v-if="toggle == 'editInfo'" flat>
+            <div>
+              <v-text-field v-model="userFrom.username" density="compact" label="昵称" variant="outlined"></v-text-field>
+              <v-text-field v-model="userFrom.email" density="compact" label="邮箱" variant="outlined"></v-text-field>
+              <v-textarea v-model="userFrom.text" label="签名" variant="outlined"></v-textarea>
+            </div>
+          </v-sheet>
+          <v-sheet class="pa-5" v-if="toggle == 'info'" flat>
+          </v-sheet>
+        </template>
+        <template #side></template>
+      </side-main>
     </v-container>
   </div>
 </template>
@@ -57,13 +51,17 @@ import { ref } from 'vue'
 import { userInfo } from '../../store/userStore'
 
 const user = userInfo()
-const tab = ref('option-1')
+const toggle = ref('info')
 const userFrom = ref({
   ...user.user,
 })
 
 const handlerChanger = (file) => {
-    const img = file.target.files[0]
+  const img = file.target.files[0]
+}
+
+const handlerTo = (val) => {
+
 }
 </script>
 
@@ -76,6 +74,8 @@ const handlerChanger = (file) => {
   background-size: cover;
   color: white;
   .user-info {
+    width: 100%;
+    padding: 10px;
     position: relative;
     display: flex;
     gap: 10px;
@@ -89,7 +89,7 @@ const handlerChanger = (file) => {
   .up-avatar {
     display: none;
   }
-  .file-label{
+  .file-label {
     display: block;
     width: 54px;
     height: 54px;

@@ -44,15 +44,6 @@
       <side-main>
         <template #main>
           <v-card flat border>
-            <!-- <v-card-title>
-              <v-select
-                density="compact"
-                clearable
-                label="Select"
-                :items="['最新']"
-                variant="outlined"
-              ></v-select>
-            </v-card-title> -->
             <v-card-text>
               <div style="width: 100%; display: flex; justify-content: center; align-items: center">
                 <div style="flex: 1">
@@ -66,22 +57,8 @@
                 </div>
               </div>
             </v-card-text>
-
-            <!-- <v-card-title>
-              <v-tabs v-model="tab">
-                <v-tab value="one">标签</v-tab>
-              </v-tabs>
-            </v-card-title>
-
-            <v-card-text>
-              <v-tabs-window v-model="tab">
-                <v-tabs-window-item value="one">
-                  <v-chip class="ma-2" label v-for="tab in data.captcha" :key="tab"> {{ tab.name }} </v-chip>
-                </v-tabs-window-item>
-              </v-tabs-window>
-            </v-card-text> -->
           </v-card>
-          <v-sheet class="pa-1" style="margin-top: 10px" min-height="85vh" rounded="lg" border color="white" flat>
+          <v-sheet class="pa-5" style="margin-top: 10px" min-height="85vh" rounded="lg" border color="white" flat>
             <div v-for="item in data.data" :key="item._id" class="ma-2 d-flex flex-no-wrap align-center justify-space-between" flat>
               <div style="flex: 6">
                 <v-card flat>
@@ -123,12 +100,12 @@
           </v-sheet>
         </template>
         <template #side>
-          <v-sheet border rounded="lg" class="pa-2">
+          <v-sheet border rounded="lg" class="pa-5">
             <v-btn color="#f5f5f5" variant="flat" block> 添 加 话 题 </v-btn>
             <br />
             <v-btn color="#f5f5f5" variant="flat" block> 发 布 文 章 </v-btn>
           </v-sheet>
-          <v-sheet style="margin-top: 10px" class="pa-2" rounded="lg" color="white" border>
+          <v-sheet style="margin-top: 10px" class="pa-5" rounded="lg" color="white" border>
             <v-list-subheader> 最新文章 </v-list-subheader>
             <v-divider></v-divider>
             <v-list-item v-for="(item, index) in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">
