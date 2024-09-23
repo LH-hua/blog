@@ -7,8 +7,14 @@ const jianliSchema = new mongoose.Schema({
   listPath: [String],
   key: [String],
 })
-const jianli = mongoose.model('jinali', jianliSchema)
+const jianli_captcha_Schema = new mongoose.Schema({
+  text: String,
+  name: String,
+})
+const jianli = mongoose.model('jianli', jianliSchema)
+const jianli_captcha = mongoose.model('jianli_captcha', jianli_captcha_Schema)
 
 module.exports = {
   jianli_DB: jianli,
+  jianli_captcha_DB: jianli_captcha,
 }

@@ -125,7 +125,7 @@ const routes = [
   },
   {
     path: '/user/login',
-    name: 'regsiter',
+    name: 'login',
     component: () => import('@/views/user/regsiter.vue'),
   },
   {

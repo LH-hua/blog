@@ -1,0 +1,1 @@
+import{k as o,q as t,d as a,e as n}from"./index-1c70507a.js";const l={__name:"dynamic",setup(s){const e=o();return t(()=>{console.log(e.params)}),(r,c)=>(a(),n("div",null,"11"))}};export{l as default};

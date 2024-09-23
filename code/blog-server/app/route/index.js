@@ -9,6 +9,7 @@ const admin = require('./admin')
 const demand = require('./demand')
 const easyHouse = require('./easyHouse')
 const pastBooks = require('./pastBooks')
+const jianli = require('./jianli')
 
 module.exports = (app) => {
   app.use('/api/post', article)
@@ -22,4 +23,5 @@ module.exports = (app) => {
   app.use('/api/demand', demand)
   app.use('/api/easyHouse', easyHouse)
   app.use('/api/pastBooks', pastBooks)
+  app.use('/api/jianli', jianli)
 }

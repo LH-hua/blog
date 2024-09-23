@@ -1,0 +1,1 @@
+import{_ as e,o as t,d as o,e as n,h as s}from"./index-1c70507a.js";t(()=>{window.document.title="功能合集 | lhgo"});const _={},c=s("iframe",{class:"iframe",src:"http://8.134.217.110:4060"},null,-1),a=[c];function r(d,i,l,p,u,f){return o(),n("div",null,a)}const h=e(_,[["render",r]]);export{h as default};

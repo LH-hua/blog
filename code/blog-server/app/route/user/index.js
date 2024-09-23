@@ -12,7 +12,6 @@ const { User, userPost } = require('../../models/user')
 const createRedisClient = require('../../redis')
 
 const { generateToken, emailVerify, maskEmailLocalPart } = require('../../tool')
-const { jianli_DB } = require('../../models/jianli')
 
 const salt = bcrypt.genSaltSync(10)
 const redis = createRedisClient()
@@ -311,27 +310,5 @@ router.get('/verifyCode', async (req, res, next) => {
   const { code } = req.query
   const value = redis.get('')
 })
-/**
- * @swagger
- * /api/user/jianli:
- *  get:
- *      summary: 获取简历信息
- *      tags: [User]
- *      parameters:
- *        - name: email
- *          in: query
- *          description: 邮箱
- *      responses:
- *          200:
- *             description: 成功
- *
- */
-router.get('/jianli', async (req, res, next) => {
-  try {
-    const data = await jianli_DB.find()
-    res.json({
-      data,
-    })
-  } catch (error) {}
-})
+
 module.exports = router

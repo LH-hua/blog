@@ -73,3 +73,4 @@ export function formdata(url, data) {
       })
   })
 }
+export { request }
