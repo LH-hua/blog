@@ -1,1 +1,0 @@
-import{k as o,q as t,d as n,e as s}from"./index-1c70507a.js";const l={__name:"info",setup(a){const e=o();return t(()=>{console.log(e.params)}),(r,c)=>(n(),s("div",null," 22 "))}};export{l as default};

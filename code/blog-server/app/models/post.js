@@ -37,7 +37,21 @@ const postSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
+
+const post_comments_Schema = new mongoose.Schema({
+  u_id: ObjectId,
+  p_id: ObjectId,
+  content: {
+    type: String,
+    default: '',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+})
 module.exports = {
   postDB: mongoose.model('posts', postSchema),
   captchaDB: mongoose.model('posts_captcha', captchaSchema),
+  post_comment_DB: mongoose.model('post_comment', post_comments_Schema),
 }

@@ -1,1 +1,0 @@
-import{_ as n,c as t,d as o,e as c,g as a,w as r,j as s}from"./index-1c70507a.js";const _={};function l(d,i){const e=t("v-container");return o(),c("div",null,[a(e,null,{default:r(()=>[s(" 展示区 工程师正在开发...")]),_:1})])}const m=n(_,[["render",l]]);export{m as default};

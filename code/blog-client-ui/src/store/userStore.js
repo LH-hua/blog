@@ -42,7 +42,7 @@ export const userInfo = defineStore(
   },
   {
     persist: {
-      storage: sessionStorage,
+      storage: localStorage,
       paths: ['user'],
       key: 'piniaStore',
     },

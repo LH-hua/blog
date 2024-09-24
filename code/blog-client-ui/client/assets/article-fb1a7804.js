@@ -1,1 +1,0 @@
-import{B as a,I as e}from"./index-1c70507a.js";function i(t){return a("/api/post/list",t)}function p(t){return a("/api/post/detail",t)}function r(t){return e("/api/post/findOneAndUpdate",t)}function s(t){return a("/api/post/captcha",t)}function o(t){return a("/api/post/new",t)}export{o as a,i as b,p as c,r as d,s as g};

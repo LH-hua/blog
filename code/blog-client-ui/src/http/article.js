@@ -19,3 +19,10 @@ export function getCaptcha(data) {
 export function getNewPost(data) {
   return get('/api/post/new', data)
 }
+
+export function getComments(data) {
+  return get('/api/post/comments/query', data)
+}
+export function newComment(data) {
+  return post('/api/post/comments/new', data)
+}

@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
-const { postDB, captchaDB } = require('../../models/post')
+const { postDB, captchaDB, post_comment_DB } = require('../../models/post')
 const { User } = require('../../models/user')
 const moment = require('moment')
 const sendData = require('../../utils/dataFun')
@@ -315,4 +315,90 @@ router.get('/captcha', async (req, res, next) => {
     })
 })
 
+/**
+ * @swagger
+ * /api/post/comments/new:
+ *  post:
+ *      summary: 新增文章评论
+ *      tags: [Post]
+ *      requestBody:
+ *        description: "Update post object"
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                p_id:
+ *                  type: string
+ *                  description: '文章id'
+ *                content:
+ *                  type: string
+ *                  description: '评论内容'
+ *                u_id:
+ *                  type: string
+ *                  description: '用户id'
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.post('/comments/new', async (req, res, next) => {
+  try {
+    const { u_id, p_id, content } = req.body
+    const data = await post_comment_DB.create({ u_id: ObjectId(u_id), p_id: ObjectId(p_id), content: content })
+    res.send({ status: 200, msg: 'ok', data })
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ * @swagger
+ * /api/post/comments/query:
+ *  get:
+ *      summary: 文章评论查询
+ *      tags: [Post]
+ *      parameters:
+ *          - name: p_id
+ *            in: query
+ *            description: '文章id'
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/comments/query', async (req, res, next) => {
+  try {
+    const { p_id } = req.query
+
+    const data = await post_comment_DB.aggregate([
+      {
+        $match: { p_id: ObjectId(p_id) },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'u_id',
+          foreignField: '_id',
+          as: 'auther',
+        },
+      },
+      {
+        $unwind: '$auther',
+      },
+      {
+        $project: {
+          'auther.password': 0,
+          'auther.admin': 0,
+          'auther.phone': 0,
+          'auther.email': 0,
+        },
+      },
+    ])
+    res.send({ data })
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = router

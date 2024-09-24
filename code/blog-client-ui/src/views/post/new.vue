@@ -101,7 +101,7 @@ const initEditor = () => {
   editor = new Editor({
     el: document.querySelector('#editor'),
     height: '50vh',
-    initialEditType: 'markdown',
+    initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
     hooks: {
       addImageBlobHook: (blob, callback) => {
