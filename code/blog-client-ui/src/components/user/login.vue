@@ -22,13 +22,13 @@
           <v-card-text>
             <v-list>
               <v-list-item>
-                <v-list-item-title> <router-link :to="'/user/' + user.user._id">个人信息</router-link></v-list-item-title>
+                <v-list-item> <router-link :to="'/user/' + user.user._id" Target="_blank"><v-icon icon="mdi-account-outline"></v-icon>个人中心</router-link></v-list-item>
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
           </v-card-text>
           <v-card-actions>
-            <v-btn block @click="quit">推出登录</v-btn>
+            <v-btn block @click="quit" prepend-icon="mdi-location-exit">推出登录</v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>

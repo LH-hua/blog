@@ -58,6 +58,7 @@ router.get('/list', async (req, res, next) => {
   // const regexCaptch = new RegExp(captcha, 'i')
   const query = {
     title: regexTile,
+    publicShow: true,
   }
   if (captcha_id) {
     query.captcha_id = ObjectId(captcha_id)
@@ -67,7 +68,10 @@ router.get('/list', async (req, res, next) => {
       $match: query,
     },
     {
-      $lookup: { from: 'captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },
+      $lookup: { from: 'posts_captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },
+    },
+    {
+      $unwind: '$captchas_info',
     },
     {
       $lookup: { from: 'users', localField: 'u_id', foreignField: '_id', as: 'auther' },
@@ -115,6 +119,7 @@ router.get('/detail', async (req, res, next) => {
     //   data: result,
     //   status: 200,
     // })
+    await postDB.update({ _id: ObjectId(_id) }, { $inc: { readcount: 1 } }, { upsert: true, new: true })
     const result = await postDB.aggregate([
       {
         $match: { _id: ObjectId(_id) },
@@ -162,8 +167,27 @@ router.get('/detail', async (req, res, next) => {
  */
 
 router.get('/new', async (req, res, next) => {
-  const data = await postDB.find({}, { body: 0, captchas: 0, captcha: 0, descr: 0 }).sort({ date: -1 }).limit(10)
-  sendData('', data, res)
+  try {
+    const data = await postDB.aggregate([
+      {
+        $match: {
+          publicShow: true,
+        },
+      },
+      {
+        $lookup: { from: 'posts_captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },
+      },
+      {
+        $sort: { date: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ])
+    sendData('', data, res)
+  } catch (error) {
+    next(error)
+  }
 })
 /**
  * @swagger
@@ -199,25 +223,35 @@ router.get('/new', async (req, res, next) => {
  *
  */
 router.post('/findOneAndUpdate', async (req, res, next) => {
-  const { u_id, title, body, _id, cover, captcha_id, descr } = req.body
-  if (!_id) {
-    postDB.create({ u_id: ObjectId(u_id), title: title, body: body, cover, captcha_id, descr }, (err, data) => {
-      sendData(err, data, res)
-    })
-  } else {
-    // const data = await captchaDB.find({ captcha: { $in: captcha } })
-    // const captchas = data.map((item) => item._id)
-    const captcha_id_arr = captcha_id.map((item) => ObjectId(item))
-    console.log(req.body)
-    postDB
-      .findOneAndUpdate(
-        { _id: ObjectId(_id) },
-        { u_id: ObjectId(u_id), title: title, body: body, cover, descr, captcha_id: captcha_id_arr },
-        { upsert: true, new: true }
-      )
-      .exec((err, data) => {
+  try {
+    const { u_id, title, body, _id, cover, captcha_id, descr, admin, publicShow } = req.body
+    if (admin) {
+      // const captcha_id_arr = captcha_id.map((item) => ObjectId(item))
+      postDB
+        .findOneAndUpdate({ _id: ObjectId(_id) }, { publicShow: publicShow, title: title, body: body, cover, descr }, { upsert: true, new: true })
+        .exec((err, data) => {
+          sendData(err, data, res)
+        })
+      return
+    }
+    if (!_id) {
+      postDB.create({ u_id: ObjectId(u_id), title: title, body: body, cover, captcha_id, descr }, (err, data) => {
         sendData(err, data, res)
       })
+    } else {
+      const captcha_id_arr = captcha_id.map((item) => ObjectId(item))
+      postDB
+        .findOneAndUpdate(
+          { _id: ObjectId(_id) },
+          { u_id: ObjectId(u_id), publicShow, title: title, body: body, cover, descr, captcha_id: captcha_id_arr },
+          { upsert: true, new: true }
+        )
+        .exec((err, data) => {
+          sendData(err, data, res)
+        })
+    }
+  } catch (error) {
+    next(error)
   }
 })
 /**

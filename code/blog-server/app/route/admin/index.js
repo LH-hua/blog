@@ -44,7 +44,7 @@ router.post('/login', async (req, res, next) => {
   try {
     const flag = await bcrypt.compare(password, user.password)
     if (flag) {
-      const token = generateToken({ id: user._id })
+      const token = generateToken({ id: user._id, admin: true })
       res.json({ code: 200, token: token, msg: '登录成功' })
     } else {
       res.json({

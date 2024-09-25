@@ -19,6 +19,9 @@ const authenticateToken = (req, res, next) => {
       })
       return
     }
+    if (result.admin) {
+      req.body.admin = result.admin
+    }
     req.body.u_id = result.id
     req.query.u_id = result.id
     next()

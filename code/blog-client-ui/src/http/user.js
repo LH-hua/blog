@@ -5,3 +5,6 @@ export function useLogin(data) {
 export function getUserInfo(data) {
   return get('/api/user/info', data)
 }
+export function serInfoUpdate(data) {
+  return post('/api/user/update', data)
+}

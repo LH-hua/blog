@@ -2,13 +2,23 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import sitemap from 'vite-plugin-sitemap'
+// import Pages from 'vite-plugin-pages'
+// import generateSitemap from 'vite-plugin-pages-sitemap'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    outDir: 'client', // 设置打包输出的目录为 dist
-  },
-  plugins: [vue(), vueDevTools()],
+  // build: {
+  //   outDir: 'client', // 设置打包输出的目录为 dist
+  // },
+  plugins: [
+    vue(),
+    vueDevTools(),
+    sitemap(),
+    // Pages({
+    //   onRoutesGenerated: (routes) => generateSitemap({ routes }),
+    // }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

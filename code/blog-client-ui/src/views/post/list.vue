@@ -7,9 +7,7 @@
             {{ item.title }}
           </a></v-list-item-title
         >
-        <v-list-item-subtitle
-          ><span>{{ item.auther.username }}</span> · {{ dateFormat(item.date) }}</v-list-item-subtitle
-        >
+        <v-list-item-subtitle><span>{{ item.auther.username }}</span> · <span>{{ dateFormat(item.date) }}</span> · <span>{{ item.readcount || 0 }} 阅读量</span></v-list-item-subtitle>
         <br />
         <v-divider></v-divider>
         <template v-slot:prepend>
@@ -52,7 +50,7 @@ watch(
   { immediate: true, deep: true }
 )
 onBeforeMount(() => {
-  query()
+  query({ captcha_id: route.params.id })
   getCaptcha().then((res) => {
     data.captcha = res.data
   })

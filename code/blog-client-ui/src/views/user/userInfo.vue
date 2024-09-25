@@ -6,12 +6,6 @@
           <div class="user-info">
             <v-avatar size="x-large" class="user-avatar">
               <v-img :alt="user.user.username" :src="user.user.avatar"></v-img>
-              <span class="up-avatar">
-                <input type="file" id="file-input" @change="handlerChanger" />
-                <label for="file-input" class="file-label">
-                  <v-icon icon="mdi-cloud-upload-outline"></v-icon>
-                </label>
-              </span>
             </v-avatar>
             <div>
               <div class="font-weight-bold">{{ user.user.username }}</div>
@@ -24,16 +18,23 @@
     </v-container>
     <side-main>
       <template #main>
-        <v-sheet class="pa-5">
-          <v-btn-toggle rounded="0">
-            <v-btn prepend-icon="mdi-home" @click="handlerTo('info')">主 页</v-btn>
-            <v-btn prepend-icon="mdi-math-norm-box" @click="handlerTo('dynamic')">动 态</v-btn>
-          </v-btn-toggle>
-          <router-view></router-view>
+        <v-sheet class="pa-5" style="display: flex; gap: 10px">
+          <v-list style="flex: 1">
+            <v-list-subheader>个人中心</v-list-subheader>
+            <v-list-item @click="handlerTo('home')"><v-icon icon="mdi-home"></v-icon> 主 页</v-list-item>
+            <v-list-item @click="handlerTo('dynamic')"><v-icon icon="mdi-microsoft-dynamics-365"></v-icon> 动 态</v-list-item>
+            <v-list-item @click="handlerTo('info')"> <v-icon icon="mdi-account"></v-icon> 我的信息</v-list-item>
+            <v-list-item @click="handlerTo('account-circle')"> <v-icon icon="mdi-account-circle"></v-icon> 我的头像</v-list-item>
+            <v-list-item @click="handlerTo('email')"> <v-icon icon="mdi-email"></v-icon> 我的邮箱</v-list-item>
+          </v-list>
+          <div style="flex: 7">
+            <router-view></router-view>
+          </div>
         </v-sheet>
       </template>
       <template #side>
-        <v-sheet class="pa-5">
+        <publish></publish>
+        <v-sheet style="margin-top: 10px;" class="pa-5">
           <div style="display: flex; width: 100%; justify-content: space-around">
             <div>文章：{{}}</div>
             <div>关注：{{}}</div>
@@ -49,6 +50,8 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { userInfo } from '../../store/userStore'
 
+import publish from '../../components/publish.vue'
+
 const router = useRouter()
 const route = useRoute()
 const user = userInfo()
@@ -56,10 +59,6 @@ const tab = ref('option-1')
 const userFrom = ref({
   ...user.user,
 })
-
-const handlerChanger = (file) => {
-  const img = file.target.files[0]
-}
 
 const handlerTo = async (val) => {
   await router.push({

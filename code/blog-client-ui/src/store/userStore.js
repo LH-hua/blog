@@ -32,13 +32,22 @@ export const userInfo = defineStore(
         user.value = res.data
       })
     }
+    const userInfoUpdate = (data) => {
+      post('/api/user/update', data).then((res) => {
+        user.value = res.data
+        return res
+      })
+    }
+    const userAvatarUpload = (data) => {
+      return post('/api/user/upload-avatar', data)
+    }
     const emailVerify = (data) => {
       return get('/api/user/emailVerify', data)
     }
     const verifyInfo = (data) => {
       return get('/api/user/verifyInfo', data)
     }
-    return { user, isLogin, login, resgsiter, queryUserInfo, loginOut, emailVerify, verifyInfo }
+    return { user, isLogin, login, resgsiter, queryUserInfo, userInfoUpdate, userAvatarUpload, loginOut, emailVerify, verifyInfo }
   },
   {
     persist: {

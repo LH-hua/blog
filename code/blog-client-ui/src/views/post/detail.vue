@@ -19,6 +19,7 @@
                 <span style="color: rgba(0, 0, 0, 0.5); font-size: 12px">
                   {{ dateFormat(store.data.date) }}
                 </span>
+                · <span>{{ store.data.readcount || 0 }} 阅读量</span>
               </div>
             </v-card-subtitle>
             <v-card-text>
@@ -63,7 +64,7 @@
           </v-textarea>
         </v-sheet>
         <v-sheet style="margin-top: 10px" class="pa-5">
-          <list  v-if="comments.length > 0" lines="three" bg-color="#e5e5e5" density="compact">
+          <list v-if="comments.length > 0" lines="three" bg-color="#e5e5e5" density="compact">
             <v-list-item v-for="item in comments" :key="item._id">
               <template #prepend>
                 <v-avatar size="50">

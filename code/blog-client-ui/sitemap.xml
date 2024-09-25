@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <url>
+    <loc>http://lhgo.top/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/categories/66efb92468d07d416c44a20f</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/categories/66efba4a68d07d416c44a226</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/categories/66efba6368d07d416c44a22b</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/categories/66f2c782aa46b3501ad57ce8</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/demand</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://lhgo.top/easyHouse</loc>
+    <priority>1.00</priority>
+  </url>
+
+</urlset>

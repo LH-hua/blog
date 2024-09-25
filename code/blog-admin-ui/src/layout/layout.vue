@@ -12,7 +12,7 @@
       <slot name="header"></slot>
     </v-app-bar>
 
-    <v-main style="background-color: #f5f5f5">
+    <v-main style="background-color: #edf2f7">
       <v-container class="h-100">
         <slot name="main"></slot>
       </v-container>

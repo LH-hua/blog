@@ -26,6 +26,7 @@ app.use(cors())
 app.post('/api/post/*', authenticateToken)
 app.post('/api/pastBooks/*', authenticateToken)
 app.post('/api/demand/*', authenticateToken)
+// app.post('/api/user/*', authenticateToken)
 // app.get('/api/jianli/download', authenticateToken)
 app.get('/api/user/info', authenticateToken)
 

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet rounded="lg" class="pa-5">
+  <v-sheet class="pa-5">
     <!-- <v-btn color="#f5f5f5" variant="flat" block @click="categories"> 添 加 话 题 </v-btn>
     <br /> -->
     <v-btn color="#f5f5f5" variant="flat" block @click="publish" prepend-icon="mdi-clipboard-edit-outline"> 发 布 文 章 </v-btn>

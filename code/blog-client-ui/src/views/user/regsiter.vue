@@ -96,6 +96,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { userInfo } from '@/store/userStore'
+import { rules } from '../../utils/tool';
 const user = userInfo()
 const router = useRouter()
 
@@ -113,15 +114,6 @@ const regsiterForm = reactive({
   userpassword: '',
   email: '',
   code: '',
-})
-const rules = ref({
-  nameRequired: (value) => !!value || '用户名不能为空',
-  passwordRequired: (value) => !!value || '密码不能为空',
-  email: (value) => {
-    const pattern =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return pattern.test(value) || '邮箱不能为空'
-  },
 })
 
 const handlerForget = () => {

@@ -19,6 +19,10 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   u_id: ObjectId,
+  readcount: {
+    type: Number,
+    default: 0,
+  },
   cover: {
     type: String,
     default: '',
@@ -32,6 +36,10 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   captcha_id: [ObjectId],
+  publicShow: {
+    type: Boolean,
+    default: true,
+  },
   date: {
     type: Date,
     default: Date.now,

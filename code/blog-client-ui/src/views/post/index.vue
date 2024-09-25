@@ -2,7 +2,7 @@
   <div class="containner">
     <side-main>
       <template #main>
-        <v-sheet rounded="lg" class="pa-5">
+        <v-sheet class="pa-5">
           <div style="display: flex; align-items: center">
             话题：
             <v-chip-group>
@@ -12,13 +12,13 @@
             </v-chip-group>
           </div>
         </v-sheet>
-        <v-sheet style="margin-top: 10px" rounded="lg" class="pa-5">
+        <v-sheet style="margin-top: 10px" class="pa-5">
           <router-view></router-view>
         </v-sheet>
       </template>
       <template #side>
         <publish></publish>
-        <v-sheet style="margin-top: 10px" class="pa-5" rounded="lg" color="white">
+        <v-sheet style="margin-top: 10px" class="pa-5" color="white">
           <v-list-subheader> 最新文章 </v-list-subheader>
           <v-divider></v-divider>
           <v-list-item v-for="(item, index) in newPost" :key="item" @click="onDetal(item)" class="cursor-pointer">

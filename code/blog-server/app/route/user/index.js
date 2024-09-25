@@ -1,17 +1,15 @@
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const multiparty = require('multiparty')
 const { Router } = require('express')
 const { ObjectId } = require('mongodb')
 const svgCaptcha = require('svg-captcha')
-// const redis = require('redis')
+const fs = require('fs')
+const path = require('path')
 const router = Router()
-// const user = require('../controller/user')
-const { User, userPost } = require('../../models/user')
-// const { redis } = require('../../../app.js')
+const { User } = require('../../models/user')
 const createRedisClient = require('../../redis')
-
 const { generateToken, emailVerify, maskEmailLocalPart } = require('../../tool')
+const { avatarPath } = require('../../config')
 
 const salt = bcrypt.genSaltSync(10)
 const redis = createRedisClient()
@@ -220,7 +218,6 @@ router.get('/info', async (req, res) => {
     {
       $project: {
         password: 0,
-        email: 0,
         phone: 0,
         admin: 0,
         name: 0,
@@ -231,6 +228,57 @@ router.get('/info', async (req, res) => {
     data: data[0],
   })
 })
+/**
+ * @swagger
+ * /api/user/update:
+ *   post:
+ *     summary: 注册
+ *     description: 注册用户信息
+ *     tags: [User]
+ *     requestBody:
+ *       description: 创建用户对象
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              type: object
+ *              properties:
+ *                username:
+ *                  type: string
+ *                  description: '用户名'
+ *                text:
+ *                  type: string
+ *                  description: '签名'
+ *                email:
+ *                  type: string
+ *                  description: '邮箱'
+ *                avatar:
+ *                  type: string
+ *                  description: '头像'
+ *                sex:
+ *                  type: string
+ *                  description: '性别'
+ *     responses:
+ *       '200':
+ *         description: 成功
+ */
+
+router.post('/update', async (req, res, next) => {
+  try {
+    const { sex, username, text, avatar, email, u_id } = req.body
+    const existingUser = await User.findOne({ username })
+    const update = { sex, email, avatar, text }
+    if (existingUser && existingUser.username !== username) {
+      update.username = username
+    }
+    const data = await User.findOneAndUpdate({ _id: ObjectId(u_id) }, update, { upsert: true, new: true })
+
+    res.send({ data })
+  } catch (error) {
+    next(error)
+  }
+})
+
 /**
  * @swagger
  * /api/user/emailVerify:
@@ -309,6 +357,75 @@ router.get('/verifyInfo', async (req, res, next) => {
 router.get('/verifyCode', async (req, res, next) => {
   const { code } = req.query
   const value = redis.get('')
+})
+/**
+ * @swagger
+ * /api/user/upload-avatar:
+ *   post:
+ *     summary: 上传头像
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               avatar:
+ *                 type: string
+ *                 format: binary
+ *               id:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: 成功上传图片
+ */
+router.post('/upload-avatar', async (req, res, next) => {
+  try {
+    const form = new multiparty.Form()
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        return res.status(400).json({ message: '解析失败', error: err })
+      }
+      const userId = fields.id ? fields.id[0] : null // 取出第一个值
+      const avatarFile = files.avatar ? files.avatar[0] : null // 取出第一个文件
+
+      if (!userId || !avatarFile) {
+        return res.status(400).json({ message: '缺少用户 ID 或头像文件' })
+      }
+      const tempPath = avatarFile.path
+      const newFileName = `${userId}-${avatarFile.originalFilename}` // 新文件名
+      const savePath = path.join(avatarPath, newFileName) // 保存路径
+
+      // 确保目标目录存在
+      if (!fs.existsSync(avatarPath)) {
+        fs.mkdirSync(avatarPath, { recursive: true })
+      }
+      // 使用 copyFile 和 unlink 来替代 rename
+      fs.copyFile(tempPath, savePath, (copyErr) => {
+        if (copyErr) {
+          return res.status(500).json({ message: '文件保存失败', error: copyErr })
+        }
+
+        // 复制成功后，删除临时文件
+        fs.unlink(tempPath, async (unlinkErr) => {
+          if (unlinkErr) {
+            return res.status(500).json({ message: '临时文件删除失败', error: unlinkErr })
+          }
+          await User.findOneAndUpdate({ _id: ObjectId(userId) }, { avatar: `/avatar/${newFileName}` })
+          res.status(200).json({ message: '上传成功', url: `/avatar/${newFileName}`, avatarPath: savePath })
+        })
+      })
+      // fs.rename(tempPath, savePath, (renameErr) => {
+      //   if (renameErr) {
+      //     return res.status(500).json({ message: '文件保存失败', error: renameErr })
+      //   }
+      //   res.status(200).json({ message: '上传成功', userId, avatarPath: savePath })
+      // })
+    })
+  } catch (error) {
+    next(err)
+  }
 })
 
 module.exports = router

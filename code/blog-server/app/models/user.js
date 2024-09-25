@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  text: String,
   password: {
     type: String,
     unique: true,
@@ -25,6 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  sex: String,
   phone: {
     type: Number,
     default: '',
