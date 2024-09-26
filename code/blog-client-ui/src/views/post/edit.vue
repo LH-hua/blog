@@ -3,14 +3,14 @@
     <side-main>
       <template #main>
         <v-sheet class="pa-5">
-          <v-toolbar color="white" title="发起话题"></v-toolbar>
+          <v-toolbar color="white" title="话题修改"></v-toolbar>
           <v-card flat>
             <v-card-text>
               <v-row>
                 <v-col cols="1" align-self="center">选择话题</v-col>
                 <v-col cols="11">
-                  <v-chip-group>
-                    <v-chip class="ma-2" variant="text" label v-for="tab in captchas" :key="tab" @click="handlerCategorie(tab)">
+                  <v-chip-group v-model="form.captcha_id">
+                    <v-chip class="ma-2" variant="text" label v-for="tab in captchas" :key="tab" :value="tab._id" @click="handlerCategorie(tab)">
                       {{ tab.name }}
                     </v-chip>
                   </v-chip-group>
@@ -39,7 +39,6 @@
               <v-row>
                 <v-col cols="1"></v-col>
                 <v-col cols="11">
-                  <v-btn @click="save" variant="flat" color="#BDBDBD" text="保 存"></v-btn>
                   <v-btn @click="submit" variant="flat" color="#5865f2" text="提 交"></v-btn>
                 </v-col>
               </v-row>
@@ -68,7 +67,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import Editor from '@toast-ui/editor'
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
@@ -84,47 +83,34 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css'
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css'
 
-import { addArticle, getCaptcha } from '@/http/article'
+import { addArticle, getCaptcha, getArticleDetal } from '@/http/article'
 import { formdata } from '@/http/request'
 
 const router = useRouter()
+const route = useRoute()
 let editor
 const captchas = ref()
-let form = reactive({
+let form = ref({
   title: '',
   captcha_id: '',
   body: '',
 })
 const handlerCategorie = (val) => {
-  form.captcha_id = val._id
-}
-const save = () => {
-  const markdownText = editor.getMarkdown()
-  form.body = markdownText
-  const post = JSON.stringify(form)
-  localStorage.setItem('post', post)
+  form.value.captcha_id = val._id
 }
 const submit = async () => {
-  if (!form.title) {
+  if (!form.value.title) {
     return
   }
-  if (!form.captcha_id) {
+  if (!form.value.captcha_id) {
     return
   }
-  console.log(editor)
 
   const markdownText = editor.getMarkdown()
-  form.body = markdownText
-  console.log(form)
-
-  addArticle(form).then((res) => {
+  form.value.body = markdownText
+  addArticle(form.value).then((res) => {
     if (res.status == 200) {
-      router.push({
-        path: `/posts/${res.data.data._id}`,
-      })
-    }
-    if (localStorage.getItem('post')) {
-      localStorage.clear('post')
+      window.history.back()
     }
   })
 }
@@ -134,6 +120,7 @@ const initEditor = () => {
     height: '50vh',
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
+    initialValue: form.body,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
     hooks: {
       addImageBlobHook: (blob, callback) => {
@@ -148,15 +135,19 @@ const initEditor = () => {
 }
 
 onMounted(() => {
-  if (localStorage.getItem('post')) {
-    form = JSON.parse(localStorage.getItem('post'))
-  }
-  initEditor()
+  const postId = route.params.id
+  getArticleDetal({ _id: postId }).then((res) => {
+    form.value = res.data
+    editor.setMarkdown(res.data.body)
+    document.title = res.data.title
+  })
   getCaptcha().then((res) => {
     captchas.value = res.data
   })
+  initEditor()
 })
 </script>
+
 <style lang="scss" scoped>
 .containner {
   background: #edf2f7;

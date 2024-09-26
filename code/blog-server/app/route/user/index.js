@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require('path')
 const router = Router()
 const { User } = require('../../models/user')
+const { postDB } = require('../../models/post')
 const createRedisClient = require('../../redis')
 const { generateToken, emailVerify, maskEmailLocalPart } = require('../../tool')
 const { avatarPath } = require('../../config')
@@ -193,40 +194,46 @@ router.post('/upload-image', async (req, res, next) => {
  *
  */
 router.get('/info', async (req, res) => {
-  const { u_id } = req.query
-  // const data = await userPost.findByIdAndUpdate({ _id: ObjectId(u_id) }, { u_id: ObjectId(u_id) }, { upsert: true, new: true })
-  const data = await User.aggregate([
-    {
-      $match: { _id: ObjectId(u_id) },
-    },
-    {
-      $lookup: {
-        from: 'pastbooks',
-        localField: '_id',
-        foreignField: 'u_id',
-        as: 'pastbooks',
+  try {
+    const { u_id } = req.query
+    // const data = await userPost.findByIdAndUpdate({ _id: ObjectId(u_id) }, { u_id: ObjectId(u_id) }, { upsert: true, new: true })
+    const total = await postDB.countDocuments({ u_id: ObjectId(u_id) })
+
+    const data = await User.aggregate([
+      {
+        $match: { _id: ObjectId(u_id) },
       },
-    },
-    {
-      $lookup: {
-        from: 'demands',
-        localField: '_id',
-        foreignField: 'u_id',
-        as: 'demands',
+      // {
+      //   $lookup: {
+      //     from: 'posts',
+      //     localField: '_id',
+      //     foreignField: 'u_id',
+      //     as: 'pastbooks',
+      //   },
+      // },
+      // {
+      //   $lookup: {
+      //     from: 'demands',
+      //     localField: '_id',
+      //     foreignField: 'u_id',
+      //     as: 'demands',
+      //   },
+      // },
+      {
+        $project: {
+          password: 0,
+          phone: 0,
+          admin: 0,
+          name: 0,
+        },
       },
-    },
-    {
-      $project: {
-        password: 0,
-        phone: 0,
-        admin: 0,
-        name: 0,
-      },
-    },
-  ])
-  res.send({
-    data: data[0],
-  })
+    ])
+    res.send({
+      data: { ...data[0], postTotal: total },
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 /**
  * @swagger
@@ -265,13 +272,15 @@ router.get('/info', async (req, res) => {
 
 router.post('/update', async (req, res, next) => {
   try {
-    const { sex, username, text, avatar, email, u_id } = req.body
-    const existingUser = await User.findOne({ username })
+    const { sex, username, text, avatar, email, _id } = req.body
+    console.log(req.body)
+    const existingUser = await User.findOne({ username: username })
     const update = { sex, email, avatar, text }
-    if (existingUser && existingUser.username !== username) {
+    if (!existingUser) {
       update.username = username
     }
-    const data = await User.findOneAndUpdate({ _id: ObjectId(u_id) }, update, { upsert: true, new: true })
+    console.log(update)
+    const data = await User.findOneAndUpdate({ _id: ObjectId(_id) }, update, { upsert: true, new: true })
 
     res.send({ data })
   } catch (error) {

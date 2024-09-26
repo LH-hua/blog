@@ -6,7 +6,6 @@ const { User } = require('../../models/user')
 const moment = require('moment')
 const sendData = require('../../utils/dataFun')
 const { ObjectId } = require('mongodb')
-const {} = require('mongoose')
 
 // 65feac185b722ffab4dc8d5f
 /**
@@ -98,6 +97,59 @@ router.get('/list', async (req, res, next) => {
 })
 /**
  * @swagger
+ * /api/post/list/user:
+ *  get:
+ *      summary: 用户文章列表
+ *      tags: [Post]
+ *      parameters:
+ *        - name: u_id
+ *          in: query
+ *          description: 用户id
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/list/user', async (req, res, next) => {
+  try {
+    const { u_id } = req.query
+    if (!u_id) {
+      res.json({
+        msg: 'u_id不能为空',
+      })
+      return
+    }
+    // const data = await postDB.find({ u_id: ObjectId(u_id) })
+    const data = await postDB.aggregate([
+      {
+        $match: { u_id: ObjectId(u_id), publicShow: true },
+      },
+      {
+        $lookup: { from: 'posts_captchas', localField: 'captcha_id', foreignField: '_id', as: 'captchas_info' },
+      },
+      {
+        $unwind: '$captchas_info',
+      },
+      {
+        $project: {
+          captcha_id: 0,
+          body: 0,
+          publicShow: 0,
+        },
+      },
+      {
+        $sort: { date: -1 },
+      },
+    ])
+    res.json({
+      data,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+/**
+ * @swagger
  * /api/post/detail:
  *  get:
  *      summary: 文章详情
@@ -137,6 +189,7 @@ router.get('/detail', async (req, res, next) => {
       },
       {
         $project: {
+          publicShow: 0,
           'auther.password': 0,
           'auther.email': 0,
           'auther.phone': 0,
@@ -214,6 +267,9 @@ router.get('/new', async (req, res, next) => {
  *                id:
  *                  type: string
  *                  description: '文章id'
+ *                captcha_id:
+ *                  type: string
+ *                  description: '话题分类id'
  *                cover:
  *                  type: string
  *                  description: '封面图片'
@@ -243,7 +299,7 @@ router.post('/findOneAndUpdate', async (req, res, next) => {
       postDB
         .findOneAndUpdate(
           { _id: ObjectId(_id) },
-          { u_id: ObjectId(u_id), publicShow, title: title, body: body, cover, descr, captcha_id: captcha_id_arr },
+          { publicShow, title: title, body: body, cover, descr, captcha_id: captcha_id_arr },
           { upsert: true, new: true }
         )
         .exec((err, data) => {

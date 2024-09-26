@@ -26,3 +26,6 @@ export function getComments(data) {
 export function newComment(data) {
   return post('/api/post/comments/new', data)
 }
+export function postDel(data) {
+  return post('/api/post/delete', data)
+}

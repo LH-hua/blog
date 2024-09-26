@@ -3,7 +3,7 @@
     <side-main>
       <template #side>
         <div style="align-self: flex-start; position: sticky; top: 65px">
-          <v-sheet rounded="lg" class="pa-2" :elevation="1">
+          <v-sheet class="pa-2">
             <v-card flat>
               <v-card-title>
                 <div style="display: flex; gap: 10px; align-items: center">
@@ -25,7 +25,7 @@
             </v-card>
           </v-sheet>
           <br />
-          <v-sheet rounded="lg" class="pa-2" :elevation="1">
+          <v-sheet class="pa-2">
             <v-card flat>
               <v-card-title>目录</v-card-title>
               <v-card-text>
@@ -37,7 +37,7 @@
       </template>
 
       <template #main>
-        <v-sheet rounded="lg" :elevation="1">
+        <v-sheet>
           <v-card flat min-height="900px">
             <v-img :src="store.data.cover ? store.data.cover : '/image/err.jpg'" cover height="300" width="100%"></v-img>
 
@@ -78,12 +78,8 @@ import toc from 'markdown-it-toc-done-right'
 import hljs from 'highlight.js'
 // import "highlight.js/styles/github.css";
 import '@/assets/css/typo.css'
-
 import { getArticleDetal } from '@/http/article'
 import { getUserInfo } from '@/http/user'
-
-// import cardImage from '@/components/cardImage.vue'
-
 const store = reactive({
   data: {
     title: '',
@@ -155,10 +151,6 @@ onMounted(() => {
   // dom.style.color = 'black'
 })
 
-onUnmounted(() => {
-  // const dom = document.querySelector('.custom')
-  // dom.style.color = 'white'
-})
 </script>
 
 <style leng="less" scoped>

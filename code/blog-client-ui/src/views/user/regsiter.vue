@@ -94,9 +94,9 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 import { userInfo } from '@/store/userStore'
-import { rules } from '../../utils/tool';
+import { rules } from '../../utils/tool'
 const user = userInfo()
 const router = useRouter()
 
@@ -128,8 +128,8 @@ const handleLogin = async () => {
 
 const handlerRegsiter = async () => {
   const res = await user.resgsiter(regsiterForm)
-  if(res.data.status == 200){
-    window.history.back()
+  if (res.data.status == 200) {
+    change()
   }
 }
 const handlerEmail = async () => {
@@ -137,10 +137,11 @@ const handlerEmail = async () => {
     email.value.msg = res.msg
   })
 }
+function change() {
+  document.querySelector('.cont').classList.toggle('s--signup')
+}
 onMounted(() => {
-  document.querySelector('.img__btn').addEventListener('click', function () {
-    document.querySelector('.cont').classList.toggle('s--signup')
-  })
+  document.querySelector('.img__btn').addEventListener('click', change)
 })
 </script>
 

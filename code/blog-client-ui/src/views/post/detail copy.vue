@@ -23,8 +23,8 @@
               </div>
             </v-card-subtitle>
             <v-card-text>
-              <div>
-                <div id="viewer"></div>
+              <div class="typo">
+                <div v-html="store.data.body"></div>
               </div>
             </v-card-text>
           </v-card>
@@ -42,7 +42,6 @@
                   {{ dateFormat(store.data.date) }}
                 </span>
               </div>
-              <div></div>
               <div>
                 <v-btn flat variant="tonal" color="#fec939" @click="handlerContact">联系他</v-btn>
               </div>
@@ -101,21 +100,13 @@
 import { reactive, ref, onBeforeMount, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import moment from 'moment'
-import Editor from '@toast-ui/editor'
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
-
-import Prism from 'prismjs'
-import 'prismjs/themes/prism-dark.min.css'
-import 'prismjs/components/prism-csharp.min.js'
-import 'prismjs/components/prism-css.min.js'
-import 'prismjs/components/prism-typescript.min.js'
-import 'prismjs/components/prism-json.min.js'
-import 'prismjs/components/prism-javascript.min.js'
-import '@toast-ui/editor/dist/toastui-editor.css'
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css'
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css'
+import MarkdownIt from 'markdown-it'
+import anchor from 'markdown-it-anchor'
+import toc from 'markdown-it-toc-done-right'
+import hljs from 'highlight.js'
 
 import publish from '@/components/publish.vue'
+import '@/assets/css/typo.css'
 
 import { getArticleDetal, getComments, newComment } from '@/http/article'
 import { userInfo } from '../../store/userStore'
@@ -139,13 +130,26 @@ const dateFormat = (date) => {
   return moment(date).format('YYYY-MM-DD HH:mm')
 }
 function initMd() {
-  const viewer = Editor.factory({
-    el: document.querySelector('#viewer'),
-    viewer: true,
-    height: '500px',
-    initialValue: store.data.body,
-    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+  const left = document.querySelector('.table-of-contents')
+  md.value = new MarkdownIt({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre class="hljs"><code>' + hljs.highlight(lang, str, true).value + '</code></pre>'
+        } catch (__) {}
+      }
+
+      return '<pre class="hljs"><code>' + md.value.utils.escapeHtml(str) + '</code></pre>'
+    },
   })
+    .use(anchor, { permalink: true, permalinkBefore: true })
+    .use(toc, {
+      callback: function (html, ast) {
+        //把目录单独列出来
+        left.innerHTML = html
+        allADemo()
+      },
+    })
 }
 function allADemo() {
   const allA = document.querySelectorAll('.table-of-contents a')
@@ -195,9 +199,13 @@ function queryComments() {
 async function getData() {
   const postId = route.params.id
   getArticleDetal({ _id: postId }).then((res) => {
+    res.data.body = md.value.render(res.data.body)
     store.data = res.data
     document.title = res.data.title
-    initMd()
+    getUserInfo({ u_id: store.data.u_id }).then((res) => {
+      console.log(res)
+      store.data.auther.post_total = res.post_total
+    })
   })
 }
 // watch(
@@ -209,6 +217,7 @@ async function getData() {
 // )
 
 onMounted(() => {
+  initMd()
   getData()
   queryComments()
   // const dom = document.querySelector('.custom')

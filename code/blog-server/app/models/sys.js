@@ -21,6 +21,9 @@ const menuSchema = new mongoose.Schema({
   },
 })
 
+const aboutSchema = new mongoose.Schema({
+  text: String,
+})
 const sysSchema = new mongoose.Schema({
   announcement: {
     type: String,
@@ -30,4 +33,5 @@ const sysSchema = new mongoose.Schema({
 module.exports = {
   menuDb: mongoose.model('menu', menuSchema),
   sysDb: mongoose.model('sys', sysSchema),
+  about_DB: mongoose.model('about', aboutSchema),
 }

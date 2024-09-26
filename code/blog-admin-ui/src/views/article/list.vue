@@ -28,12 +28,6 @@
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
-      <!-- <template v-slot:item.captcha="item">
-        <v-chip v-for="i in item.item.captcha" :key="i">{{ i }}</v-chip>
-      </template>
-      <template v-slot:item.cover="item">
-        <v-img width="50px" height="50px" :src="item.item.cover"></v-img>
-      </template> -->
       <template v-slot:item.publicShow="item">
         <v-switch v-model="item.item.publicShow" color="success" @update:modelValue="(e) => handlerSwitch(e, item)" hide-details></v-switch>
       </template>
@@ -58,6 +52,7 @@ import l from '@/util'
 const table = reactive({
   headers: [
     { title: '文章标题', align: 'start', key: 'title' },
+    { title: '作者', align: 'start', key: 'auther.username' },
     { title: '阅读量', align: 'start', key: 'readcount' },
     { title: '话题', align: 'start', key: 'captchas_info.name' },
     { title: '审核发布', align: 'start', key: 'publicShow' },

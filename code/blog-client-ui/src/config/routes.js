@@ -46,8 +46,19 @@ const routes = [
         },
       },
       {
+        path: '/posts/edit/:id',
+        component: () => import('@/views/post/edit.vue'),
+        meta: {
+          title: '发起话题',
+        },
+      },
+      {
         path: '/categories/new',
         component: () => import('@/views/post/categories-new.vue'),
+      },
+      {
+        path: '/about',
+        component: () => import('@/views/about/index.vue'),
       },
       {
         path: 'pastBooks',
@@ -108,7 +119,12 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/views/user/info.vue'),
+        component: () => import('@/views/user/post.vue'),
+      },
+      {
+        path: 'post',
+        name: 'userpost',
+        component: () => import('@/views/user/post.vue'),
       },
       {
         path: 'info',
@@ -119,11 +135,6 @@ const routes = [
         path: 'dynamic',
         name: 'dynamic',
         component: () => import('@/views/user/dynamic.vue'),
-      },
-      {
-        path: 'home',
-        name: 'home',
-        component: () => import('@/views/user/home.vue'),
       },
       {
         path: 'account-circle',

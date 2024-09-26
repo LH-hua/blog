@@ -31,6 +31,10 @@ const routes = [
         path: 'menus',
         component: () => import('@/views/menus/index.vue'),
       },
+      {
+        path: 'about',
+        component: () => import('@/views/sys/about/index.vue'),
+      },
     ],
   },
   {

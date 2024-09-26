@@ -18,6 +18,7 @@
       </template>
       <template #side>
         <publish></publish>
+        <sys></sys>
         <v-sheet style="margin-top: 10px" class="pa-5" color="white">
           <v-list-subheader> 最新文章 </v-list-subheader>
           <v-divider></v-divider>
@@ -39,6 +40,7 @@ import { useRouter } from 'vue-router'
 import { getArticleList, getCaptcha, getNewPost } from '@/http/article'
 
 import publish from '@/components/publish.vue'
+import sys from '@/components/sys.vue'
 
 const router = useRouter()
 const newPost = ref()

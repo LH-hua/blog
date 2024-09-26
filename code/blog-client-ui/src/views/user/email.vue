@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-sheet>
-      <v-toolbar density="compact" title="我的邮箱"></v-toolbar>
+      <v-toolbar color="white" density="compact" title="我的邮箱"></v-toolbar>
+      <v-divider></v-divider>
+
       <div class="pa-5">
         <v-text-field density="compact" variant="outlined" disabled v-model="user.user.email">
           <template #prepend>

@@ -14,7 +14,7 @@
                 <v-img :src="user.user.avatar" :alt="user.user.username"></v-img>
               </v-avatar>
               <v-list lines="two">
-                <v-list-item :title="user.user.username" :subtitle="user.user.desc || '这人有点懒，什么也没写！'"></v-list-item>
+                <v-list-item :title="user.user.username" :subtitle="user.user.text || '这人有点懒，什么也没写！'"></v-list-item>
               </v-list>
             </div>
             <v-divider></v-divider>

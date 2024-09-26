@@ -18,14 +18,16 @@
     </v-container>
     <side-main>
       <template #main>
-        <v-sheet class="pa-5" style="display: flex; gap: 10px">
+        <v-sheet style="display: flex; gap: 10px">
           <v-list style="flex: 1">
             <v-list-subheader>个人中心</v-list-subheader>
-            <v-list-item @click="handlerTo('home')"><v-icon icon="mdi-home"></v-icon> 主 页</v-list-item>
-            <v-list-item @click="handlerTo('dynamic')"><v-icon icon="mdi-microsoft-dynamics-365"></v-icon> 动 态</v-list-item>
+            <v-divider></v-divider>
+            <v-list-item @click="handlerTo('userpost')"> <v-icon icon="mdi-post-outline"></v-icon> 我的话题</v-list-item>
             <v-list-item @click="handlerTo('info')"> <v-icon icon="mdi-account"></v-icon> 我的信息</v-list-item>
             <v-list-item @click="handlerTo('account-circle')"> <v-icon icon="mdi-account-circle"></v-icon> 我的头像</v-list-item>
             <v-list-item @click="handlerTo('email')"> <v-icon icon="mdi-email"></v-icon> 我的邮箱</v-list-item>
+            <!-- <v-list-item @click="handlerTo('home')"><v-icon icon="mdi-home"></v-icon> 主 页</v-list-item> -->
+            <!-- <v-list-item @click="handlerTo('dynamic')"><v-icon icon="mdi-microsoft-dynamics-365"></v-icon> 动 态</v-list-item> -->
           </v-list>
           <div style="flex: 7">
             <router-view></router-view>
@@ -34,10 +36,10 @@
       </template>
       <template #side>
         <publish></publish>
-        <v-sheet style="margin-top: 10px;" class="pa-5">
+        <v-sheet style="margin-top: 10px" class="pa-5">
           <div style="display: flex; width: 100%; justify-content: space-around">
-            <div>文章：{{}}</div>
-            <div>关注：{{}}</div>
+            <div>文章：{{ user.user.postTotal || 0 }}</div>
+            <div>关注：{{ 0 }}</div>
           </div>
         </v-sheet>
       </template>

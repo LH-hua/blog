@@ -7,7 +7,11 @@
             {{ item.title }}
           </a></v-list-item-title
         >
-        <v-list-item-subtitle><span>{{ item.auther.username }}</span> · <span>{{ dateFormat(item.date) }}</span> · <span>{{ item.readcount || 0 }} 阅读量</span></v-list-item-subtitle>
+        <v-list-item-subtitle>
+          <v-chip density="compact" color="primary" size="small"> {{ item.captchas_info.name }} </v-chip> · 
+          <span>{{ item.auther.username }}</span> · <span>{{ dateFormat(item.date) }}</span> ·
+          <span>{{ item.readcount || 0 }} 阅读量</span></v-list-item-subtitle
+        >
         <br />
         <v-divider></v-divider>
         <template v-slot:prepend>
