@@ -84,14 +84,6 @@
       </template>
       <template #side>
         <publish></publish>
-        <v-sheet style="margin-top: 5px" rounded="lg" class="pa-5">
-          <v-card flat>
-            <v-card-title>目录</v-card-title>
-            <v-card-text>
-              <div class="table-of-contents"></div>
-            </v-card-text>
-          </v-card>
-        </v-sheet>
       </template>
     </side-main>
   </div>

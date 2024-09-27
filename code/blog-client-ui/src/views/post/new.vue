@@ -90,6 +90,7 @@ import { formdata } from '@/http/request'
 const router = useRouter()
 let editor
 const captchas = ref()
+const isFullscreen = ref(false)
 let form = reactive({
   title: '',
   captcha_id: '',
@@ -129,11 +130,44 @@ const submit = async () => {
   })
 }
 const initEditor = () => {
+  function createLastButton() {
+    const button = document.createElement('button')
+
+    button.className = 'toastui-editor-toolbar-icons last'
+    button.style.backgroundImage = 'none'
+    button.style.margin = '0'
+    button.innerHTML = `<i>全屏</i>`
+    button.addEventListener('click', () => {
+      button.addEventListener('click', () => {
+      editor.setHeight('100vh')
+      // let ui = document.querySelector('.toastui-editor-defaultUI')
+      // ui.classList.toggle('fullScreen')
+      // isFullscreen.value = true
+    })
+    })
+
+    return button
+  }
   editor = new Editor({
     el: document.querySelector('#editor'),
     height: '50vh',
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
+    toolbarItems: [
+      ['heading', 'bold', 'italic', 'strike'],
+      ['hr', 'quote'],
+      ['ul', 'ol', 'task', 'indent', 'outdent'],
+      ['table', 'image', 'link'],
+      ['code', 'codeblock'],
+      // Using Option: Customize the last button
+      [
+        {
+          el: createLastButton(),
+          command: 'bold',
+          tooltip: '全屏',
+        },
+      ],
+    ],
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
     hooks: {
       addImageBlobHook: (blob, callback) => {
@@ -145,6 +179,18 @@ const initEditor = () => {
       },
     },
   })
+  // const index = editor.options.toolbarItems.length
+  // editor.insertToolbarItem(
+  //   { groupIndex: 4, itemIndex: index },
+  //   {
+  //     name: 'myItem',
+  //     tooltip: '全屏',
+  //     command: 'bold',
+  //     text: '全屏',
+  //     className: 'toastui-editor-toolbar-icons first',
+  //     style: { backgroundImage: 'none' },
+  //   }
+  // )
 }
 
 onMounted(() => {

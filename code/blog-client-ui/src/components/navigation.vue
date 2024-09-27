@@ -5,9 +5,11 @@
       style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
       @click="handlerToHome"
     >
-      昔日 
+      <v-avatar color="blue-darken-2" rounded="0">
+        <v-img src="/logo.webp"></v-img>
+      </v-avatar>
     </div>
-    回忆不曾丢失，只是存在这里
+    <span style="text-indent: 10px">时光印记</span>
     <v-spacer></v-spacer>
     <ul class="navigation">
       <li v-for="item in store.menu" :key="item.url">
@@ -36,35 +38,6 @@ const data = reactive({
 })
 const store = reactive({
   menu: [
-    // {
-    //   id: '0',
-    //   pid: '0',
-    //   icon: 'mdi-home-outline',
-    //   name: '首 页',
-    //   url: '/',
-    //   tag: false,
-    //   children: [],
-    // },
-    // {
-    //   id: '1',
-    //   pid: '0',
-    //   icon: 'mdi-card-text',
-    //   name: '技术',
-    //   url: '/',
-    //   thirdParty: false,
-    //   tag: false,
-    //   children: [],
-    // },
-    // {
-    //   id: '1',
-    //   pid: '0',
-    //   icon: 'mdi-menu',
-    //   name: '展示区',
-    //   url: 'show',
-    //   thirdParty: false,
-    //   tag: false,
-    //   children: [],
-    // },
     {
       id: '1',
       pid: '0',

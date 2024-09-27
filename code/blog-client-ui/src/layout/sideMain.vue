@@ -1,6 +1,13 @@
 <template>
   <v-container>
-    <!-- <div style="position: relative;"> -->
+    <!-- <div class="container-">
+      <div class="main">
+        <slot name="main"></slot>
+      </div>
+      <div class="side">
+        <slot name="side"></slot>
+      </div>
+    </div> -->
     <v-row>
       <v-col cols="9">
         <slot name="main"></slot>
@@ -9,14 +16,18 @@
         <slot name="side"></slot>
       </v-col>
     </v-row>
-    <!-- </div> -->
   </v-container>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 /* @media (min-width: 1920px) {
   .v-container {
     max-width: 1200px !important;
   }
 } */
+.container- {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
 </style>

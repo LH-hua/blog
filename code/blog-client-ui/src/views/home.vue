@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar class="custom" density="compact" flat style="position: static">
+  <v-app-bar class="custom" density="compact" flat>
     <navigation></navigation>
   </v-app-bar>
 
-  <v-main>
+  <v-main style="margin-top: 48px;">
     <div class="main">
       <router-view></router-view>
     </div>

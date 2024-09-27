@@ -3,6 +3,7 @@
     <v-sheet>
       <v-toolbar color="white" density="compact" title="我的邮箱"></v-toolbar>
       <v-divider></v-divider>
+      <v-alert v-model="alert" density="compact" :text="text" title="提示" :type="type" closable></v-alert>
 
       <div class="pa-5">
         <v-text-field density="compact" variant="outlined" disabled v-model="user.user.email">
@@ -41,11 +42,35 @@ const newForm = ref({
   email: '',
   code: '',
 })
+const alert = ref(false)
+const text = ref('')
+const type = ref('success')
 const user = userInfo()
+const tmp = ref()
 
 const handlerEmail = async () => {
-  user.emailVerify({ email: regsiterForm.email }).then((res) => {
+  user.emailVerify({ email: newForm.value.email }).then((res) => {
     email.value.msg = res.msg
+  })
+}
+
+const save = () => {
+  if (!newForm.email || !newForm.code) {
+    return
+  }
+  user.userUpdateEmail(newForm.value).then((res) => {
+    if (res.data.status == 200) {
+      text.value = res.data.msg
+      alert.value = true
+    } else {
+      type.value = 'warning'
+      text.value = res.data.msg
+      alert.value = true
+    }
+    tmp.value = null
+    tmp.value = setTimeout(function () {
+      alert.value = false
+    }, 2000)
   })
 }
 </script>

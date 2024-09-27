@@ -50,7 +50,23 @@ export const userInfo = defineStore(
     const userPostList = (data) => {
       return get('/api/post/list/user', data)
     }
-    return { user, isLogin, login, resgsiter, queryUserInfo, userInfoUpdate, userAvatarUpload, loginOut, emailVerify, verifyInfo, userPostList }
+    const userUpdateEmail = (data) => {
+      return post('/api/user/updateEmail', data)
+    }
+    return {
+      user,
+      isLogin,
+      login,
+      resgsiter,
+      queryUserInfo,
+      userInfoUpdate,
+      userAvatarUpload,
+      loginOut,
+      emailVerify,
+      verifyInfo,
+      userPostList,
+      userUpdateEmail,
+    }
   },
   {
     persist: {

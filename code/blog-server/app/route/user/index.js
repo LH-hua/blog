@@ -239,8 +239,8 @@ router.get('/info', async (req, res) => {
  * @swagger
  * /api/user/update:
  *   post:
- *     summary: 注册
- *     description: 注册用户信息
+ *     summary: 更新用户信息
+ *     description: 用户信息
  *     tags: [User]
  *     requestBody:
  *       description: 创建用户对象
@@ -272,10 +272,9 @@ router.get('/info', async (req, res) => {
 
 router.post('/update', async (req, res, next) => {
   try {
-    const { sex, username, text, avatar, email, _id } = req.body
-    console.log(req.body)
+    const { sex, username, text, avatar, _id } = req.body
     const existingUser = await User.findOne({ username: username })
-    const update = { sex, email, avatar, text }
+    const update = { sex, avatar, text }
     if (!existingUser) {
       update.username = username
     }
@@ -434,6 +433,58 @@ router.post('/upload-avatar', async (req, res, next) => {
     })
   } catch (error) {
     next(err)
+  }
+})
+
+/**
+ * @swagger
+ * /api/user/updateEmail:
+ *   post:
+ *     summary: 更新邮箱
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               code:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: ok
+ */
+router.post('/updateEmail', async (req, res, next) => {
+  try {
+    const { code, email, u_id } = req.body
+    if (!code || !email) {
+      res.json({
+        msg: '信息不完整',
+        status: 404,
+      })
+    }
+    redis.get(email, async function (err, value) {
+      if (err) {
+        res.json({
+          msg: '验证码错误',
+          status: 404,
+        })
+        return
+      }
+      if (value == code) {
+        const data = await User.findOneAndUpdate({ _id: ObjectId(u_id) }, { email: email }, { new: true })
+        res.json({
+          data,
+          msg: '更新成功',
+        })
+        return
+      }
+    })
+  } catch (error) {
+    next(error)
   }
 })
 
