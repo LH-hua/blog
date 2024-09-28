@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex align-center">
+  <v-container style="height: 48px;" class="d-flex align-center">
     <div
       class="font-weight-bold"
       style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"

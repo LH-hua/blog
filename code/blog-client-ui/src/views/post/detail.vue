@@ -24,7 +24,8 @@
             </v-card-subtitle>
             <v-card-text>
               <div>
-                <div id="viewer"></div>
+                <edit type="viewer" :markdownContent="store.data.body"></edit>
+                <!-- <div id="viewer"></div> -->
               </div>
             </v-card-text>
           </v-card>
@@ -93,21 +94,9 @@
 import { reactive, ref, onBeforeMount, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import moment from 'moment'
-import Editor from '@toast-ui/editor'
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
-
-import Prism from 'prismjs'
-import 'prismjs/themes/prism-dark.min.css'
-import 'prismjs/components/prism-csharp.min.js'
-import 'prismjs/components/prism-css.min.js'
-import 'prismjs/components/prism-typescript.min.js'
-import 'prismjs/components/prism-json.min.js'
-import 'prismjs/components/prism-javascript.min.js'
-import '@toast-ui/editor/dist/toastui-editor.css'
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css'
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css'
 
 import publish from '@/components/publish.vue'
+import edit from '../../components/edit.vue'
 
 import { getArticleDetal, getComments, newComment } from '@/http/article'
 import { userInfo } from '../../store/userStore'
@@ -129,15 +118,6 @@ const comments = ref([])
 const userComment = ref()
 const dateFormat = (date) => {
   return moment(date).format('YYYY-MM-DD HH:mm')
-}
-function initMd() {
-  const viewer = Editor.factory({
-    el: document.querySelector('#viewer'),
-    viewer: true,
-    height: '500px',
-    initialValue: store.data.body,
-    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
-  })
 }
 function allADemo() {
   const allA = document.querySelectorAll('.table-of-contents a')

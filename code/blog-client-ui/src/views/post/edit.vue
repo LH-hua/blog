@@ -31,18 +31,19 @@
               <v-row>
                 <v-col cols="1">正文</v-col>
                 <v-col cols="11">
-                  <div id="editor"></div>
+                  <edit type="editor" :markdownContent="form.body" @content="submit"></edit>
+                  <!-- <div id="editor"></div> -->
                 </v-col>
               </v-row>
             </v-card-text>
-            <template v-slot:actions>
+            <!-- <template v-slot:actions>
               <v-row>
                 <v-col cols="1"></v-col>
                 <v-col cols="11">
                   <v-btn @click="submit" variant="flat" color="#5865f2" text="提 交"></v-btn>
                 </v-col>
               </v-row>
-            </template>
+            </template> -->
           </v-card>
         </v-sheet>
       </template>
@@ -66,29 +67,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onBeforeMount, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-import Editor from '@toast-ui/editor'
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
-
-import Prism from 'prismjs'
-import 'prismjs/themes/prism-dark.min.css'
-import 'prismjs/components/prism-csharp.min.js'
-import 'prismjs/components/prism-css.min.js'
-import 'prismjs/components/prism-typescript.min.js'
-import 'prismjs/components/prism-json.min.js'
-import 'prismjs/components/prism-javascript.min.js'
-import '@toast-ui/editor/dist/toastui-editor.css'
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css'
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css'
+import edit from '../../components/edit.vue'
 
 import { addArticle, getCaptcha, getArticleDetal } from '@/http/article'
-import { formdata } from '@/http/request'
 
 const router = useRouter()
 const route = useRoute()
-let editor
 const captchas = ref()
 let form = ref({
   title: '',
@@ -98,7 +85,7 @@ let form = ref({
 const handlerCategorie = (val) => {
   form.value.captcha_id = val._id
 }
-const submit = async () => {
+const submit = (text) => {
   if (!form.value.title) {
     return
   }
@@ -106,45 +93,21 @@ const submit = async () => {
     return
   }
 
-  const markdownText = editor.getMarkdown()
-  form.value.body = markdownText
+  form.value.body = text
   addArticle(form.value).then((res) => {
     if (res.status == 200) {
       window.history.back()
     }
   })
 }
-const initEditor = () => {
-  editor = new Editor({
-    el: document.querySelector('#editor'),
-    height: '50vh',
-    initialEditType: 'wysiwyg',
-    previewStyle: 'vertical',
-    initialValue: form.body,
-    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
-    hooks: {
-      addImageBlobHook: (blob, callback) => {
-        const formData = new FormData()
-        formData.append('image', blob)
-        formdata('/api/file/upload-image', formData).then((res) => {
-          callback(res.data.src, '')
-        })
-      },
-    },
-  })
-}
-
-onMounted(() => {
+onBeforeMount(async () => {
   const postId = route.params.id
-  getArticleDetal({ _id: postId }).then((res) => {
-    form.value = res.data
-    editor.setMarkdown(res.data.body)
-    document.title = res.data.title
-  })
+  const res = await getArticleDetal({ _id: postId })
+  form.value = res.data
+  document.title = res.data.title
   getCaptcha().then((res) => {
     captchas.value = res.data
   })
-  initEditor()
 })
 </script>
 

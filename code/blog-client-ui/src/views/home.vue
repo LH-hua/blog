@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="custom" density="compact" flat>
+  <v-app-bar density="compact" flat>
     <navigation></navigation>
   </v-app-bar>
 
@@ -26,9 +26,7 @@ onMounted(() => {
 </script>
 
 <style>
-.v-app-bar,
-.v-toolbar {
-  /* backdrop-filter: blur(10px); */
+.v-app-bar {
   border-bottom: 1px solid #e0e0e0;
 }
 .main {
