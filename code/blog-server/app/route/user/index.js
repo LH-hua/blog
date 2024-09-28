@@ -56,22 +56,21 @@ router.post('/login', async (req, res, next) => {
     let result = await User.findOne({ username: req.body.username })
     if (!result) {
       res.send({
-        type: 'info',
         msg: '用户名不存在',
+        status: 201,
       })
       return
     }
     const isTure = bcrypt.compareSync(req.body.password, result.password)
     if (!isTure) {
       res.send({
-        type: 'error',
         msg: '密码错误',
+        status: 202,
       })
       return
     }
     const token = generateToken({ id: result._id })
     res.send({
-      type: 'success',
       msg: '登录成功',
       token: token,
       status: 200,
@@ -116,6 +115,14 @@ router.post('/login', async (req, res, next) => {
 router.post('/regsiter', async (req, res, next) => {
   try {
     const { username, userpassword, email, code } = req.body
+    const name = await User.findOne({ username: username })
+    if (name) {
+      res.send({
+        status: 202,
+        msg: '用户已存在',
+      })
+      return
+    }
     redis.get(email, async function (err, value) {
       if (err) throw err
       console.log(value)
@@ -132,7 +139,8 @@ router.post('/regsiter', async (req, res, next) => {
           })
         }
       } else {
-        res.status(200).send({
+        res.send({
+          status: 201,
           msg: '验证码不正确',
         })
       }

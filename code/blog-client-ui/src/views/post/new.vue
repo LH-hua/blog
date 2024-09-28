@@ -31,7 +31,7 @@
               <v-row>
                 <v-col cols="1">正文</v-col>
                 <v-col cols="11">
-                  <edit markdownContent="fsdafsdafdsfa" type="editor" @content="submit" @cancel="cancel"></edit>
+                  <edit type="editor" @content="submit" @cancel="cancel"></edit>
                 </v-col>
               </v-row>
             </v-card-text>

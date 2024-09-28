@@ -26,6 +26,7 @@ export class Scroll {
 export const rules = {
   nameRequired: (value) => !!value || '用户名不能为空',
   passwordRequired: (value) => !!value || '密码不能为空',
+  code: (value) => !!value || '验证码不能为空',
   email: (value) => {
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

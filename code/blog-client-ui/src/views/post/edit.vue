@@ -49,7 +49,14 @@
       </template>
       <template #side>
         <v-sheet class="pa-5">
-          <v-card flat>
+          发帖提示
+          <ul>
+            <li>给你的贴子选择正确的分类</li>
+            <li>鲜明的标题，好的标题更能够吸引人</li>
+            <li>认真的书写你的正文，真诚是表达的前提</li>
+            <li>允许转载，请在末尾给出原文链接</li>
+          </ul>
+          <!-- <v-card flat>
             <v-card-title> 发帖提示 </v-card-title>
             <v-card-text>
               <ul>
@@ -59,7 +66,7 @@
                 <li>允许转载，请在末尾给出原文链接</li>
               </ul>
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-sheet>
       </template>
     </side-main>

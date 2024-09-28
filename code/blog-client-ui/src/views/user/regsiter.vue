@@ -11,7 +11,10 @@
               prepend-inner-icon="mdi-account"
               label="用户名"
               variant="outlined"
+              :error="error.name.error"
+              :error-messages="error.name.msg"
               :rules="[rules.nameRequired]"
+              @update:focused="userNameFocused"
             ></v-text-field>
           </label>
           <label>
@@ -22,8 +25,11 @@
               variant="outlined"
               prepend-inner-icon="mdi-shield-key"
               density="compact"
+              :error="error.password.error"
+              :error-messages="error.password.msg"
               required
               :rules="[rules.passwordRequired]"
+              @update:focused="userPasswordFocused"
             ></v-text-field>
           </label>
           <p class="forgot-pass" @click="handlerForget">忘记密码？</p>
@@ -53,7 +59,10 @@
                 prepend-inner-icon="mdi-account"
                 label="用户名"
                 variant="outlined"
+                :error="error.name.error"
+                :error-messages="error.name.msg"
                 :rules="[rules.nameRequired]"
+                @update:focused="userNameFocused"
               ></v-text-field>
             </label>
             <label>
@@ -70,7 +79,16 @@
               ></v-text-field>
             </label>
             <label>
-              <v-text-field v-model="regsiterForm.code" density="compact" label="验证码" variant="outlined"></v-text-field>
+              <v-text-field
+                v-model="regsiterForm.code"
+                density="compact"
+                label="验证码"
+                variant="outlined"
+                :error="error.code.error"
+                :error-messages="error.code.msg"
+                :rules="[rules.code]"
+                @update:focused="userCodeFocused"
+              ></v-text-field>
             </label>
             <label>
               <v-text-field
@@ -106,6 +124,20 @@ const data = reactive({
   userPassword: '',
 })
 
+let error = ref({
+  password: {
+    error: false,
+    msg: '',
+  },
+  name: {
+    error: false,
+    msg: null,
+  },
+  code: {
+    error: false,
+    msg: null,
+  },
+})
 const email = ref({
   msg: '',
 })
@@ -119,8 +151,32 @@ const regsiterForm = reactive({
 const handlerForget = () => {
   router.push('/user/forget')
 }
+
+const userNameFocused = (t) => {
+  error.value.name.error = false
+  error.value.name.msg = null
+}
+const userPasswordFocused = () => {
+  error.value.password.error = false
+  error.value.password.msg = null
+}
+const userCodeFocused = () => {
+  error.value.code.error = false
+  error.value.code.msg = null
+}
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })
+  console.log(res)
+
+  if (res.data.status == 201) {
+    error.value.name.msg = res.data.msg
+    error.value.name.error = true
+    return
+  }
+  if (res.data.status == 202) {
+    error.value.password.msg = res.data.msg
+    error.value.password.error = true
+  }
   if (res.data.status == 200) {
     window.history.back()
   }
@@ -128,6 +184,15 @@ const handleLogin = async () => {
 
 const handlerRegsiter = async () => {
   const res = await user.resgsiter(regsiterForm)
+  if (res.data.status == 201) {
+    error.value.code.msg = res.data.msg
+    error.value.code.error = true
+    return
+  }
+  if (res.data.status == 202) {
+    error.value.name.msg = res.data.msg
+    error.value.name.error = true
+  }
   if (res.data.status == 200) {
     change()
   }

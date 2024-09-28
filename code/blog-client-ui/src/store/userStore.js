@@ -10,14 +10,22 @@ export const userInfo = defineStore(
     let user = ref()
     let isLogin = ref(false)
     const login = (data) => {
-      return useLogin(data).then((res) => {
-        if (res.data.status == 200) {
+      return new Promise((resolve, reject) => {
+        useLogin(data).then((res) => {
           isLogin.value = true
           localStorage.setItem('token', res.data.token)
           queryUserInfo()
-          return res
-        }
+          resolve(res)
+        })
       })
+      // return useLogin(data).then((res) => {
+      //   if (res.data.status == 200) {
+      //     isLogin.value = true
+      //     localStorage.setItem('token', res.data.token)
+      //     queryUserInfo()
+      //     return res
+      //   }
+      // })
     }
     const resgsiter = (data) => {
       return post('/api/user/regsiter', data)

@@ -11,6 +11,9 @@
     </div>
     <span style="text-indent: 10px">时光印记</span>
     <v-spacer></v-spacer>
+
+    <search></search>
+    <v-spacer></v-spacer>
     <ul class="navigation">
       <li v-for="item in store.menu" :key="item.url">
         <a :href="item.url">{{ item.name }}</a>
@@ -27,6 +30,7 @@ import { useRouter, useRoute } from 'vue-router'
 import login from '@/components/user/login.vue'
 import userMenu from './user/userMenu.vue'
 // import regsiter from "@/components/user/regsite.vue";
+import search from './input/search.vue'
 
 // pinia
 import { userInfo } from '../store/userStore'

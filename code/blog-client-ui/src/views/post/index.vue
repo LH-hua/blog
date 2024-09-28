@@ -4,8 +4,9 @@
       <template #main>
         <v-sheet class="pa-5">
           <div style="display: flex; align-items: center">
-            话题：
-            <v-chip-group>
+            <div style="width: 70px;"> 话题： </div>
+            <v-chip-group column>
+              <v-chip class="ma-2" variant="text" label @click="handlerCategorie"> 全部 </v-chip>
               <v-chip class="ma-2" variant="text" label v-for="tab in data.captcha" :key="tab" @click="handlerCategorie(tab)">
                 {{ tab.name }}
               </v-chip>
@@ -52,6 +53,12 @@ const data = reactive({
 })
 
 const handlerCategorie = (item) => {
+  if (!item._id) {
+    router.push({
+      path: '/',
+    })
+    return
+  }
   router.push(`/categories/${item._id}`)
 }
 onBeforeMount(() => {
