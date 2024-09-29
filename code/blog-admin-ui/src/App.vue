@@ -1,12 +1,10 @@
 <template>
   <v-app class="scroll-hidden app-bg">
     <router-view></router-view>
-    <alter></alter>
   </v-app>
 </template>
 
 <script setup>
-import alter from './components/alter/alter.vue'
 </script>
 
 <style scoped>

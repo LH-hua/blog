@@ -80,7 +80,7 @@ export const userInfo = defineStore(
     persist: {
       storage: localStorage,
       paths: ['user'],
-      key: 'piniaStore',
+      key: 'userPiniaStore',
     },
   }
 )

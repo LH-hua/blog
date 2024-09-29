@@ -693,10 +693,10 @@ vue@^3.2.45:
     "@vue/server-renderer" "3.4.15"
     "@vue/shared" "3.4.15"
 
-vuetify@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.npmmirror.com/vuetify/-/vuetify-3.5.1.tgz#c2f35dad5e54a090e87e55ed1a4e76091199ed4a"
-  integrity sha512-fkhU4UFnX/lBARXg+n9mBCDPTaEDHoYGx9SZ5A/1LlzM7LohoqldmrNgza4WgpPTLIWqr6NvYp2NvT2IrcTfhg==
+vuetify@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.npmmirror.com/vuetify/-/vuetify-3.7.2.tgz#e37fa4c191ea00144de5943315cbf77ddb80448d"
+  integrity sha512-q0WTcRG977+a9Dqhb8TOaPm+Xmvj0oVhnBJhAdHWFSov3HhHTTxlH2nXP/GBTXZuuMHDbBeIWFuUR2/1Fx0PPw==
 
 w3c-keyname@^2.2.0:
   version "2.2.8"

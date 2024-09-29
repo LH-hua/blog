@@ -12,7 +12,6 @@ import { computed } from 'vue'
 
 const msg = computed(() => {
   const massege = usrMassegeStore()
-  console.log(massege.msg())
   return massege.msg()
 })
 </script>

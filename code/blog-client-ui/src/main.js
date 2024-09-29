@@ -1,9 +1,10 @@
+// main.js 或 main.ts
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 
-import { userInfo } from './store/userStore.js'
+import { userInfo, userDataList } from './store'
 
 import router from './router/index.js'
 import { vuetify } from './plugin'
@@ -13,11 +14,6 @@ import '@/style/global.css'
 
 // 布局组件
 import sideMain from '@/layout/sideMain.vue'
-
-// import { asyncRoute } from '@/router/dynamicRoute'
-// if (localStorage.getItem('token')) {
-//   asyncRoute(localStorage.getItem('token'))
-// }
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -30,7 +26,13 @@ app.use(router)
 app.use(vuetify)
 
 const user = userInfo()
+const dataList = userDataList()
+
 if (user.isLogin) {
   user.queryUserInfo()
 }
+// 获取数据
+dataList.queryPost()
+dataList.queryCaptcha()
+
 app.mount('#app')

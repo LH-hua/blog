@@ -1,16 +1,13 @@
 <template>
   <div>
     <v-list>
-      <v-list-item v-for="item in data.data" :key="item">
+      <v-list-item v-for="item in postLists" :key="item">
         <v-list-item-title
-          ><a :href="'/posts/' + item._id" Target="_blank">
-            {{ item.title }}
-          </a></v-list-item-title
-        >
+          ><a :href="'/posts/' + item._id" Target="_blank" v-html="highlightKeyword(item.title, searchKey)"></a
+        ></v-list-item-title>
         <v-list-item-subtitle>
-          <v-chip density="compact" color="primary" size="small"> {{ item.captchas_info.name }} </v-chip> · 
-          <span>{{ item.auther.username }}</span> · <span>{{ dateFormat(item.date) }}</span> ·
-          <span>{{ item.readcount || 0 }} 阅读量</span></v-list-item-subtitle
+          <v-chip density="compact" color="primary" size="small"> {{ item.captchas_info.name }} </v-chip> · <span>{{ item.auther.username }}</span> ·
+          <span>{{ dateFormat(item.date) }}</span> · <span>{{ item.readcount || 0 }} 阅读量</span></v-list-item-subtitle
         >
         <br />
         <v-divider></v-divider>
@@ -25,45 +22,31 @@
 </template>
 
 <script setup>
-import { reactive, ref, onBeforeMount, onUnmounted, computed, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
 import moment from 'moment'
+import { userDataList } from '../../store'
 
-import { getArticleList, getCaptcha, getNewPost } from '@/http/article'
-
-const router = useRouter()
-const route = useRoute()
-const data = reactive({
-  data: [],
-  captcha: [],
-})
+const userDataListStore = userDataList()
+const postLists = computed(() => userDataListStore.postList)
+const searchKey = computed(() => userDataListStore.key)
 
 const dateFormat = (date) => {
   return moment(date).format('YYYY-MM-DD HH:mm')
 }
-function query(params) {
-  getArticleList(params).then((res) => {
-    data.data = res.data
-  })
+
+const highlightKeyword = (text, keyword) => {
+  if (!keyword) return text
+  const regex = new RegExp(`(${keyword})`, 'gi')
+  return text.replace(regex, '<mark>$1</mark>')
 }
-watch(
-  () => route.name,
-  () => {
-    query({ captcha_id: route.params.id })
-  },
-  { immediate: true, deep: true }
-)
-onBeforeMount(() => {
-  query({ captcha_id: route.params.id })
-  getCaptcha().then((res) => {
-    data.captcha = res.data
-  })
-})
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 a {
   text-decoration: none;
   color: black;
+}
+mark {
+  background-color: yellow; /* 设置高亮颜色 */
 }
 </style>

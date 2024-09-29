@@ -4,10 +4,10 @@
       <template #main>
         <v-sheet class="pa-5">
           <div style="display: flex; align-items: center">
-            <div style="width: 70px;"> 话题： </div>
+            <div style="width: 70px">话题：</div>
             <v-chip-group column>
               <v-chip class="ma-2" variant="text" label @click="handlerCategorie"> 全部 </v-chip>
-              <v-chip class="ma-2" variant="text" label v-for="tab in data.captcha" :key="tab" @click="handlerCategorie(tab)">
+              <v-chip class="ma-2" variant="text" label v-for="tab in categories" :key="tab" @click="handlerCategorie(tab)">
                 {{ tab.name }}
               </v-chip>
             </v-chip-group>
@@ -35,42 +35,36 @@
 </template>
 
 <script setup>
-import { reactive, ref, onBeforeMount, onUnmounted, computed, watch } from 'vue'
+import { ref, onBeforeMount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { getArticleList, getCaptcha, getNewPost } from '@/http/article'
+import { getNewPost } from '@/http/article'
+import { userDataList } from '../../store'
 
 import publish from '@/components/publish.vue'
 import sys from '@/components/sys.vue'
 
 const router = useRouter()
 const newPost = ref()
+const { captchaList, queryPost } = userDataList()
 
-const data = reactive({
-  data: [],
-  captcha: [],
-  // announcement: '',
-})
-
+const categories = computed(() => captchaList)
 const handlerCategorie = (item) => {
   if (!item._id) {
     router.push({
       path: '/',
     })
+    queryPost()
+
     return
   }
+  queryPost({ captcha_id: item._id })
   router.push(`/categories/${item._id}`)
 }
 onBeforeMount(() => {
-  getCaptcha().then((res) => {
-    data.captcha = res.data
-  })
   getNewPost().then((res) => {
     newPost.value = res.data
   })
-  // announcement().then((res) => {
-  //   data.announcement = res.data.announcement
-  // })
 })
 </script>
 

@@ -66,3 +66,25 @@ export const geoCode = [
   { name: '澳门', spell: 'aomen', coord: [113.55, 22.17] },
   { name: '台湾', spell: 'taiwan', coord: [121.01, 23.54] },
 ]
+
+const a = [
+  // 登录展示页面
+  {
+    path: '/posts/new',
+    component: () => import('@/views/post/new.vue'),
+    meta: {
+      title: '发起话题',
+    },
+  },
+  {
+    path: '/posts/edit/:id',
+    component: () => import('@/views/post/edit.vue'),
+    meta: {
+      title: '发起话题',
+    },
+  },
+  {
+    path: '/categories/new',
+    component: () => import('@/views/post/categories-new.vue'),
+  },
+]

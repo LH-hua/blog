@@ -33,8 +33,8 @@ import userMenu from './user/userMenu.vue'
 import search from './input/search.vue'
 
 // pinia
-import { userInfo } from '../store/userStore'
-import { userSearchFilters } from '@/store/dataStore'
+import { userInfo } from '../store'
+import { userSearchFilters } from '@/store'
 
 const data = reactive({
   serachValue: '',

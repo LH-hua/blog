@@ -1,38 +1,36 @@
 <template>
   <div class="container">
-    <v-sheet class="bg" width="400px">
-      <v-card height="100%" class="pa-2" flat>
+    <v-sheet class="bg pa-5" width="400px">
+      <v-card class="pa-2" flat>
         <v-card-title>
           <h2>欢迎登录</h2>
         </v-card-title>
         <v-card-text>
-          <v-form>
-            <v-text-field
-              v-model="state.form.name"
-              :error-messages="state.tip.name"
-              label="用户名"
-              flat
-              single-line
-              append-inner-icon="mdi-account"
-              variant="outlined"
-              density="compact"
-            ></v-text-field>
+          <v-text-field
+            density="compact"
+            v-model="state.form.name"
+            :error-messages="state.tip.name"
+            label="用户名"
+            flat
+            single-line
+            append-inner-icon="mdi-account"
+            variant="outlined"
+          ></v-text-field>
 
-            <v-text-field
-              v-model="state.form.password"
-              label="密码"
-              single-line
-              type="password"
-              :error-messages="state.tip.password"
-              append-inner-icon="mdi-lock"
-              variant="outlined"
-              density="compact"
-            ></v-text-field>
+          <v-text-field
+            v-model="state.form.password"
+            label="密码"
+            single-line
+            type="password"
+            :error-messages="state.tip.password"
+            append-inner-icon="mdi-lock"
+            variant="outlined"
+            density="compact"
+          ></v-text-field>
 
-            <br />
+          <br />
 
-            <v-btn block color="#00B0FF" size="large" type="submit" variant="elevated" @click="btn_login"> 登 录 </v-btn>
-          </v-form>
+          <v-btn block color="#00B0FF" size="large" type="submit" variant="elevated" @click="btn_login"> 登 录 </v-btn>
         </v-card-text>
       </v-card>
     </v-sheet>
@@ -43,9 +41,9 @@
 import { reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/http/user'
-import { usrMassegeStore } from '../store/massege'
+// import { usrMassegeStore } from '../store/massege'
 import { useMenuItems } from '../store/index'
-import {menu} from '@/config/menu'
+import { menu } from '@/config/menu'
 
 const menuItems = useMenuItems()
 
@@ -54,15 +52,15 @@ const state = reactive({
     name: '',
     password: '',
   },
-  tip:{
-    name:'',
-    password:''
-  }
+  tip: {
+    name: '',
+    password: '',
+  },
 })
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()
 const btn_login = () => {
-  const msg = usrMassegeStore()
+  // const msg = usrMassegeStore()
   if (!state.form.name) {
     // msg.openMsg({
     //   type: 'info',
@@ -89,10 +87,10 @@ const btn_login = () => {
         path: '/admin/list',
       })
     }
-    msg.openMsg({
-      type: res.data.type,
-      text: res.data.msg,
-    })
+    // msg.openMsg({
+    //   type: res.data.type,
+    //   text: res.data.msg,
+    // })
   })
 }
 </script>
@@ -105,12 +103,9 @@ const btn_login = () => {
   align-items: center;
   justify-content: center;
   background: #f5f5f5;
-
 }
-.bg{
+.bg {
   backdrop-filter: blur(5px);
-  background-color: white
-}
-.v-card{
+  background-color: white;
 }
 </style>

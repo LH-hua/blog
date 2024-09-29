@@ -4,9 +4,8 @@ export const menu = [
     id: 0,
     text: '文章管理',
     icon: 'mdi-credit-card',
-    path: 'article',
     scr: 'article',
-    chilren: [
+    children: [
       {
         parent: 0,
         id: 0,
@@ -14,7 +13,6 @@ export const menu = [
         icon: 'mdi-label',
         path: 'catptchs',
         scr: 'catptchs',
-        chilren: [],
       },
       {
         parent: 0,
@@ -23,7 +21,6 @@ export const menu = [
         icon: 'mdi-format-list-bulleted',
         path: 'list',
         scr: 'list',
-        chilren: [],
       },
       {
         parent: null,
@@ -32,7 +29,6 @@ export const menu = [
         icon: 'mdi-notebook-edit-outline',
         path: 'publish',
         scr: 'publish',
-        chilren: [],
       },
     ],
   },
@@ -43,16 +39,14 @@ export const menu = [
     icon: 'mdi-compass-rose',
     path: 'preject',
     scr: 'preject',
-    chilren: [],
   },
   {
     parent: null,
     id: 1,
     text: '系统管理',
     icon: 'mdi-cog',
-    path: 'system',
     scr: 'system',
-    chilren: [
+    children: [
       {
         parent: null,
         id: 1,
@@ -68,7 +62,6 @@ export const menu = [
         icon: 'mdi-menu',
         path: 'menus',
         scr: 'menus',
-        chilren: [],
       },
     ],
   },

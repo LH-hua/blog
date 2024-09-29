@@ -39,23 +39,22 @@
 
 <script setup>
 import { reactive, defineEmits, onMounted } from 'vue'
-import { userSearchFilters } from '@/store/dataStore'
+import { userDataList } from '@/store'
 
 const emit = defineEmits('search')
 
-const serachFilters = userSearchFilters()
+const serachFilters = userDataList()
 const data = reactive({
   serachValue: '',
   historyItems: [],
 })
-
 
 const clearHandler = () => {
   serachFilters.clear()
 }
 const focused = (boolean) => {
   if (boolean) {
-    const history = serachFilters.history()
+    const history = serachFilters.saveHistory()
     data.historyItems = history
   }
 }
@@ -68,7 +67,7 @@ async function handlerEnter() {
   // 键盘enter事件
   if (data.serachValue) {
     emit('search')
-    await serachFilters.query({ title: data.serachValue })
+    await serachFilters.queryPost({ title: data.serachValue })
     data.serachValue = ''
     // router.push('search')
   }

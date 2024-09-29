@@ -1,18 +1,22 @@
 <template>
   <layout>
     <template #header>
-
       <v-spacer></v-spacer>
       <user></user>
     </template>
     <template #side>
-      <v-card class="mx-auto" flat color="transparent">
-        <div class="pa-2">
-          <h2>LHGO</h2>
-        </div>
-        <v-list density="compact">
-          <Menu :data="menu"></Menu>
-        </v-list>
+      <v-card class="mx-auto" flat>
+        <v-treeview
+          color="warning"
+          density="compact"
+          item-title="text"
+          item-value="path"
+          activatable
+          @click:open="open"
+          @update:activated="activated"
+          @click:select="select"
+          :items="menu"
+        ></v-treeview>
       </v-card>
     </template>
     <template #main>
@@ -26,19 +30,14 @@
 <script setup>
 import layout from './layout.vue'
 import user from '@/components/user'
-import Menu from '@/components/Menu.vue'
-
-import { reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { menu } from '@/config/menu.js'
 
-const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()
-const _this = ctx
 
-const toRouter = (val) => {
-  router.push(val.path)
+const activated = (item) => {
+  router.push('/' + item)
 }
 </script>
 

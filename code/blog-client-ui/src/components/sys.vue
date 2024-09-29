@@ -16,6 +16,6 @@ const about = () => {
   router.push('/posts/66f5520dec491b2b889c9f39')
 }
 const rules = () => {
-  router.push('/rules')
+  router.push('/posts/66f93b161862c09af020a8a6')
 }
 </script>

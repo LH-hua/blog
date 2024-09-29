@@ -5,9 +5,9 @@ const routes = [
     name: 'index',
     component: () => import('@/views/home.vue'),
     meta: {
-      title: 'lhgo | 社区',
+      title: 'lhgo | 时光印记',
       content: {
-        keywords: 'lhgo、昔日、美好的瞬间、知过去,聊未来',
+        keywords: 'lhgo、昔日、美好的瞬间、知过去,聊未来、时光印记',
         description: '在社区，我们进行有价值的话题讨论，分享过去那些美好的瞬间、民间话题。回忆不曾丢失，只是存在这里。',
       },
     },
@@ -115,6 +115,7 @@ const routes = [
   },
   {
     path: '/user/:id',
+    name: 'userPrivte',
     component: infoPage,
     children: [
       {
@@ -157,11 +158,6 @@ const routes = [
     path: '/user/forget',
     name: 'forget',
     component: () => import('@/views/user/forget.vue'),
-  },
-  {
-    path: '/publish',
-    name: 'publish',
-    component: () => import('@/views/article/publish.vue'),
   },
   {
     path: '/examples',
