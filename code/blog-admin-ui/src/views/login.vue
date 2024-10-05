@@ -84,7 +84,7 @@ const btn_login = () => {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user-info', JSON.stringify(res.data))
       router.push({
-        path: '/admin/list',
+        path: '/list',
       })
     }
     // msg.openMsg({

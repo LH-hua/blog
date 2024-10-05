@@ -9,7 +9,7 @@ const createRedisClient = require('./redis')
 dotenv.config()
 
 // 使用swagger API 文档
-const swaggerInstall = require('./app/utils/swagger')
+const swaggerInstall = require('./swagger/client-swagger')
 const router = require('./app/route') // 客户端API
 const admin = require('./admin') // 管理员API
 
