@@ -1,7 +1,7 @@
 const { Router, query } = require('express')
 const { ObjectId } = require('mongodb')
 const router = Router()
-const { sysDb, about_DB } = require('../../models/sys')
+const { sysDb, about_DB } = require('../../../models/sys')
 const sendData = require('../../utils/dataFun')
 /**
  * @swagger

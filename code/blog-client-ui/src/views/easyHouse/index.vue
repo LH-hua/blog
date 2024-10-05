@@ -73,16 +73,19 @@
         </v-sheet>
       </template>
     </side-main>
+    <v-snackbar location="top" color="info" :text="msg" v-model="snackbar"></v-snackbar>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onBeforeMount, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { get, post,request } from '@/http/request'
+import { get, post, request } from '@/http/request'
 import { userInfo } from '@/store/userStore'
 
 const overlay = ref(false)
+const snackbar = ref(false)
+const msg = ref('银币不足！')
 const fileImage = ref('')
 const data = reactive({
   jianliLIst: [],
@@ -100,24 +103,31 @@ function isHighDownPayload(item) {
   if (!user.isLogin) {
     return router.push({ name: 'login' })
   }
+  console.log(user.user.coins)
+  if (parseInt(user.user.coins) < 3) {
+    snackbar.value  = true
+    return
+  }
 
-  request.get('/api/jianli/download', {
-    params: { dPath: item.docPath },
-    responseType: 'blob',
-  }).then((res) => {
-    const blob = new Blob([res.data], { type: 'application/octet-stream;charset=UTF-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'aaa.docx'
-    a.style.display = 'none'
-    // 将 <a> 标签添加到文档中
-    document.body.appendChild(a)
-    // 触发点击事件
-    a.click()
-    // 移除 <a> 标签
-    document.body.removeChild(a)
-  })
+  request
+    .get('/api/jianli/download', {
+      params: { dPath: item.docPath },
+      responseType: 'blob',
+    })
+    .then((res) => {
+      const blob = new Blob([res.data], { type: 'application/octet-stream;charset=UTF-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = '简历.docx'
+      a.style.display = 'none'
+      // 将 <a> 标签添加到文档中
+      document.body.appendChild(a)
+      // 触发点击事件
+      a.click()
+      // 移除 <a> 标签
+      document.body.removeChild(a)
+    })
 }
 function curry(num) {
   params.currePage = num

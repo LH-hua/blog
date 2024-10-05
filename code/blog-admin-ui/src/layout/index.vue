@@ -6,6 +6,7 @@
     </template>
     <template #side>
       <v-card class="mx-auto" flat>
+        <div class="pa-5 text-h5">lhgo时光印记</div>
         <v-treeview
           color="warning"
           density="compact"

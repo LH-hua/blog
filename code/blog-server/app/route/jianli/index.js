@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { Router } = require('express')
-const { jianli_DB, jianli_captcha_DB } = require('../../models/jianli')
+const { jianli_DB, jianli_captcha_DB } = require('../../../models/jianli')
 const { authenticateToken } = require('../../middleware/index')
 
 const router = Router()
@@ -103,7 +103,6 @@ router.get('/download', authenticateToken, async (req, res, next) => {
     for (let ext of types) {
       const fullPath = path.join(process.cwd(), 'assets', `${parsedPath.dir}/${parsedPath.name}${ext}`)
       if (fs.existsSync(fullPath)) {
-        console.log(fullPath)
         const fileName = `aa${ext}`
         res.set({
           'Content-Type': 'application/octet-stream',
@@ -119,28 +118,4 @@ router.get('/download', authenticateToken, async (req, res, next) => {
     next(error) // 错误处理
   }
 })
-
-// router.get('/download', async (req, res, next) => {
-//   try {
-//     const { dPath } = req.query
-//     const docPath = dPath.join('/')
-//     const newPath = docPath.split('.')
-//     const type = ['.doc', '.docx']
-//     type.forEach((item) => {
-//       const fullPath = path.join(process.cwd(), 'assets', `${newPath[0]}${item}`)
-//       if (fs.existsSync(fullPath)) {
-//         res.set({
-//           'Content-Type': 'application/octet-stream',
-//           'Content-Disposition': `attachment; filename="简历"`,
-//         })
-//         const fileStream = fs.readFileSync(fullPath)
-//         res.send({
-//           data: fileStream,
-//         })
-//       }
-//     })
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 module.exports = router

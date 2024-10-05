@@ -22,14 +22,6 @@ export const menu = [
         path: 'list',
         scr: 'list',
       },
-      {
-        parent: null,
-        id: 2,
-        text: '文章发布',
-        icon: 'mdi-notebook-edit-outline',
-        path: 'publish',
-        scr: 'publish',
-      },
     ],
   },
   {
@@ -37,8 +29,24 @@ export const menu = [
     id: 1,
     text: '作品管理',
     icon: 'mdi-compass-rose',
-    path: 'preject',
     scr: 'preject',
+    children: [],
+  },
+  {
+    parent: null,
+    id: 1,
+    text: '用户管理',
+    icon: 'mdi-compass-rose',
+    scr: 'preject',
+    children: [
+      {
+        parent: null,
+        id: 1,
+        text: '用户列表',
+        icon: 'mdi-compass-rose',
+        path: 'user',
+      },
+    ],
   },
   {
     parent: null,

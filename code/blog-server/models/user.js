@@ -30,12 +30,15 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: '',
   },
-})
-const userPostSchema = new mongoose.Schema({
-  u_id: ObjectId,
-  p_id: [ObjectId],
+  lv: {
+    type: Number,
+    default: 0,
+  },
+  coins: {
+    type: Number,
+    default: 3,
+  },
 })
 module.exports = {
   User: mongoose.model('users', userSchema),
-  userPost: mongoose.model('userPost', userPostSchema),
 }

@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const prejectDB = require('../../models/preject')
+const prejectDB = require('../../../models/preject')
 const sendData = require('../../utils/dataFun')
 const router = Router()
 

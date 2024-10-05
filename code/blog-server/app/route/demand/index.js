@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const router = Router()
 
-const { demandDB } = require('../../models/demand')
+const { demandDB } = require('../../../models/demand')
 
 /**
  * @swagger

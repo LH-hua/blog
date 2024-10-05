@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const router = Router()
 
-const { easyDB } = require('../../models/easyHouse')
+const { easyDB } = require('../../../models/easyHouse')
 /**
  * @swagger
  * /api/easyHouse/list:

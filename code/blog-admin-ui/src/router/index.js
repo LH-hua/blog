@@ -12,10 +12,6 @@ const routes = [
         component: () => import('@/views/article/list.vue'),
       },
       {
-        path: 'publish',
-        component: () => import('@/views/article/publish.vue'),
-      },
-      {
         path: 'editpost/:id',
         component: () => import('@/views/article/editArticle.vue'),
       },
@@ -35,6 +31,10 @@ const routes = [
         path: 'about',
         component: () => import('@/views/sys/about/index.vue'),
       },
+      {
+        path: 'user',
+        component: () => import('@/views/user/index.vue'),
+      },
     ],
   },
   {
@@ -45,7 +45,7 @@ const routes = [
 ]
 const router = VueRouter.createRouter({
   base: '/admin',
-  mode: 'history',
+  // mode: 'history',
   history: VueRouter.createWebHashHistory(),
   routes,
 })

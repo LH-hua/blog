@@ -17,12 +17,25 @@
                 <v-list-item :title="user.user.username" :subtitle="user.user.text || '这人有点懒，什么也没写！'"></v-list-item>
               </v-list>
             </div>
+            <div>
+              <div style="display: flex; font-size: 12px"><span style="margin-right: 10px; color: #7a7a7a">硬币：</span> {{ user.user.coins }}</div>
+
+              <div style="display: flex; justify-content: center; align-items: center; font-size: 12px">
+                <span style="margin-right: 10px; color: #7a7a7a">lv: </span
+                ><v-progress-linear color="blue-lighten-3" v-model="user.user.lv" :height="5"></v-progress-linear
+                ><span style="margin-left: 10px; color: #7a7a7a">{{ user.user.lv }} / 100</span>
+              </div>
+            </div>
             <v-divider></v-divider>
           </v-card-title>
           <v-card-text>
             <v-list>
               <v-list-item>
-                <v-list-item> <router-link :to="'/user/' + user.user._id" Target="_blank"><v-icon icon="mdi-account-outline"></v-icon>个人中心</router-link></v-list-item>
+                <v-list-item>
+                  <router-link :to="'/user/' + user.user._id" Target="_blank"
+                    ><v-icon icon="mdi-account-outline"></v-icon>个人中心</router-link
+                  ></v-list-item
+                >
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -72,7 +85,6 @@ const regsiter = () => {
 const handlerUserSpace = () => {
   console.log(user.user)
   router.push(`/userSpace/${user.user._id}`)
-
 }
 const handleLogin = async () => {
   const res = await user.login({ username: data.userName, password: data.userPassword })

@@ -15,4 +15,15 @@ export const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
   },
+  defaults: {
+    VBtn: {
+      density: 'compact',
+    },
+    VBtn: {
+      density: 'compact',
+    },
+    VTextField: {
+      density: 'compact',
+    },
+  },
 })

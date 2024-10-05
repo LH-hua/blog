@@ -1,14 +1,12 @@
 const { ObjectId } = require('mongodb')
 
-const { adminDB } = require('../../models/admin')
-const roleDB = require('../../models/role')
+const { adminDB } = require('../../../models/admin')
+const roleDB = require('../../../models/role')
 
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const { Router } = require('express')
 const router = Router()
 
-const { secretKey } = require('../../config')
 const { resloveToken, generateToken } = require('../../tool')
 
 /**

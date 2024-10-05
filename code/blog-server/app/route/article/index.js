@@ -1,8 +1,8 @@
 const _ = require('lodash')
 const { Router } = require('express')
 const router = Router()
-const { postDB, captchaDB, post_comment_DB } = require('../../models/post')
-const { User } = require('../../models/user')
+const { postDB, captchaDB, post_comment_DB } = require('../../../models/post')
+const { User } = require('../../../models/user')
 const moment = require('moment')
 const sendData = require('../../utils/dataFun')
 const { ObjectId } = require('mongodb')
@@ -280,16 +280,7 @@ router.get('/new', async (req, res, next) => {
  */
 router.post('/findOneAndUpdate', async (req, res, next) => {
   try {
-    const { u_id, title, body, _id, cover, captcha_id, descr, admin, publicShow } = req.body
-    if (admin) {
-      // const captcha_id_arr = captcha_id.map((item) => ObjectId(item))
-      postDB
-        .findOneAndUpdate({ _id: ObjectId(_id) }, { publicShow: publicShow, title: title, body: body, cover, descr }, { upsert: true, new: true })
-        .exec((err, data) => {
-          sendData(err, data, res)
-        })
-      return
-    }
+    const { u_id, title, body, _id, cover, captcha_id, descr, publicShow } = req.body
     if (!_id) {
       postDB.create({ u_id: ObjectId(u_id), title: title, body: body, cover, captcha_id, descr }, (err, data) => {
         sendData(err, data, res)

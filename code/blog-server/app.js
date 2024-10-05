@@ -4,14 +4,14 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const fs = require('fs')
-const createRedisClient = require('./app/redis')
+const createRedisClient = require('./redis')
 
-const { authenticateToken } = require('./app/middleware')
 dotenv.config()
 
 // 使用swagger API 文档
 const swaggerInstall = require('./app/utils/swagger')
-const router = require('./app/route')
+const router = require('./app/route') // 客户端API
+const admin = require('./admin') // 管理员API
 
 const app = new express()
 fs.chmod(path.join(__dirname, './assets'), 0o700, (err) => {
@@ -23,17 +23,11 @@ app.use(express.json())
 
 app.use(cors())
 
-app.post('/api/post/*', authenticateToken)
-app.post('/api/pastBooks/*', authenticateToken)
-app.post('/api/demand/*', authenticateToken)
-// app.post('/api/user/*', authenticateToken)
-// app.get('/api/jianli/download', authenticateToken)
-app.get('/api/user/info', authenticateToken)
-
-require('./app/mongodb/conect')
+require('./mongodb/conect')
 createRedisClient()
 swaggerInstall(app)
 router(app)
+admin(app)
 
 // 错误捕捉，防止程序崩溃
 app.use(function (err, req, res, next) {

@@ -9,7 +9,7 @@ const options = {
     info: {
       title: 'API',
       version: '1.0.0',
-      description: `LH接口API文档`,
+      description: `lhgo时光印记接口API文档`,
     },
   },
   // 去哪个路由下收集 swagger 注释
