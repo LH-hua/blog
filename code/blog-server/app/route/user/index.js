@@ -9,8 +9,9 @@ const router = Router()
 const { User } = require('../../../models/user')
 const { postDB } = require('../../../models/post')
 const createRedisClient = require('../../../redis')
-const { generateToken, emailVerify, maskEmailLocalPart } = require('../../tool')
-const { avatarPath } = require('../../config')
+const sgin = require('../../../sign')
+const { emailVerify, maskEmailLocalPart } = require('../../../sendServer/email')
+const { avatarPath } = require('../../../config')
 
 const salt = bcrypt.genSaltSync(10)
 const redis = createRedisClient()
@@ -69,7 +70,7 @@ router.post('/login', async (req, res, next) => {
       })
       return
     }
-    const token = generateToken({ id: result._id })
+    const token = sgin.user_sign({ id: result._id })
     res.send({
       msg: '登录成功',
       token: token,
@@ -125,7 +126,6 @@ router.post('/regsiter', async (req, res, next) => {
     }
     redis.get(email, async function (err, value) {
       if (err) throw err
-      console.log(value)
       if (value == code) {
         const result = await User.create({
           username: username,

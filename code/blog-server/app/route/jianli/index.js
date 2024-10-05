@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { Router } = require('express')
 const { jianli_DB, jianli_captcha_DB } = require('../../../models/jianli')
-const { authenticateToken } = require('../../middleware/index')
+const { authenticateToken } = require('../../../middleware')
 
 const router = Router()
 

@@ -10,7 +10,7 @@ const easyHouse = require('./easyHouse')
 const pastBooks = require('./pastBooks')
 const jianli = require('./jianli')
 
-const { authenticateToken } = require('../middleware')
+const { authenticateToken } = require('../../middleware')
 
 module.exports = (app) => {
   app.post('/api/post/*', authenticateToken)

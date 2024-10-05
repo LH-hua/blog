@@ -25,7 +25,7 @@ const admin_options = {
       description: `lhgo时光印记管理员接口API文档`,
     },
   },
-  apis: [path.join(__dirname, '../admin/router/*.js')],
+  apis: [path.join(__dirname, '../admin/*/*.js')],
 }
 
 // 返回 JSON 格式的 Swagger 文档
