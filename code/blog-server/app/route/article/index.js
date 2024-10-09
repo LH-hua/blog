@@ -171,7 +171,7 @@ router.get('/detail', async (req, res, next) => {
     //   data: result,
     //   status: 200,
     // })
-    await postDB.update({ _id: ObjectId(_id) }, { $inc: { readcount: 1 } }, { upsert: true, new: true })
+    // await postDB.update({ _id: ObjectId(_id) }, { $inc: { readcount: 1 } }, { upsert: true, new: true })
     const result = await postDB.aggregate([
       {
         $match: { _id: ObjectId(_id) },
@@ -201,6 +201,35 @@ router.get('/detail', async (req, res, next) => {
     ])
     res.send({
       data: result[0],
+      status: 200,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+/**
+ * @swagger
+ * /api/post/detail:
+ *  get:
+ *      summary: 增加文章阅读量
+ *      tags: [Post]
+ *      parameters:
+ *          - name: _id
+ *            in: query
+ *            description: '文章ID'
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/readcount', async (req, res, next) => {
+  try {
+    const { _id } = req.query
+    console.log(req.query)
+    const data = await postDB.update({ _id: ObjectId(_id) }, { $inc: { readcount: 1 } }, { upsert: true, new: true })
+    res.send({
+      data: data,
+      msg: 'ok',
       status: 200,
     })
   } catch (error) {

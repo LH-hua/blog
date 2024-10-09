@@ -7,6 +7,9 @@ export function getArticleList(params) {
 export function getArticleDetal(params) {
   return get('/api/post/detail', params)
 }
+export function postReadCount(params) {
+  return get('/api/post/readcount', params)
+}
 
 export function addArticle(data) {
   return post('/api/post/findOneAndUpdate', data)

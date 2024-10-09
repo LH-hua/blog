@@ -98,13 +98,15 @@ import moment from 'moment'
 import publish from '@/components/publish.vue'
 import edit from '../../components/edit.vue'
 
-import { getArticleDetal, getComments, newComment } from '@/http/article'
+import { getArticleDetal, getComments, newComment, postReadCount } from '@/http/article'
 import { userInfo } from '../../store/userStore'
 
 const router = useRouter()
 const route = useRoute()
 const user = userInfo()
 let md = ref()
+
+let timer = ref(null)
 const store = reactive({
   data: {
     title: '',
@@ -181,6 +183,11 @@ async function getData() {
 // )
 
 onMounted(() => {
+  if (timer.value == null) {
+    timer.value = setTimeout(function () {
+      postReadCount({ _id: route.params.id })
+    }, 10000)
+  }
   getData()
   queryComments()
   // const dom = document.querySelector('.custom')

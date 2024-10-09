@@ -40,6 +40,7 @@ app.use(function (err, req, res, next) {
 app.listen(3333, () => {
   console.log('---------------------------------------------------------------------')
   console.log(`app run at http://127.0.0.1:3333`)
-  console.log(`API 文档 在 http://127.0.0.1:3333/api-docs`)
+  console.log(`API 文档 在 http://127.0.0.1:3333/api-docs-1`)
+  console.log(`API 文档 在 http://127.0.0.1:3333/api-docs-2`)
   console.log('---------------------------------------------------------------------')
 })
