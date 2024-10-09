@@ -193,7 +193,10 @@ onMounted(() => {
   // const dom = document.querySelector('.custom')
   // dom.style.color = 'black'
 })
-onBeforeMount(() => {})
+onUnmounted(() => {
+  clearTimeout(timer.value)
+  timer.value = null
+})
 </script>
 <style lang="scss" scoped>
 .containner {

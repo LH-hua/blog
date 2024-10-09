@@ -1,9 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '@/config/routes'
+import preject from '@/views/project/index.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: routes,
+})
+
+router.addRoute('index', {
+  path: 'preject',
+  component: preject,
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.content) {

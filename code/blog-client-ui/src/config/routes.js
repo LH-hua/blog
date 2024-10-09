@@ -169,4 +169,9 @@ const routes = [
   },
 ]
 
+const modules = import.meta.glob('@/views/*/*.vue')
+for (const path in modules) {
+  console.log(modules[path])
+}
+
 export default routes
