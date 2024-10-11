@@ -57,10 +57,6 @@ const routes = [
         component: () => import('@/views/post/categories-new.vue'),
       },
       {
-        path: '/about',
-        component: () => import('@/views/about/index.vue'),
-      },
-      {
         path: 'pastBooks',
         name: 'pastBooks',
         component: () => import('@/views/pastBooks/index.vue'),

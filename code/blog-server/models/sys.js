@@ -1,31 +1,32 @@
 const mongoose = require('mongoose')
 const menuSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-  },
   pid: {
     type: String,
     default: '',
   },
   name: {
     type: String,
+    default: '',
   },
   icon: {
     type: String,
+    default: '',
   },
   url: {
     type: String,
+    default: '',
   },
   path: {
     type: String,
+    default: '',
   },
   meta: {
     type: Object,
-    default: { keywords: '', description: '' },
+    default: { keywords: '', description: '', isLogin: false },
   },
-  children: {
-    type: Array,
-    default: [],
+  show: {
+    type: Boolean,
+    default: true,
   },
 })
 
