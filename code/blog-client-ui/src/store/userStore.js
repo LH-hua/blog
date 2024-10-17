@@ -7,7 +7,9 @@ import { asyncRoute } from '@/router/dynamicRoute'
 export const userInfo = defineStore(
   'info',
   () => {
-    let user = ref()
+    let user = ref({
+      avatar: '/avatar/default.png',
+    })
     let isLogin = ref(false)
     const login = (data) => {
       return new Promise((resolve, reject) => {

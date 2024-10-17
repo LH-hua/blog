@@ -1,25 +1,34 @@
 <template>
-  <v-container style="height: 48px;" class="d-flex align-center">
-    <div
-      class="font-weight-bold"
-      style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
-      @click="handlerToHome"
-    >
-      <v-avatar color="blue-darken-2" rounded="0">
-        <v-img src="/logo.webp"></v-img>
-      </v-avatar>
-    </div>
-    <span style="text-indent: 10px">时光印记</span>
-    <v-spacer></v-spacer>
+  <v-container style="height: 48px" class="d-flex align-center">
+  <div
+    class="font-weight-bold"
+    style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; text-align: center; cursor: pointer"
+    @click="handlerToHome"
+  >
+    <v-avatar color="blue-darken-2" rounded="0">
+      <v-img src="/logo.webp"></v-img>
+    </v-avatar>
+  </div>
+  <span style="text-indent: 10px">时光印记</span>
+  <v-spacer></v-spacer>
 
-    <search></search>
-    <v-spacer></v-spacer>
-    <ul class="navigation">
-      <li v-for="item in store.menu" :key="item.url">
-        <a :href="item.url">{{ item.name }}</a>
-      </li>
-    </ul>
-    <login></login>
+  <search></search>
+  <v-spacer></v-spacer>
+  <ul class="navigation">
+    <li v-for="item in store.menu" :key="item.url">
+      <a :href="item.url"
+        ><span>{{ item.name }}</span></a
+      >
+      <ul v-if="item.children.length" class="navigation-item">
+        <li v-for="i in item.children" :key="i.url">
+          <a :href="i.url"
+            ><span>{{ i.name }}</span></a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <login></login>
   </v-container>
 </template>
 
@@ -52,7 +61,6 @@ const store = reactive({
       tag: false,
       children: [],
     },
-
     {
       id: '1',
       pid: '0',
@@ -61,6 +69,24 @@ const store = reactive({
       url: '/easyHouse',
       tag: false,
       children: [],
+    },
+    {
+      id: '1',
+      pid: '0',
+      icon: '',
+      name: '可视化',
+      tag: false,
+      children: [
+        {
+          id: '1',
+          pid: '0',
+          icon: '',
+          name: 'GIS',
+          url: '/easyHouse',
+          tag: false,
+          children: [],
+        },
+      ],
     },
     {
       id: '1',
@@ -134,37 +160,46 @@ function onTorouter(obj) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .logo {
   cursor: pointer;
   font-weight: 800;
 }
 
-.navigation {
+ul {
   list-style: none;
   margin: 0;
-
-  /* background: deepskyblue; */
-
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-
   -webkit-flex-flow: row wrap;
   justify-content: flex-end;
 }
-
+.navigation > li {
+  position: relative;
+  cursor: pointer;
+}
 .navigation a {
   text-decoration: none;
   display: block;
   padding: 1em;
   color: black;
 }
-
-.navigation a:hover {
+.navigation > li > ul {
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  top: 100%;
+}
+.navigation li a:hover {
   color: deepskyblue;
+}
+
+.navigation > li:hover ul {
+  display: block;
+  left: 0;
 }
 
 @media all and (max-width: 800px) {

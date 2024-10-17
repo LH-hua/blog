@@ -13,6 +13,7 @@
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
+    "@vueuse/core": "^11.1.0",
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "highlight.js": "^11.8.0",

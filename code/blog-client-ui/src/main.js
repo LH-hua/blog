@@ -4,7 +4,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 
-import { userInfo, userDataList } from './store'
+import { userInfo, userDataList, useGlobStore } from './store'
 
 import router from './router/index.js'
 import { vuetify } from './plugin'

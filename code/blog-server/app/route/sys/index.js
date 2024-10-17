@@ -1,7 +1,7 @@
 const { Router, query } = require('express')
 const { ObjectId } = require('mongodb')
 const router = Router()
-const { sysDb, about_DB } = require('../../../models/sys')
+const { sysDb, about_DB, Menu } = require('../../../models/sys')
 const sendData = require('../../utils/dataFun')
 /**
  * @swagger
@@ -112,6 +112,30 @@ router.post('/about/update', async (req, res, next) => {
         msg: 'ok',
       })
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ * @swagger
+ * /api/sys/menus/list:
+ *  get:
+ *      summary: 导航栏
+ *      tags: [Sys]
+ *      parameters: []
+ *      responses:
+ *          200:
+ *             description: 成功
+ *
+ */
+router.get('/menus/list', async (req, res, next) => {
+  try {
+    const data = await Menu.find({ show: true })
+    res.send({
+      msg: 'ok',
+      data,
+    })
   } catch (error) {
     next(error)
   }

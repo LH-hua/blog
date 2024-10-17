@@ -18,7 +18,7 @@
               </v-list>
             </div>
             <div>
-              <div style="display: flex; font-size: 12px"><span style="margin-right: 10px; color: #7a7a7a">硬币：</span> {{ user.user.coins }}</div>
+              <div style="display: flex; font-size: 12px"><span style="margin-right: 10px; color: #7a7a7a">印记：</span> {{ user.user.coins }}</div>
 
               <div style="display: flex; justify-content: center; align-items: center; font-size: 12px">
                 <span style="margin-right: 10px; color: #7a7a7a">lv: </span

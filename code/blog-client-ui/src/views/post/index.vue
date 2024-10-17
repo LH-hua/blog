@@ -70,7 +70,7 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
 .containner {
-  background: #edf2f7;
+  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
   min-height: calc(100vh - 48px);
 }
 </style>

@@ -54,7 +54,7 @@
           <v-textarea v-model="userComment" hide-details label="评论" rows="2" placeholder="友善评论，恶语伤人心" variant="outlined">
             <template #prepend>
               <v-avatar size="50">
-                <v-img :src="user.user.avatar"></v-img>
+                <v-img :src="user.user.avatar || ''"></v-img>
               </v-avatar>
             </template>
             <template #append>

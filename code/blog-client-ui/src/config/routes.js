@@ -38,24 +38,24 @@ const routes = [
           },
         },
       },
-      {
-        path: '/posts/new',
-        component: () => import('@/views/post/new.vue'),
-        meta: {
-          title: '发起话题',
-        },
-      },
-      {
-        path: '/posts/edit/:id',
-        component: () => import('@/views/post/edit.vue'),
-        meta: {
-          title: '发起话题',
-        },
-      },
-      {
-        path: '/categories/new',
-        component: () => import('@/views/post/categories-new.vue'),
-      },
+      // {
+      //   path: '/posts/new',
+      //   component: () => import('@/views/post/new.vue'),
+      //   meta: {
+      //     title: '发起话题',
+      //   },
+      // },
+      // {
+      //   path: '/posts/edit/:id',
+      //   component: () => import('@/views/post/edit.vue'),
+      //   meta: {
+      //     title: '发起话题',
+      //   },
+      // },
+      // {
+      //   path: '/categories/new',
+      //   component: () => import('@/views/post/categories-new.vue'),
+      // },
       {
         path: 'pastBooks',
         name: 'pastBooks',

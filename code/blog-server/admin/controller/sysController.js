@@ -96,7 +96,7 @@ exports.menu_add = async (req, res, next) => {
  */
 exports.menu_update = async (req, res, next) => {
   try {
-    const { name, _id, show, meta } = req.body
+    const { name, _id, show, meta, url, path } = req.body
     if (!_id) {
       res.send({
         msg: 'id不能为空',
@@ -105,7 +105,7 @@ exports.menu_update = async (req, res, next) => {
     }
     const data = await Menu.findOneAndUpdate(
       { _id: ObjectId(_id) },
-      { name, show, 'meta.keywords': meta.keywords, 'meta.description': meta.description, 'meta.isLogin': meta.isLogin },
+      { name, show, url, path, 'meta.keywords': meta.keywords, 'meta.description': meta.description, 'meta.isLogin': meta.isLogin },
       { new: true }
     )
     res.json({
